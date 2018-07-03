@@ -1,0 +1,60 @@
+<!-- this contains all the jQuery used in this project / it is included using template inheritance in base.html -->
+
+<script>
+    $(document).ready(function() {
+
+    // isotope layout defined
+        var $grid = $('.grid').isotope({
+            itemSelector: '.grid-item',
+            percentPosition: true,
+            masonry: {
+                columnWidth: '.grid-sizer'
+            }
+        });
+
+        $grid.imagesLoaded().progress(function() {
+            $grid.isotope('layout');
+        });
+
+
+// VIEW POST
+    // triggers submission of data for selected post/image on click
+        $('.linkspan').click(function() {
+            var myForm = '#viewPostForm' + this.id;
+            $(myForm).submit();
+        });
+
+        console.log({{ launch }});
+    // prompts modal launch with data for selected post/image
+        if ({{ launch }} == 1) {
+            $('#hiddenViewButton').click();
+        };
+
+        $('#viewModal').on('hidden.bs.modal', function() {
+            console.log('view modal closed');
+            $('#clearLaunch')[0].click();
+            console.log({{ launch }});
+        });
+
+
+// NEW POST
+    // new post modal
+        $('#photo').change(function() {
+            $('#hiddenSubmit').trigger('click');
+        });
+
+    // if new pic was just saved, launch newPostModal
+        if ({{ request.session.pID }} != 0) {
+            $('#newPostModalButton').trigger('click');
+        };
+
+    // if newPostModal is closed without saving post, trigger 'scrap' view to delete photo
+        // this will only happen the modal has been closed by the user WITHOUT saving a post
+        $('#newPostModal').on('hidden.bs.modal', function() {
+            $('#scrap').trigger('click');
+
+            // delete image from media folder - need to write this code still
+        });
+
+    });
+</script>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" name="description" content="python/django example, social media site example">
+        <title>PIC Login</title>
+        <link rel="kstgrm_icon" href="kstgrm_icon.ico">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- google fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Leckerli+One|Pacifico|Satisfy" rel="stylesheet">
+        {% load staticfiles %}
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'login_reg/css/style.css' %}">
+        <!-- <link rel="stylesheet" type="text/css" href=""> -->
+    </head>
+    <body>
+        <div class="container">
+            <header class="page-header">
+                <h1>KittenStagram <small>Login/Registration</small></h1>
+            </header>
+            {{ thisUser }}
+            {% if users %}
+                {% for user in users %}
+                    <p>{{ user.id }} | {{ user.username }} | {{ user.email }} | {{ user.pw_hashed }}</p>
+                {% endfor %}
+            {% endif %}
+
+            <div>
+                {% if messages %}
+                    <div class="alert alert-danger">
+                        {% for alert in messages %}
+                            <p {% if messages.tags %} class="messages.tags" {% endif %}>{{ alert }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <section>
+                <article class="col-md-5">
+                    <h3>Register</h3>
+                    <form class="form-horizontal" action="{% url 'login_reg:register' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Username:</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="text" name="username" value="{{request.session.username}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Email:</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="text" name="email" value="{{request.session.email}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Password:</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="password" name="password" value="{{request.session.password}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Confirm pw:</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="password" name="pw_verify">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input class="btn btn-primary" type="submit" value="Register">
+                            </div>
+                        </div>
+                    </form>
+                </article>
+
+
+                <article class="col-md-offset-1 col-md-5">
+                    <h3>Login</h3>
+                    <form class="form-horizontal" action="{% url 'login_reg:login' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"> Email:</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="text" name="log_email" value="{{request.session.log_email}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Password:</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="password" name="password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input class="btn btn-primary" type="submit" value="Login">
+                            </div>
+                        </div>
+                    </form>
+                </article>
+            </section>
+
+
+        </div> <!-- close container -->
+    </body>
+</html>

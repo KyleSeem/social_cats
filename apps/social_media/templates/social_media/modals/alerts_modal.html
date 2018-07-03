@@ -1,0 +1,11 @@
+<!-- basic template for pop-up alerts -->
+
+<div>
+    {% if messages %}
+        <div class="alert alert-danger">
+            {% for alert in messages %}
+                <p {% if messages.tags %} class="messages.tags" {% endif %}>{{ alert }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>

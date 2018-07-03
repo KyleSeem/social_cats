@@ -1,0 +1,46 @@
+{% extends 'social_media/base.html' %}
+
+
+{% block title %}KittenStagram | Home{% endblock %}
+
+
+
+{% block content %}
+<button id="hiddenViewButton" class="d-none" type="button" data-toggle="modal" data-target="#viewModal"></button>
+
+
+
+<div class="grid">
+    <div class="grid-sizer"></div>
+    {% if posts %}
+        {% for post in posts %}
+
+            <div class="grid-item">
+                <div class="img-thumbnail">
+                    <!-- <a href="{% url 'social_media:view_post' %}"> -->
+                    <!-- <span role="button" id="viewPostLink"> -->
+                    <span role="button" id="{{post.id}}" class="linkspan">
+                        <img class="img-fluid img-thumbnail border-0 brick" src="../media/{{ post.photo.photo }}" alt="" />
+                    </span>
+                    <!-- </a> -->
+
+                    <div class="media">
+                        <img id="profilePic" class="mr-3" src="../static/social_media/img/frame1.png" alt="" />
+                        <div class="media-body">
+                            <h6 class="mt-0">{{ post.user.username }} - {{ post.created_at|date:"g:i A - j M y" }}</h6>
+                            {{ post.caption }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form id="viewPostForm{{post.id}}" action="view_post" method="POST">
+                {% csrf_token %}
+                <input id="this_post" type="hidden" name="this_post" value="{{ post.id }}" />
+                <input id="viewPostSubmit" type="submit" class="d-none" value="submit" />
+            </form>
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% endblock %}

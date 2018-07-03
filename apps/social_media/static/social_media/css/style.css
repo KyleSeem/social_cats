@@ -1,0 +1,165 @@
+/* BOOTSTRAP 4 IS MOBILE-FIRST and the viewport is set to NOT shrink to fit */
+/* CSS applies to all device sizes unless otherwise called out */
+html {
+    font-size: 1rem;
+}
+body {
+    background-image: url("../img/yarn-bright.png");
+    background-repeat: repeat;
+}
+/* header and nav */
+    header.page-header {
+        margin: 0px;
+        background-image: url("../img/yarn-bright.png");
+        background-repeat: repeat;
+        border-bottom: none;
+    }
+        header h1 {
+            text-align: center;
+            font-family: 'Leckerli One', cursive;
+            font-size: 4.5rem;
+            color: #000;
+        }
+
+/* might want to create theme classes in the future */
+        #myNav {
+            background-color: #9ba9b6;
+            font-size: 1.25rem;
+            color: #00000069;
+        }
+        #myIcon {
+            width: 3.25em;
+        }
+        #myNav label:hover {
+            cursor: pointer;
+        }
+        #myNav div.dropdown-menu {
+            background-color: #afbbc5;
+        }
+        #myNav div.dropdown-menu a:hover {
+            background-color: #9ba9b6;
+        }
+        #myNav div.dropdown-divider {
+            border-top: 1px solid #9ba9b6;
+        }
+
+
+/* fluid container below navbar */
+    #main-container {
+        padding-top: 11.5rem;
+    }
+
+/* modals modal */
+    div.modal-dialog {
+        max-width: fit-content;
+    }
+        #photoWrapper {
+            width: fit-content;
+        }
+            img#profilePic {
+                width: 4em;
+            }
+    /* viewModal */
+    #viewModal div.modal-dialog {
+        /* max-width: 90vw; */
+        max-height: 90vh;
+    }
+
+/* isotope */
+    .grid-sizer,
+    .grid-item {
+        width: 50%;
+        padding: .5em;
+    }
+
+    /* div.grid-item:hover {
+        cursor: pointer;
+    } */
+
+
+    .linkspan:hover {
+        cursor: pointer;
+    }
+
+/* ------------------------------------------------ */
+/* ------- LARGE+ DEVICES/SCREENS ------- */
+
+@media screen and (min-width: 992px) {
+/* header and nav */
+    header h1 {
+        font-size: 6.25rem;
+    }
+        #myIcon {
+            width: 3.75em;
+        }
+
+/* fluid container below navbar */
+    #main-container {
+        padding-top: 14em;
+    }
+
+/* isotope */
+    .grid-sizer,
+    .grid-item {
+        width: 33.333%;
+    }
+
+/* modals */
+    img.img-thumbnail.pt {
+        max-height: 80vh;
+    }
+    img.img-thumbnail.ls {
+        max-width: 50vw;
+    }
+    #viewModal div.modal-dialog {
+        max-width: 90vw;
+    }
+    #viewModal div.modal-body {
+        /* display: flex; */
+    }
+    /* #photoWrapper {
+        margin-bottom: 0;
+    } */
+
+}
+
+/* ------------------------------------------------ */
+/* ------- X-LARGE DEVICES/SCREENS ------- */
+
+@media screen and (min-width: 1400px) {
+/* isotope */
+    .grid-sizer,
+    .grid-item {
+        width: 25%;
+    }
+
+}
+
+
+/* --------------------------------------- */
+/* ------- X-SMALL DEVICES/SCREENS ------- */
+
+@media screen and (max-width: 425px) {
+/* header and nav */
+    header h1 {
+        font-size: 2.25rem;
+    }
+        #myNav a, label {
+            font-size: .9rem;
+        }
+        #myIcon {
+            width: 3em;
+        }
+
+/* fluid container below navbar */
+    #main-container {
+        padding-top: 8.5em;
+        font-size: .9em;
+    }
+
+/* isotope */
+    .grid-sizer,
+    .grid-item {
+        width: 100%;
+    }
+}

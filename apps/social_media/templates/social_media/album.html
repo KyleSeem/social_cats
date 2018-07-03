@@ -1,0 +1,23 @@
+<!-- this template is for the "My Album" section -->
+
+{% extends 'social_media/base.html' %}
+
+
+{% block title %}KittenStagram | My Album{% endblock %}
+
+
+
+{% block content %}
+<div class="grid">
+    <div class="grid-sizer"></div>
+    {% if myPhotos %}
+        {% for photo in myPhotos %}
+            <div class="grid-item">
+                <div class="img-thumbnail">
+                    <img class="img-thumbnail" style="border:none;" src="../media/{{ photo.photo }}" alt="{{ photo.id }}" />
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
