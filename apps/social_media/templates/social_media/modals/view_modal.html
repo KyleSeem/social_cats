@@ -24,7 +24,7 @@
                 <!-- this row makes it so the modal shifts for larger screens - do not remove -->
 
 <!-- ## ROW ################################ -->
-                <div class="row mr-lg-0 ">
+                <div id="modalRow" class="mr-lg-0 ">
                 <!-- main image -->
     <!-- ** COL *********************** -->
                     <div class="col-lg">
@@ -39,11 +39,10 @@
                         <div class="row" style="height:85%;">
                         <!-- existing comments div -->
                             <div id="commentsWrapper" class="w-100">
-                            <!-- <div id="commentsWrapper" class="w-100" style="position:absolute; height:85%; overflow:auto;"> -->
                                 {% if comments %}
                                     {% for comment in comments %}
                                         <div class="media mb-3 pb-2 border-bottom border-light">
-                                            <img class="mr-3" src="../static/social_media/img/frame1.png" alt="" width="50" />
+                                            <img class="mr-3 other_user_pic" src="../static/social_media/img/frame1.png" alt="" width="50" />
                                             <div class="media-body">
                                                 <h6>{{ comment.user.username }} at {{ comment.created_at|date:"g:i A - j M y" }}</h6>
                                                 <p class="mb-0">{{ comment.comment }}</p>
@@ -59,9 +58,10 @@
                             <!-- comment form section -->
                             <div id="formWrapper" class="w-100">
                                 <div class="media pt-3 border-top">
-                                    <img class="mr-3" src="../static/social_media/img/frame1.png" alt="{{ request.session.sessionUserID }}" width="50" />
+                                    <img class="other_user_pic" src="../static/social_media/img/frame1.png" alt="{{ request.session.sessionUserID }}" width="50" />
 
                                     <div class="media-body">
+                            <!-- ## FORM ## -->
                                         <form action="new_comment" method="POST">
                                             {% csrf_token %}
                                             <input id="user" type="hidden" name="user" value="{{ request.session.sessionUserID }}" />
@@ -72,7 +72,7 @@
                                                     <input id="comment" class="form-control" type="text" name="comment" placeholder="add comment..." />
                                                 </div>
                                                 <div class="form-group">
-                                                    <button class="btn btn-success" type="submit">add</button>
+                                                    <button id="add" class="btn btn-success" type="submit">add</button>
                                                 </div>
                                             </div>
                                         </form>

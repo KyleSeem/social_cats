@@ -46,7 +46,8 @@ def index(request):
 def myAlbum(request):
     context = {
         'myPhotos':Photo.objects.filter(user=request.session['sessionUserID']),
-        'nav_myAlbum':'active'
+        'nav_myAlbum':'active',
+        'launch':0
     }
     if request.method == "GET":
         print ('-'*20)

@@ -53,6 +53,9 @@ body {
     div.modal-dialog {
         max-width: fit-content;
     }
+    div.modal-body img.img-thumbnail.pt {
+        max-height: 60vh;
+    }
         #photoWrapper {
             width: fit-content;
         }
@@ -62,7 +65,7 @@ body {
     /* viewModal */
     #viewModal div.modal-dialog {
         /* max-width: 90vw; */
-        max-height: 90vh;
+        max-height: 70vh;
     }
 
 /* isotope */
@@ -111,8 +114,13 @@ body {
     img.img-thumbnail.ls {
         max-width: 50vw;
     }
-    #viewModal div.modal-dialog {
-        max-width: 90vw;
+    div.modal-dialog {
+    /* #viewModal div.modal-dialog { */
+        /* max-width: 90vw; */
+        max-height: 70vh;
+    }
+    #modalRow {
+        display: flex;
     }
     #viewModal div.modal-body {
         /* display: flex; */
@@ -161,5 +169,30 @@ body {
     .grid-sizer,
     .grid-item {
         width: 100%;
+    }
+
+    .modal-content h6{
+        font-size: .9rem;
+    }
+    .modal-content {
+        font-size: .8rem;
+    }
+    img#profilePic, img.other_user_pic {
+        width: 3em;
+    }
+    input#comment {
+        padding: .25rem .5rem;
+        font-size: .875rem;
+        line-height: 1.5;
+        border-radius: .2rem;
+    }
+    button#add {
+        padding: .25rem .5rem;
+        font-size: .875rem;
+        line-height: 1.5;
+        border-radius: .2rem;
+    }
+    .form-group {
+        margin-bottom: 0;
     }
 }
