@@ -4,6 +4,8 @@
 from __future__ import unicode_literals
 import os
 
+from django.views.generic import ListView, DetailView, UpdateView
+
 from PIL import Image
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
@@ -16,31 +18,52 @@ from .forms import PhotoUploadForm, NewPostForm, NewCommentForm
 
 # session info: userID is id of logged in user, thisUser is username of logged in user
 
+# dashboard/main page
+class DashboardListView(ListView):
+    model = Post
+    template_name = 'social_media/index.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        return Post.objects.all().order_by('-created_at')
+
+class DashboardDetail(DetailView):
+    model = Post
+
+    def get_context_data(self, **kwargs):
+        context = super(DashboardDetail, self).get_context_data(**kwargs)
+        context['users'] = User.objects.all()
+        context['photos'] = Photo.objects.all()
+        context['comments'] = Comment.objects.all()
+        context['nav_dashboard'] = 'active'
+        return context
+
+
+
+
+class ViewPostListView(ListView):
+    template_name = 'social_media/view_modal.html'
+    context_object_name = 'this_post'
+
+    def get_post(request):
+        print ('-'*40)
+        print self
+        print ('-'*40)
+
+
+
+
+
+def get_post(request):
+
+    print ('-'*40)
+    print id
+    print ('-'*40)
+
+
 
 ###### NAVIGATION ######
 
-# dashboard/main page
-def index(request):
-    # Photo.objects.all().delete()
-    # request.session['pID'] = 8
-    context = {
-        'users':User.objects.all(),
-        'posts':Post.objects.all().order_by('-created_at'),
-        'photos':Photo.objects.all(),
-        'comments':Comment.objects.all(),
-        'nav_dashboard':'active',
-        'launch':0
-    }
-    if 'pID' in request.session:
-        if request.session['pID'] >= 1:
-            context['new_pic'] = Photo.objects.get(id=request.session['pID'])
-
-    if 'this_post' in request.session:
-        context['this_post'] = Post.objects.get(id=request.session['this_post'])
-        context['launch'] = 1
-    else:
-        context['launch'] = 0
-    return render(request, 'social_media/index.html', context)
 
 # user's album
 def myAlbum(request):
