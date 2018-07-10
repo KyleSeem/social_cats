@@ -8,7 +8,7 @@
     <nav id="myNav" class="navbar navbar-expand-lg navbar-light">
     <!-- brand icon - routes to dashboard on-click -->
         <a class="navbar-brand" href="{%url 'social_media:index' %}">
-            <img id="myIcon" alt="Brand" src="../static/social_media/img/icon.png" />
+            <img id="myIcon" alt="Brand" src="/static/social_media/img/icon.png" />
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +19,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item {{ nav_dashboard }}"><a class="nav-link" href="{%url 'social_media:index' %}"><i class="fas fa-home pr-1"></i>Dashboard</a></li>
-                    <li class="nav-item {{ nav_myAlbum }}"><a class="nav-link" href="{%url 'social_media:myAlbum' %}"><i class="far fa-images pr-1"></i>My Album</a></li>
+                    <li class="nav-item {{ nav_myAlbum }}"><a class="nav-link" href="{%url 'social_media:myAlbum' request.session.sessionUserID %}"><i class="far fa-images pr-1"></i>My Album</a></li>
 
                     <li class="nav-item">
                         <form enctype="multipart/form-data" action="add_photo" method="POST">

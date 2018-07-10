@@ -8,16 +8,18 @@
 
 
 {% block content %}
+
 <div class="grid">
     <div class="grid-sizer"></div>
-    {% if myPhotos %}
-        {% for photo in myPhotos %}
+    {% if posts %}
+        {% for post in posts %}
             <div class="grid-item">
                 <div class="img-thumbnail">
-                    <img class="img-thumbnail" style="border:none;" src="../media/{{ photo.photo }}" alt="{{ photo.id }}" />
+                    <img class="img-thumbnail" style="border:none;" src="../../media/{{ post.photo.photo }}" alt="{{ photo.id }}" />
                 </div>
             </div>
         {% endfor %}
     {% endif %}
 </div>
+
 {% endblock %}

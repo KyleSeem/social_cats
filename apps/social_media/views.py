@@ -7,7 +7,7 @@ import os
 from django.views.generic import ListView, DetailView, UpdateView
 
 from PIL import Image
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -36,20 +36,35 @@ class DashboardListView(ListView):
         context['nav_dashboard'] = 'active'
         return context
 
+# user's album page
+class MyAlbumListView(ListView):
+    model = Post
+    template_name = 'social_media/album.html'
+    context_object_name = 'thisUser'
+
+    def get_queryset(self):
+        return Post.objects.all().order_by('-created_at')
+
+        # write alternate if decide to use guest login options
+
+    def get_context_data(self, *args, **kwargs):
+        # print ('-'*40)
+        id = self.kwargs['id']
+
+        context = super(MyAlbumListView, self).get_context_data(**kwargs)
+        context['thisUser'] = User.objects.get(id=id)
+        context['posts'] = Post.objects.filter(user=id)
+        context['photos'] = Photo.objects.filter(user=id)
+        context['comments'] = Comment.objects.all()
+        context['users'] = User.objects.all()
+        context['nav_myAlbum'] = 'active'
+        return context
+
+
+
 
 ###### NAVIGATION ######
 
-
-# user's album
-def myAlbum(request):
-    context = {
-        'myPhotos':Photo.objects.filter(user=request.session['sessionUserID']),
-        'nav_myAlbum':'active',
-        'launch':0
-    }
-    if request.method == "GET":
-        print ('-'*20)
-        return render(request, 'social_media/album.html', context)
 
 
 
@@ -64,17 +79,6 @@ def myAccount(request, **kwargs):
     return render(request, 'social_media/account.html', context)
 
 
-# view modal
-def view_post(request):
-    # called on modal close - removes session that tells jquery to launch modal
-    if request.method == "GET":
-        del request.session['this_post']
-        return redirect(reverse('social_media:index'))
-
-    # called when post is clicked - creates session data that tells jquery to launch modal
-    if request.method == "POST":
-        request.session['this_post'] = request.POST['this_post']
-        return redirect(reverse('social_media:index'))
 
 
 

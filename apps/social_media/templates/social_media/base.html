@@ -29,9 +29,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'social_media/css/style.css' %}">
 
-
-
-        <!-- all jquery functions located in one html file and then included here -->
+        <!-- all of my jquery functions located in one html file and then included here -->
         {% include 'social_media/assets/jquery.html' %}
     </head>
     <body>
@@ -42,8 +40,6 @@
 
         <div id="modal-block">
             {% include 'social_media/modals/post_modal.html' %}
-
-
         </div>
 
         <div id="main-container" class="container-fluid">
