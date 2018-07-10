@@ -17,24 +17,6 @@
         });
 
 
-// VIEW POST
-    // triggers submission of data for selected post/image on click
-        $('.linkspan').click(function() {
-            var myForm = '#viewPostForm' + this.id;
-            $(myForm).submit();
-        });
-
-        console.log('launch', {{ launch }});
-    // prompts modal launch with data for selected post/image
-        if ({{ launch }} == 1) {
-            $('#hiddenViewButton').click();
-        };
-
-        $('#viewModal').on('hidden.bs.modal', function() {
-            console.log('view modal closed');
-            $('#clearLaunch')[0].click();
-            console.log({{ launch }});
-        });
 
 
 // NEW POST

@@ -2,7 +2,7 @@
 
 <!-- modal for view post or image -->
 
-<div id="viewModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+<div id="viewModal{{post.id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <!-- modal header -->
@@ -10,8 +10,8 @@
                 <div class="media">
                     <img id="profilePic" class="mr-3" src="../static/social_media/img/frame1.png" alt="" />
                     <div class="media-body">
-                        <h6 class="mt-0">{{ this_post.user.username }} - {{ this_post.created_at|date:"g:i A - j M y" }}</h6>
-                        {{ this_post.caption }}
+                        <h6 class="mt-0">{{ post.user.username }} - {{ post.created_at|date:"g:i A - j M y" }}</h6>
+                        <p class="mb-0">{{ post.caption }}</p>
                     </div>
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -27,27 +27,31 @@
                 <div id="modalRow" class="mr-lg-0 ">
                 <!-- main image -->
     <!-- ** COL *********************** -->
-                    <div class="col-lg">
+                    <div class="mr-lg-3">
+                    <!-- <div class="col-lg"> -->
                         <div id="photoWrapper" class="img-thumbnail">
-                            <img id="viewImage" class="img-thumbnail {{ this_post.photo.orientation }}" style="border:none;" src="../media/{{ this_post.photo.photo }}" />
+                            <img id="viewImage" class="img-thumbnail {{ post.photo.orientation }}" style="border:none;" src="../media/{{ post.photo.photo }}" />
                         </div>
                     </div>
 
     <!-- ** COL *********************** -->
-                    <div class="col-lg m-3 m-lg-0">
+                    <div class="col">
+                    <!-- <div class="col-lg m-3 m-lg-0"> -->
             <!-- ## ROW ################################ -->
                         <div class="row" style="height:85%;">
                         <!-- existing comments div -->
                             <div id="commentsWrapper" class="w-100">
                                 {% if comments %}
                                     {% for comment in comments %}
-                                        <div class="media mb-3 pb-2 border-bottom border-light">
-                                            <img class="mr-3 other_user_pic" src="../static/social_media/img/frame1.png" alt="" width="50" />
-                                            <div class="media-body">
-                                                <h6>{{ comment.user.username }} at {{ comment.created_at|date:"g:i A - j M y" }}</h6>
-                                                <p class="mb-0">{{ comment.comment }}</p>
+                                        {% if comment.post.id == post.id %}
+                                            <div class="media mb-3 pb-2 border-bottom border-light">
+                                                <img class="mr-3 other_user_pic" src="../static/social_media/img/frame1.png" alt="" width="50" />
+                                                <div class="media-body">
+                                                    <h6>{{ comment.user.username }} at {{ comment.created_at|date:"g:i A - j M y" }}</h6>
+                                                    <p class="mb-0">{{ comment.comment }}</p>
+                                                </div>
                                             </div>
-                                        </div>
+                                        {% endif %}
                                     {% endfor %}
                                 {% endif %}
                             </div> <!-- close commentsWrapper -->
@@ -65,7 +69,7 @@
                                         <form action="new_comment" method="POST">
                                             {% csrf_token %}
                                             <input id="user" type="hidden" name="user" value="{{ request.session.sessionUserID }}" />
-                                            <input id="post" type="hidden" name="post" value="{{ this_post.id }}" />
+                                            <input id="post" type="hidden" name="post" value="{{ post.id }}" />
                         <!-- ## ROW ################################ -->
                                             <div class="row m-0">
                                                 <div class="form-group col-9">

@@ -12,6 +12,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.http import JsonResponse
+from datetime import datetime
 from .models import User, Photo, Post, Comment
 from .forms import PhotoUploadForm, NewPostForm, NewCommentForm
 
@@ -27,39 +28,13 @@ class DashboardListView(ListView):
     def get_queryset(self):
         return Post.objects.all().order_by('-created_at')
 
-class DashboardDetail(DetailView):
-    model = Post
-
     def get_context_data(self, **kwargs):
-        context = super(DashboardDetail, self).get_context_data(**kwargs)
+        context = super(DashboardListView, self).get_context_data(**kwargs)
         context['users'] = User.objects.all()
         context['photos'] = Photo.objects.all()
         context['comments'] = Comment.objects.all()
         context['nav_dashboard'] = 'active'
         return context
-
-
-
-
-class ViewPostListView(ListView):
-    template_name = 'social_media/view_modal.html'
-    context_object_name = 'this_post'
-
-    def get_post(request):
-        print ('-'*40)
-        print self
-        print ('-'*40)
-
-
-
-
-
-def get_post(request):
-
-    print ('-'*40)
-    print id
-    print ('-'*40)
-
 
 
 ###### NAVIGATION ######

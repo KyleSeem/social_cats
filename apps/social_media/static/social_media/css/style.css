@@ -79,7 +79,10 @@ body {
         cursor: pointer;
     } */
 
-
+    button.linkspan {
+        border: none;
+        padding: 0;
+    }
     .linkspan:hover {
         cursor: pointer;
     }
@@ -191,6 +194,9 @@ body {
         font-size: .875rem;
         line-height: 1.5;
         border-radius: .2rem;
+    }
+    div#formWrapper {
+        width: 95%;
     }
     .form-group {
         margin-bottom: 0;

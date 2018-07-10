@@ -2,10 +2,12 @@
 
 from django.conf.urls import url
 from . import views
+from views import DashboardListView
 
 app_name = 'social_media'
 urlpatterns = [
-    url(r'^$', views.index, name='index'), # dashboard
+    url(r'^$', DashboardListView.as_view(), name='index'),
+
     url(r'^myAccount$', views.myAccount, name='myAccount'),
     url(r'^myAlbum$', views.myAlbum, name='myAlbum'),
     url(r'^add_photo$', views.add_photo, name='add_photo'),
