@@ -15,5 +15,5 @@ urlpatterns = [
     url(r'^add_photo$', views.add_photo, name='add_photo'),
     url(r'^new_post$', views.new_post, name='new_post'),
     url(r'^new_comment$', views.new_comment, name='new_comment'),
-    url(r'^scrap$', views.scrap, name='scrap'),
+    # url(r'^scrap$', views.scrap, name='scrap'),
 ]

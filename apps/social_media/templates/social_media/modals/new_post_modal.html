@@ -1,4 +1,4 @@
- 
+
 
 <!-- modal for new post pop-up -->
 
@@ -14,18 +14,19 @@
             </div>
 
         <!-- modal body -->
-            <form action="new_post" method="POST">
+            <form enctype="multipart/form-data" action="new_post" method="POST">
                 {% csrf_token %}
                 <div class="modal-body">
                     <div id="photoWrapper" class="img-thumbnail">
-                        {% if new_pic %}
-                            <img class="img-thumbnail {{ new_pic.orientation }}" style="border:none;" src="../media/{{ new_pic.photo }}" alt="{{ new_pic.id }}" />
-                        {% endif %}
+                        <span id="imgPreview">
+                            <!-- jQuery updates selected image details for image preview -->
+                        </span>
                     </div>
 
                     <div class="mt-3">
                         <input id="user" type="hidden" name="user" value="{{ request.session.sessionUserID }}" />
-                        <input id="photo" type="hidden" name="photo" value="{{ request.session.pID }}" />
+                        <input id="photoInput" class="d-none" type="file" name="photo" />
+                        <input id="orientation" type="hidden" name="orientation" value="#" />
                         <textarea id="caption" name="caption" class="form-control" placeholder="add a caption..."></textarea>
                     </div>
                 </div>
@@ -40,11 +41,3 @@
         </div>
     </div>
 </div> <!-- close modal -->
-
-<!-- hidden form gets triggered when user 'cancels' submission / calls scrap function that deletes this image from database -->
-<form class="d-none" action="scrap" method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="user" id="user" value="{{ request.session.sessionUserID }}" />
-    <input type="hidden" name="photo" id="photo" value="{{ request.session.pID }}" />
-    <input type="submit" class="d-none" id="scrap" value="scrap photo" />
-</form>

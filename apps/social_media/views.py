@@ -62,6 +62,12 @@ class MyAlbumListView(ListView):
 
 
 
+def deletePost(request):
+    if request.method == "POST":
+        print ('-'*40)
+
+
+
 
 ###### NAVIGATION ######
 
@@ -110,27 +116,51 @@ def add_photo(request):
             return redirect(reverse('social_media:index'))
 
 
-# delete photo - if user 'cancels' out of modal instead of submitting new post, delete the canceled photo from database
-def scrap(request):
-    if request.method == "POST":
-        photo = Photo.objects.get(id=request.session['pID'])
-        photo.delete()
-        request.session['pID'] = 0
-        return redirect(reverse('social_media:index'))
-
 
 # create new post - takes image that was just saved and combines with user input
+# def new_post(request):
+#     if request.method == "POST":
+#         form = NewPostForm(request.POST)
+#         if form.is_valid():
+#             post = form.save()
+#             return redirect(reverse('social_media:index'))
+#         else:
+#             print ('invalid post')
+#             print form.errors
+#             return redirect(reverse('social_media:index'))
+
+
+
 def new_post(request):
     if request.method == "POST":
-        form = NewPostForm(request.POST)
-        if form.is_valid():
-            post = form.save()
-            request.session['pID'] = 0
-            return redirect(reverse('social_media:index'))
+        photo_form = PhotoUploadForm(request.POST, request.FILES)
+
+        if photo_form.is_valid():
+            new_photo = photo_form.save()
+            print ('-'*40)
+            print (new_photo.id, new_photo.user, new_photo.photo, new_photo.orientation)
+            print ('-'*40)
+
+        ######
+
+            post_form = NewPostForm(request.POST)
+            if post_form.is_valid():
+                print ('POST FORM VALID')
+                new_post = post_form.save()
+                print ('%'*20)
+                print (new_post.id, new_post.photo.id, new_post.user.id, new_post.caption)
+                print ('%'*20)
+
+                return redirect(reverse('social_media:index'))
+            else:
+                return HttpResponse('INVALID POST FORM')
+
         else:
-            print ('invalid post')
-            print form.errors
-            return redirect(reverse('social_media:index'))
+            return HttpResponse('INVALID PHOTO FORM')
+
+
+
+        # return HttpResponse('returned')
 
 
 def new_comment(request):

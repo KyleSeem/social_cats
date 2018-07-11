@@ -76,9 +76,21 @@ body {
         padding: .5em;
     }
 
-    /* div.grid-item:hover {
-        cursor: pointer;
-    } */
+    #deleteImage {
+        float: right;
+        margin-bottom: -1em;
+        opacity: 0.7;
+        line-height: 0;
+        background: none;
+        border: none;
+        border-radius: 50%;
+        color: #0b0e0f;
+        font-size: 1.5em;
+    }
+    #deleteImage:hover {
+        color: white;
+        background: red;
+    }
 
     button.linkspan {
         border: none;

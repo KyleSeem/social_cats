@@ -12,13 +12,13 @@
     <div class="grid-sizer"></div>
     {% if posts %}
         {% for post in posts %}
-        <!-- include modal within each grid item so data is already there when toggled -->
+        <!-- include modal within each grid item // passes post's data when toggled -->
             {% include 'social_media/modals/view_modal.html' %}
 
-            <div id="{{post.id}}" class="grid-item">
+            <div id="gridItem{{post.id}}" class="grid-item">
                 <div class="img-thumbnail">
                     <button class="btn btn-light p-1" type="button" data-toggle="modal" data-target="#viewModal{{post.id}}" data-id="{{ post.id }}">
-                        <img class="img-fluid border-0 brick" src="../media/{{ post.photo.photo }}" alt="image for post id: {{ post.id }}" />
+                        <img id="grid_image" class="img-fluid border-0 brick" src="../media/{{ post.photo.photo }}" alt="image for post id: {{ post.id }}" />
                     </button>
 
                     <div class="media m-2">

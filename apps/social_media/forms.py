@@ -1,6 +1,7 @@
 # apps/social_media/forms.py
 
 from django import forms
+from django.forms.formsets import BaseFormSet
 from .models import User, Photo, Post, Comment
 
 
@@ -22,4 +23,4 @@ class NewPostForm(forms.ModelForm):
 class NewCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('user', 'post', 'comment')
+        fields = ('user', 'post', 'comment')        

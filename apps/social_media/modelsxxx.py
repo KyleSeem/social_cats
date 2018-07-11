@@ -16,6 +16,24 @@ def upload_path(instance, filename):
     return 'user_{0}/{1}'.format(instance.user.id, filename)
 
 
+# queryset for photos based on orientation
+class PhotoQuerySet(models.QuerySet):
+    def landscapes(self):
+        return self.filter(width_gte=models.F('height'))
+
+    def portraits(self):
+        return self.filter(width_lte=models.F('height'))
+
+
+
+# model manager for photo class
+class PhotoManager(models.Manager):
+    def get_queryset(self):
+        return PhotoQuerySet(self.model, using=self._db)
+
+
+
+
 
 
 # just the uploaded image with user connection
