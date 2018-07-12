@@ -5,15 +5,20 @@ from __future__ import unicode_literals, print_function
 import os, sys
 
 from PIL import Image, ImageFile
+from datetime import datetime
 from django.db import models
 from ..login_reg.models import User
 
 
-
 # save path for uploaded images
 def upload_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'user_{0}/{1}_%d-%m-%Y_%H:%M:%S'.format(instance.user.id, filename)
+    # define variables for desired date and time formats for save path structure
+    upload_date_time = str(datetime.now())
+    dt = upload_date_time.split(' ', 1)
+    time = dt[1].split('.', 1)
+
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<YYYY-MM-DD>/<filename>_<hhmmss>
+    return 'user_{0}/{1}/{2}_{3}'.format(instance.user.id, dt[0], filename, time[0])
 
 
 
