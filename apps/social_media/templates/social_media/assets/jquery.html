@@ -31,18 +31,16 @@
                     image.onload = function() {
                         var imgOr;
                         // console.log(this.width , this.height);
-                    // determine proper image orientation (portrait or landscape)
-                        if (this.height > this.width) {
-                            imgOr = 'pt';
-                        } else {
+                    // determine proper image orientation (portrait or landscape - ratio 1:1 treated as portrait)
+                        if (this.width > this.height) {
                             imgOr = 'ls';
+                        } else {
+                            imgOr = 'pt';
                         }
                     // create the html for the image preview - orientation added to class for sizing (see style.css)
                         var imagePreview = '<img id="selectedImageFile" class="img-thumbnail ' + imgOr + '" src="' + this.src + '" alt="selected image file" style="border:none;" />';
                     // create inner html for image preview
                         $('#imgPreview').html(imagePreview);
-                    // include image file data for form submission
-                        // $('#selectedPhoto')[0].value = input.files;
                     // update hidden input value for image orientation
                         $('#orientation')[0].value = imgOr;
                     }
