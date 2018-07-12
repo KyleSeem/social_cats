@@ -62,17 +62,9 @@ class MyAlbumListView(ListView):
 
 
 
-def deletePost(request):
-    if request.method == "POST":
-        print ('-'*40)
-
-
 
 
 ###### NAVIGATION ######
-
-
-
 
 # user's acount page
 def myAccount(request, **kwargs):
@@ -90,79 +82,32 @@ def myAccount(request, **kwargs):
 
 ###### CRUD ######
 
-# create photo - from image upload, validate and save
-def add_photo(request):
-    ####### use alerts array or messages????
-    # alerts = []
-    if request.method == "POST":
-        form = PhotoUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            im = Image.open(request.FILES['photo'])
-            if im.size[0] >= im.size[1]:
-                orientation = 'ls'
-            else:
-                orientation = 'pt'
 
-            new_photo = form.save()
-
-            new_photo.orientation = orientation
-            new_photo.save()
-
-            request.session['pID'] = new_photo.id
-            return redirect(reverse('social_media:index'))
-
-        else:
-            print ('invalid entry')
-            return redirect(reverse('social_media:index'))
-
-
-
-# create new post - takes image that was just saved and combines with user input
-# def new_post(request):
-#     if request.method == "POST":
-#         form = NewPostForm(request.POST)
-#         if form.is_valid():
-#             post = form.save()
-#             return redirect(reverse('social_media:index'))
-#         else:
-#             print ('invalid post')
-#             print form.errors
-#             return redirect(reverse('social_media:index'))
-
-
-
+# create and save new photo and new post objects
 def new_post(request):
     if request.method == "POST":
         photo_form = PhotoUploadForm(request.POST, request.FILES)
+        post_form = NewPostForm(request.POST)
 
-        if photo_form.is_valid():
+        # if BOTH forms pass validation
+        if all([photo_form.is_valid(), post_form.is_valid()]):
+            # save new photo object
             new_photo = photo_form.save()
-            print ('-'*40)
-            print (new_photo.id, new_photo.user, new_photo.photo, new_photo.orientation)
-            print ('-'*40)
+            # save new post (uses default as placeholder for photo field)
+            new_post = post_form.save()
+            # get new_post object and update photo field with new_photo object
+            new_post.photo = Photo.objects.get(id=new_photo.id)
+            # save changes to new_post object
+            new_post.save()
 
-        ######
+            return redirect(reverse('social_media:index'))
 
-            post_form = NewPostForm(request.POST)
-            if post_form.is_valid():
-                print ('POST FORM VALID')
-                new_post = post_form.save()
-                print ('%'*20)
-                print (new_post.id, new_post.photo.id, new_post.user.id, new_post.caption)
-                print ('%'*20)
-
-                return redirect(reverse('social_media:index'))
-            else:
-                return HttpResponse('INVALID POST FORM')
 
         else:
-            return HttpResponse('INVALID PHOTO FORM')
+            return HttpResponse('INVALID FORM')
 
 
-
-        # return HttpResponse('returned')
-
-
+# create and save new comment for specified post
 def new_comment(request):
     if request.method == "POST":
         print request.POST
@@ -175,3 +120,9 @@ def new_comment(request):
             print ('invalid comment')
             print form.errors
             return redirect(reverse('social_media:index'))
+
+
+# delete post and all associated objects (comments, photo)
+def deletePost(request):
+    if request.method == "POST":
+        print ('-'*40)

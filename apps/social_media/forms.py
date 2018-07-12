@@ -8,7 +8,7 @@ from .models import User, Photo, Post, Comment
 class PhotoUploadForm(forms.ModelForm):
     class Meta:
         model = Photo
-        fields = ('user', 'photo')
+        fields = ('user', 'photo', 'orientation')
         # error_messages = {
         #     'invalid': 'Invalid file format: selection must be image file type'
         # }
@@ -17,10 +17,10 @@ class PhotoUploadForm(forms.ModelForm):
 class NewPostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('user', 'photo', 'caption')
+        fields = ('user', 'caption')
 
 
 class NewCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('user', 'post', 'comment')        
+        fields = ('user', 'post', 'comment')

@@ -13,7 +13,7 @@ from ..login_reg.models import User
 # save path for uploaded images
 def upload_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'user_{0}/{1}'.format(instance.user.id, filename)
+    return 'user_{0}/{1}_%d-%m-%Y_%H:%M:%S'.format(instance.user.id, filename)
 
 
 
@@ -32,7 +32,7 @@ class Photo(models.Model):
 # whole post - includes user, photo and user-added caption
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    photo = models.ForeignKey(Photo, on_delete=models.CASCADE)
+    photo = models.ForeignKey(Photo, on_delete=models.CASCADE, default=1)
     caption = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
