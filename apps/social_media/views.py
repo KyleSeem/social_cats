@@ -19,7 +19,9 @@ from .forms import PhotoUploadForm, NewPostForm, NewCommentForm
 
 # session info: userID is id of logged in user, thisUser is username of logged in user
 
-# dashboard/main page
+###### NAVIGATION ######
+
+# DASHBOARD - landing page
 class DashboardListView(ListView):
     model = Post
     template_name = 'social_media/index.html'
@@ -29,6 +31,7 @@ class DashboardListView(ListView):
         return Post.objects.all().order_by('-created_at')
 
     def get_context_data(self, **kwargs):
+    # define context for dashboard
         context = super(DashboardListView, self).get_context_data(**kwargs)
         context['users'] = User.objects.all()
         context['photos'] = Photo.objects.all()
@@ -36,37 +39,36 @@ class DashboardListView(ListView):
         context['nav_dashboard'] = 'active'
         return context
 
-# user's album page
+
+# MYALBUM - user's album page
 class MyAlbumListView(ListView):
     model = Post
     template_name = 'social_media/album.html'
     context_object_name = 'thisUser'
 
     def get_queryset(self):
-        return Post.objects.all().order_by('-created_at')
+        return Post.objects.all()
 
         # write alternate if decide to use guest login options
 
     def get_context_data(self, *args, **kwargs):
-        # print ('-'*40)
         id = self.kwargs['id']
-
+    # define context for user's album
         context = super(MyAlbumListView, self).get_context_data(**kwargs)
         context['thisUser'] = User.objects.get(id=id)
-        context['posts'] = Post.objects.filter(user=id)
+        context['posts'] = Post.objects.filter(user=id).order_by('-created_at')
         context['photos'] = Photo.objects.filter(user=id)
         context['comments'] = Comment.objects.all()
         context['users'] = User.objects.all()
         context['nav_myAlbum'] = 'active'
+
+        p = Post.objects.filter(user=id)
+        print p
+        print len(p)
         return context
 
 
-
-
-
-###### NAVIGATION ######
-
-# user's acount page
+# MYACCOUNT - user's acount page
 def myAccount(request, **kwargs):
     ##### add validation to show only user's info OR change to id kwarg
 
@@ -102,8 +104,8 @@ def new_post(request):
 
             return redirect(reverse('social_media:index'))
 
-
         else:
+            # 404 error page with reroute link or something like that
             return HttpResponse('INVALID FORM')
 
 
@@ -113,7 +115,6 @@ def new_comment(request):
         print request.POST
         form = NewCommentForm(request.POST)
         if form.is_valid():
-            print ('valid comment')
             comment = form.save()
             return redirect(reverse('social_media:index'))
         else:
