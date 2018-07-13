@@ -21,43 +21,32 @@
 
         <!-- modal body -->
             <div class="modal-body">
-                <!-- this row makes it so the modal shifts for larger screens - do not remove -->
-
-<!-- ## ROW ################################ -->
-                <div id="modalRow" class="mr-lg-0 ">
-                <!-- main image -->
-    <!-- ** COL *********************** -->
-                    <div class="mr-lg-3">
-                    <!-- <div class="col-lg"> -->
+            <!-- div below makes it so the modal shifts for larger screens - do not remove -->
+                <div class="d-lg-flex">
+                    <!-- <div class="mr-lg-3"> -->
                         <div id="photoWrapper" class="img-thumbnail">
                             <img id="viewImage" class="img-thumbnail {{ post.photo.orientation }}" style="border:none;" src="/media/{{ post.photo.photo }}" />
                         </div>
-                    </div>
+                    <!-- </div> -->
 
     <!-- ** COL *********************** -->
-                    <div class="col">
-                    <!-- <div class="col-lg m-3 m-lg-0"> -->
-            <!-- ## ROW ################################ -->
-                        <div class="row" style="height:85%;">
-                        <!-- existing comments div -->
+                    {% if comments %}
+                        <div class="" >
                             <div id="commentsWrapper" class="w-100">
-                                {% if comments %}
-                                    {% for comment in comments %}
-                                        {% if comment.post.id == post.id %}
-                                            <div class="media mb-3 pb-2 border-bottom border-light">
-                                                <img class="mr-3 other_user_pic" src="/static/social_media/img/frame1.png" alt="" width="50" />
-                                                <div class="media-body">
-                                                    <h6>{{ comment.user.username }} at {{ comment.created_at|date:"g:i A - j M y" }}</h6>
-                                                    <p class="mb-0">{{ comment.comment }}</p>
-                                                </div>
+                                {% for comment in comments %}
+                                    {% if comment.post.id == post.id %}
+                                        <div class="media mb-3 pb-2 border-bottom border-light">
+                                            <img class="mr-3 other_user_pic" src="/static/social_media/img/frame1.png" alt="" width="50" />
+                                            <div class="media-body">
+                                                <h6>{{ comment.user.username }} at {{ comment.created_at|date:"g:i A - j M y" }}</h6>
+                                                <p class="mb-0">{{ comment.comment }}</p>
                                             </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
                             </div> <!-- close commentsWrapper -->
-                        </div>
-
-                    </div> <!-- close col -->
+                        </div> <!-- close col -->
+                    {% endif %}
                 </div>
 
             </div> <!-- end modal body -->

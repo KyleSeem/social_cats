@@ -63,11 +63,6 @@ body {
             img#profilePic {
                 width: 4em;
             }
-    /* viewModal */
-    #viewModal div.modal-dialog {
-        /* max-width: 90vw; */
-        max-height: 70vh;
-    }
 
 /* isotope */
     .grid-sizer,
@@ -84,20 +79,12 @@ body {
         background: none;
         border: none;
         border-radius: 50%;
-        color: #0b0e0f;
+        color: #dc3545;
         font-size: 1.5em;
     }
     #deleteImage:hover {
         color: white;
         background: red;
-    }
-
-    button.linkspan {
-        border: none;
-        padding: 0;
-    }
-    .linkspan:hover {
-        cursor: pointer;
     }
 
 /* ------------------------------------------------ */
@@ -128,23 +115,27 @@ body {
         max-height: 80vh;
     }
     img.img-thumbnail.ls {
-        max-width: 50vw;
+        /* max-width: 50vw; */
+    }
+    div.modal-body img.img-thumbnail.pt {
+        max-height: 60vh;
     }
     div.modal-dialog {
-    /* #viewModal div.modal-dialog { */
-        /* max-width: 90vw; */
-        max-height: 70vh;
+        /* max-height: 70vh; */
     }
-    #modalRow {
-        display: flex;
+    .modal-body div.mr-lg-3 {
+        max-width: 50%;
     }
-    #viewModal div.modal-body {
-        /* display: flex; */
+    #photoWrapper.img-thumbnail {
+        width: fit-content;
+        max-width: 50vw;
     }
-    /* #photoWrapper {
-        margin-bottom: 0;
-    } */
 
+    /* NEW MODAL TEMPLATE STUFF */
+    .post_image {
+        max-width:55vw;
+        max-height:75vh;
+    }
 }
 
 /* ------------------------------------------------ */

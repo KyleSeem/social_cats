@@ -5,91 +5,61 @@
 <div id="viewModal{{post.id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-        <!-- modal header -->
-            <div class="modal-header">
-                <div class="media">
-                    <img id="profilePic" class="mr-3" src="../static/social_media/img/frame1.png" alt="" />
-                    <div class="media-body">
-                        <h6 class="mt-0">{{ post.user.username }} - {{ post.created_at|date:"g:i A - j M y" }}</h6>
-                        <p class="mb-0">{{ post.caption }}</p>
-                    </div>
-                </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="w-100">
+                <button type="button" class="close float-right mr-2" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
         <!-- modal body -->
             <div class="modal-body">
-                <!-- this row makes it so the modal shifts for larger screens - do not remove -->
-
-<!-- ## ROW ################################ -->
-                <div id="modalRow" class="mr-lg-0 ">
-                <!-- main image -->
-    <!-- ** COL *********************** -->
-                    <div class="mr-lg-3">
-                    <!-- <div class="col-lg"> -->
-                        <div id="photoWrapper" class="img-thumbnail">
-                            <img id="viewImage" class="img-thumbnail {{ post.photo.orientation }}" style="border:none;" src="../media/{{ post.photo.photo }}" />
-                        </div>
+            <!-- image div -->
+                <div class="d-lg-flex">
+                    <div class="m-1 flex-lg-col card">
+                        <img class="image-fluid post_image" style="" src="/media/{{ post.photo.photo }}" />
                     </div>
 
-    <!-- ** COL *********************** -->
-                    <div class="col">
-                    <!-- <div class="col-lg m-3 m-lg-0"> -->
-            <!-- ## ROW ################################ -->
-                        <div class="row" style="height:85%;">
-                        <!-- existing comments div -->
-                            <div id="commentsWrapper" class="w-100">
-                                {% if comments %}
-                                    {% for comment in comments %}
-                                        {% if comment.post.id == post.id %}
-                                            <div class="media mb-3 pb-2 border-bottom border-light">
-                                                <img class="mr-3 other_user_pic" src="../static/social_media/img/frame1.png" alt="" width="50" />
-                                                <div class="media-body">
-                                                    <h6>{{ comment.user.username }} at {{ comment.created_at|date:"g:i A - j M y" }}</h6>
-                                                    <p class="mb-0">{{ comment.comment }}</p>
-                                                </div>
+            <!-- caption and comments div -->
+                    <div class="m-1 flex-lg-col border border-dark" style="min-width:30vw;">
+                        <div class="flex-row">
+                        <!-- post user and caption details / media object -->
+                            <div class="media border border-info">
+                                <img id="profilePic" class="mr-3" src="/static/social_media/img/frame1.png" alt="" />
+                                <div class="media-body">
+                                    <h6 class="mt-0">{{ post.user.username }} - {{ post.created_at|date:"g:i A - j M y" }}</h6>
+                                    <p class="mb-0">{{ post.caption }}</p>
+
+                            <!-- post comments details / nested media object -->
+                                {% for comment in comments %}
+                                    {% if comment.post.id == post.id %}
+                                        <div class="media mt-3">
+                                            <!-- eventually make this link to other users' albums -->
+                                            <a class="pr-3" href="#">
+                                                <img class="other_user_pic" src="/static/social_media/img/frame1.png" alt="" width="50" />
+                                            </a>
+                                            <div class="media-body">
+                                                <h6>{{ comment.user.username }} at {{ comment.created_at|date:"g:i A - j M y" }}</h6>
+                                                <p class="mb-0">{{ comment.comment }}</p>
                                             </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                            </div> <!-- close commentsWrapper -->
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                                </div> <!-- close outer media-body -->
+                            </div> <!-- close outer media object -->
                         </div>
 
-            <!-- ## ROW ################################ -->
-                        <div class="row">
-                            <!-- comment form section -->
-                            <div id="formWrapper" class="w-100">
-                                <div class="media pt-3 border-top">
-                                    <img class="other_user_pic" src="/static/social_media/img/frame1.png" alt="{{ request.session.sessionUserID }}" width="50" />
+                        <div class="flex-row align-self-end">
+                        <!-- comment form / as media object -->
+                            <div class="media border border-success">
+                                <img class="other_user_pic" src="/static/social_media/img/frame1.png" alt="" width="50" />
+                                <div class="media-body">
 
-                                    <div class="media-body">
-                            <!-- ## FORM ## -->
-                                        <form action="new_comment" method="POST">
-                                            {% csrf_token %}
-                                            <input id="user" type="hidden" name="user" value="{{ request.session.sessionUserID }}" />
-                                            <input id="post" type="hidden" name="post" value="{{ post.id }}" />
-                        <!-- ## ROW ################################ -->
-                                            <div class="row m-0">
-                                                <div class="form-group col-9">
-                                                    <input id="comment" class="form-control" type="text" name="comment" placeholder="add comment..." />
-                                                </div>
-                                                <div class="form-group">
-                                                    <button id="add" class="btn btn-success" type="submit">add</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
                                 </div>
                             </div>
-                        <!-- close comment form section -->
                         </div>
 
 
-                    </div> <!-- close col -->
-                </div>
-
+                    </div> <!-- close flex col -->
+                </div> <!-- close outer flex box -->
             </div> <!-- end modal body -->
         </div> <!-- end modal content -->
     </div>
