@@ -13,49 +13,78 @@
         <!-- modal body -->
             <div class="modal-body">
             <!-- image div -->
-                <div class="d-lg-flex">
-                    <div class="m-1 flex-lg-col card">
+                <div class="d-xl-flex">
+                    <div class="m-1 flex-xl-column card">
                         <img class="image-fluid post_image" style="" src="/media/{{ post.photo.photo }}" />
                     </div>
 
             <!-- caption and comments div -->
-                    <div class="m-1 flex-lg-col border border-dark" style="min-width:30vw;">
-                        <div class="flex-row">
-                        <!-- post user and caption details / media object -->
-                            <div class="media border border-info">
-                                <img id="profilePic" class="mr-3" src="/static/social_media/img/frame1.png" alt="" />
+                    <div id="commentsOuter" class="m-1 border border-warning">
+                    <!-- post's user and caption details div -->
+                        <div id="commentsInner" class="border border-info" style="overflow-y:auto; overflow-x:wrap;">
+                            <div class="media">
+                                <img class="mr-3" src="/static/social_media/img/frame1.png" alt="" style="width:3em;"/>
                                 <div class="media-body">
                                     <h6 class="mt-0">{{ post.user.username }} - {{ post.created_at|date:"g:i A - j M y" }}</h6>
-                                    <p class="mb-0">{{ post.caption }}</p>
+                                    {{ post.caption }}
 
-                            <!-- post comments details / nested media object -->
-                                {% for comment in comments %}
-                                    {% if comment.post.id == post.id %}
+                                <!-- post's comments details / nested media object -->
+                                    {% for comment in comments %}
+                                        {% if comment.post.id == post.id %}
+                                            <div class="media mt-3">
+                                                <!-- eventually make this link to other users' albums -->
+                                                <a class="pr-3" href="#">
+                                                    <img src="/static/social_media/img/frame1.png" alt="" style="width:3em;" />
+                                                </a>
+                                                <div class="media-body">
+                                                    <h6>{{ comment.user.username }} at {{ comment.created_at|date:"g:i A - j M y" }}</h6>
+                                                    {{ comment.comment }}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+
                                         <div class="media mt-3">
                                             <!-- eventually make this link to other users' albums -->
                                             <a class="pr-3" href="#">
-                                                <img class="other_user_pic" src="/static/social_media/img/frame1.png" alt="" width="50" />
+                                                <img src="/static/social_media/img/frame1.png" alt="" style="width:3em;" />
                                             </a>
                                             <div class="media-body">
-                                                <h6>{{ comment.user.username }} at {{ comment.created_at|date:"g:i A - j M y" }}</h6>
-                                                <p class="mb-0">{{ comment.comment }}</p>
+                                                <h6> comment.user.username  at  comment.created_at|date:"g:i A - j M y" </h6>
+                                                Help text should be explicitly associated with the form control it relates to using the aria-describedby attribute. This will ensure that assistive technologies—such as screen readers—will announce this help text when the user focuses or enters the control.
                                             </div>
                                         </div>
-                                    {% endif %}
-                                {% endfor %}
+
+
+
                                 </div> <!-- close outer media-body -->
                             </div> <!-- close outer media object -->
                         </div>
 
-                        <div class="flex-row align-self-end">
-                        <!-- comment form / as media object -->
-                            <div class="media border border-success">
-                                <img class="other_user_pic" src="/static/social_media/img/frame1.png" alt="" width="50" />
-                                <div class="media-body">
+                    <!-- add comment form div -->
+                        <div class="d-flex border border-success " style="height:20%;">
+                            <form class="w-100" action="new_comment" method="POST">
+                                {% csrf_token %}
+                                <input id="user" type="hidden" name="user" value="{{ request.session.sessionUserID }}" />
+                                <input id="post" type="hidden" name="post" value="{{ post.id }}" />
 
+                                <div class="form-row h-100 align-items-end">
+                                    <div class="col">
+                                        <div class="form-group mb-0">
+                                            <label class="sr-only" for="comment">Comment</label>
+                                            <textarea id="comment" class="form-control" name="comment" placeholder="add comment..."></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-auto">
+                                        <div class="form-group mb-0">
+                                            <button id="" class="btn btn-success" type="submit">add</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
+
 
 
                     </div> <!-- close flex col -->
