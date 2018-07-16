@@ -1,0 +1,68 @@
+{% extends 'social_media/base.html' %}
+
+
+{% block title %}KittenStagram | Home{% endblock %}
+
+
+
+{% block content %}
+
+<section id="viewPost{{post.id}}" class="viewPost m-auto">
+    <div class="rounded p-2 bg-white">
+        <div class="media p-2">
+            <img id="" class="mr-3" src="/static/social_media/img/frame1.png" alt="" style="width:2.5em;" />
+            <div class="media-body">
+                <h5>{{ post.user.username }} <small>at {{ post.created_at|date:"g:i A - j M y" }}</small></h5>
+                {{ post.caption }}
+            </div>
+        </div>
+    <!-- post image -->
+        <img class="img-fluid rounded" src="/media/{{ post.photo.photo }}" alt="image for post id: {{ post.id }}" />
+
+    <!-- comments area -->
+        <ul class="list-group mt-2">
+            <li class="list-group-item p-2">
+            <!-- comments form -->
+                <form class="w-100" action="{% url 'social_media:new_comment' post.id %}" method="POST">
+                    {% csrf_token %}
+                    <input id="user" type="hidden" name="user" value="{{ request.session.sessionUserID }}" />
+                    <input id="post" type="hidden" name="post" value="{{ post.id }}" />
+
+                    <div class="form-row h-100 align-items-end">
+                        <div class="col">
+                            <div class="form-group mb-0">
+                                <label class="sr-only" for="comment">Comment</label>
+                                <input id="comment" type="text" name="comment" class="form-control" placeholder="add comment..." />
+                                <!-- <textarea id="comment" class="form-control" name="comment" placeholder="add comment..."></textarea> -->
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <div class="form-group mb-0">
+                                <button id="" class="btn btn-success" type="submit">add</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </li>
+
+        <!-- post's comments -->
+            {% for comment in comments %}
+            <li class="list-group-item p-2">
+                <div class="media">
+                    <!-- eventually make this link to other users' albums -->
+                    <a class="pr-3" href="#">
+                        <img src="/static/social_media/img/frame1.png" alt="" style="width:2.5em;" />
+                    </a>
+                    <div class="media-body">
+                        <h6>{{ comment.user.username }} <small>at {{ comment.created_at|date:"g:i A - j M y" }}</small></h6>
+                        {{ comment.comment }}
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
+{% endblock %}
