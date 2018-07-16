@@ -16,18 +16,18 @@
             {% include 'social_media/modals/view_modal.html' %}
 
             <div id="gridItem{{post.id}}" class="grid-item">
-                <div class="img-thumbnail">
-                    <button class="btn btn-light p-1" type="button" data-toggle="modal" data-target="#viewModal{{post.id}}" data-id="{{ post.id }}">
-                        <img id="grid_image" class="img-fluid border-0 brick" src="../media/{{ post.photo.photo }}" alt="image for post id: {{ post.id }}" />
-                    </button>
-
+                <div class="rounded p-2 bg-white">
                     <div class="media m-2">
-                        <img id="" class="mr-3" src="/static/social_media/img/frame1.png" alt="" style="width:4em;" />
+                        <img id="" class="mr-3" src="/static/social_media/img/frame1.png" alt="" style="width:15%;" />
                         <div class="media-body">
-                            <h6 class="mt-0">{{ post.user.username }} - {{ post.created_at|date:"g:i A - j M y" }}</h6>
+                            <h5 class="mt-0">{{ post.user.username }} <small>at {{ post.created_at|date:"g:i A - j M y" }}</small></h5>
                             {{ post.caption }}
                         </div>
                     </div>
+
+                    <a href="{% url 'social_media:viewPost' post.id %}">
+                        <img id="grid_image" class="img-fluid border-0 brick" src="/media/{{ post.photo.photo }}" alt="image for post id: {{ post.id }}" />
+                    </a>
                 </div>
             </div>
         {% endfor %}

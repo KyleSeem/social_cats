@@ -129,9 +129,13 @@ body {
 
 @media screen and (min-width: 1200px) {
 /* isotope */
-    .grid-sizer,
+    /* .grid-sizer,
     .grid-item {
         width: 25%;
+    } */
+
+    #viewPost {
+        max-width: 60vw;
     }
 
 }

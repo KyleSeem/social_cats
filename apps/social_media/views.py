@@ -68,6 +68,24 @@ class MyAlbumListView(ListView):
         return context
 
 
+class ViewPostDetailView(DetailView):
+    model = Post
+    template_name = 'social_media/view_post.html'
+
+    def get_queryset(self):
+        return Post.objects.all()
+
+    def get_context_data(self, **kwargs):
+        id = self.kwargs['pk']
+
+        context = super(ViewPostDetailView, self).get_context_data(**kwargs)
+        context['post'] = Post.objects.get(id=id)
+        context['comments'] = Comment.objects.filter(post=id).order_by('-created_at')
+        context['users'] = User.objects.all()
+
+        return context
+
+
 # MYACCOUNT - user's acount page
 def myAccount(request, **kwargs):
     ##### add validation to show only user's info OR change to id kwarg
@@ -110,14 +128,15 @@ def new_post(request):
 
 
 # create and save new comment for specified post
-def new_comment(request):
+def new_comment(request, id):
     if request.method == "POST":
-        print request.POST
+        id = id
         form = NewCommentForm(request.POST)
         if form.is_valid():
             comment = form.save()
-            return redirect(reverse('social_media:index'))
+            return redirect(reverse('social_media:viewPost', kwargs={'pk':id}))
         else:
+            ########### make some error
             print ('invalid comment')
             print form.errors
             return redirect(reverse('social_media:index'))
