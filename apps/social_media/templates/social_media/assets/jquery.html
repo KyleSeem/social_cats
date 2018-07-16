@@ -32,7 +32,7 @@
                         var imgOr;
                         // console.log(this.width , this.height);
                     // determine proper image orientation (portrait or landscape - ratio 1:1 treated as portrait)
-                        if (this.width > this.height) {
+                        if (this.width >= this.height) {
                             imgOr = 'ls';
                         } else {
                             imgOr = 'pt';

@@ -3,23 +3,18 @@
 <!-- modal for delete alert -->
 
 <div id="deleteModal{{post.id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteModal{{post.id}}Label" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
         <!-- modal body -->
-            <div class="modal-header">
-                <h1>Delete this post?</h1>
-            </div>
             <div class="modal-body">
-                <div class="img-thumbnail">
-                    <img id="viewImage" class="img-thumbnail {{ post.photo.orientation }}" style="border:none; max-width:30vw;" src="/media/{{ post.photo.photo }}" />
-                </div>
-
+                <h4>Permanently delete this post?</h4>
             </div>
 
             <div class="modal-footer">
                 <form class="" action="deletePost" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="user" id="user" value="{{ request.session.sessionUserID }}" />
+                    <input type="hidden" name="post" id="post" value="{{ post.id }}" />
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <input type="submit" class="btn btn-primary" value="Delete Post" />
                 </form>

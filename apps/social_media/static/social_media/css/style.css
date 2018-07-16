@@ -1,7 +1,7 @@
 /* BOOTSTRAP 4 IS MOBILE-FIRST and the viewport is set to NOT shrink to fit */
 /* CSS applies to all device sizes unless otherwise called out */
 html {
-    font-size: 1rem;
+    font-size: 1em;
 }
 body {
     background-image: url("../img/yarn-bright.png");
@@ -18,14 +18,14 @@ body {
         header h1 {
             text-align: center;
             font-family: 'Leckerli One', cursive;
-            font-size: 4.5rem;
             color: #000;
         }
+
 
 /* might want to create theme classes in the future */
         #myNav {
             background-color: #9ba9b6;
-            font-size: 1.25rem;
+            font-size: 1.25em;
             color: #00000069;
         }
         #myIcon {
@@ -47,7 +47,8 @@ body {
 
 /* fluid container below navbar */
     #main-container {
-        padding-top: 11.5rem;
+        padding-top: 8.5em;
+        /* padding-top: 11.5em; */
     }
 
 /* modals modal */
@@ -65,7 +66,7 @@ body {
 /* isotope */
     .grid-sizer,
     .grid-item {
-        width: 50%;
+        width: 100%;
         padding: .5em;
     }
 
@@ -91,7 +92,7 @@ body {
 @media screen and (min-width: 992px) {
 /* header and nav */
     header h1 {
-        font-size: 6.25rem;
+        font-size: 6.25em;
     }
         #myIcon {
             width: 3.75em;
@@ -108,19 +109,10 @@ body {
         width: 33.333%;
     }
 
-/* modals */
-    /* NEW MODAL TEMPLATE STUFF */
-    .post_image {
-        max-width: 55vw;
-        max-height: 75vh;
+    #viewPost {
+        max-width: 60vw;
     }
-    div#commentsOuter {
-        width: 30vw;
-        /* min-width:30vw; */
-    }
-    div#commentsInner {
-        height: 80%;
-    }
+
 
 }
 
@@ -128,16 +120,24 @@ body {
 /* ------- X-LARGE DEVICES/SCREENS ------- */
 
 @media screen and (min-width: 1200px) {
-/* isotope */
-    /* .grid-sizer,
-    .grid-item {
-        width: 25%;
-    } */
-
     #viewPost {
-        max-width: 60vw;
+        max-width: 90%;
+        width: fit-content;
+    }
+    #viewPost div.flex-xl-row {
+        margin: .5em;
+        margin-top: -.5em;
+    }
+    #viewPost div.flex-xl-row.comments {
+        min-width: 40vw;
     }
 
+    #viewPost img.pt {
+        max-width: 30vw;
+    }
+    #viewPost div.flex-xl-row.ls {
+        /* max-height: 60vh; */
+    }
 }
 
 
@@ -146,26 +146,18 @@ body {
 
 @media screen and (max-width: 575.98px) {
 /* header and nav */
-    header h1 {
-        font-size: 2.25rem;
-    }
-        #myNav a, label {
-            font-size: .9rem;
-        }
-        #myIcon {
-            width: 3em;
-        }
-
-/* fluid container below navbar */
-    #main-container {
-        padding-top: 8.5em;
+    #myNav a, label {
         font-size: .9em;
     }
-
-/* isotope */
-    .grid-sizer,
-    .grid-item {
-        width: 100%;
+    #myIcon {
+        width: 3em;
     }
+
+/* fluid container below navbar */
+    /* #main-container {
+        padding-top: 8.5em;
+        font-size: .9em;
+    } */
+
 
 }

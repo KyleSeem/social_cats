@@ -13,18 +13,11 @@
     <div class="grid-sizer"></div>
     {% if posts %}
         {% for post in posts %}
-            {% include 'social_media/modals/album_modal.html' %}
-            {% include 'social_media/modals/delete_modal.html' %}
-
             <div class="grid-item">
-                <div class="list-group-item p-0">
-                    <button id="deleteImage" class="btn p-0" type="button" data-toggle="modal" data-target="#deleteModal{{post.id}}">
-                        <span><i class="far fa-times-circle"></i></span>
-                    </button>
-
-                    <button class="btn p-0" type="button" data-toggle="modal" data-target="#albumModal{{post.id}}" data-id="{{ post.id }}">
+                <div class="ounded p-2 bg-white">
+                    <a href="{% url 'social_media:viewPost' post.id %}">
                         <img class="img-thumbnail" style="border:none;" src="/media/{{ post.photo.photo }}" alt="{{ photo.id }}" />
-                    </button>
+                    </a>
                 </div>
             </div>
         {% endfor %}
