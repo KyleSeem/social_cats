@@ -7,6 +7,15 @@
 
 {% block content %}
 
+<div>
+    {% for photo in photos %}
+        <p>User: {{ photo.user.id }}, {{ photo.user.username }} | Photo ID: {{ photo.id }} | Photo: {{ photo.photo }}</p>
+    {% endfor %}
+
+    {% for post in posts %}
+        <p>CAPTION: {{ post.caption }} | Post ID: {{ post.id }} | Photo ID: {{ post.photo.id }}</p>
+    {% endfor %}
+</div>
 
 <div class="grid">
     <div class="grid-sizer"></div>

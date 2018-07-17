@@ -9,10 +9,10 @@
 {% include 'social_media/modals/delete_modal.html' %}
 
 <section id="viewPost" class="m-auto p-2">
-    <div class="rounded p-2 bg-white ">
+    <div class="rounded p-2 bg-white position-relative">
         {% if post.user.id == request.session.sessionUserID %}
-            <button class="float-right text-info" type="button" data-toggle="modal" data-target="#deleteModal{{post.id}}">
-                <i class="fas fa-trash-alt"></i>
+            <button class="position-absolute text-info bg-white border-0 m-0 p-0" type="button" data-toggle="modal" data-target="#deleteModal{{post.id}}" style="right:1em;">
+                <i class="fas fa-trash-alt text-info"></i>
             </button>
         {% endif %}
 
@@ -28,7 +28,7 @@
     <!-- post image -->
             <div class="flex-xl-row">
                 <img class="img-fluid rounded mt-2 {{post.photo.orientation}}" src="/media/{{ post.photo.photo }}" alt="image for post id: {{ post.id }}" />
-                <span class="ml-1"><small>{{ post.created_at|date:"g:i A - j M y" }}</small></span>
+                <span class="d-block pl-1"><small>{{ post.created_at|date:"g:i A - j M y" }}</small></span>
             </div>
 
     <!-- comments area -->
@@ -46,7 +46,6 @@
                                     <div class="form-group mb-0">
                                         <label class="sr-only" for="comment">Comment</label>
                                         <input id="comment" type="text" name="comment" class="form-control" placeholder="add comment..." />
-                                        <!-- <textarea id="comment" class="form-control" name="comment" placeholder="add comment..."></textarea> -->
                                     </div>
                                 </div>
 

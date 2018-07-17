@@ -13,6 +13,8 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.http import JsonResponse
 from datetime import datetime
+from urlparse import urlparse
+from os.path import splitext, basename
 from .models import User, Photo, Post, Comment
 from .forms import PhotoUploadForm, NewPostForm, NewCommentForm
 
@@ -62,9 +64,6 @@ class MyAlbumListView(ListView):
         context['users'] = User.objects.all()
         context['nav_myAlbum'] = 'active'
 
-        p = Post.objects.filter(user=id)
-        print p
-        print len(p)
         return context
 
 
@@ -143,6 +142,29 @@ def new_comment(request, id):
 
 
 # delete post and all associated objects (comments, photo)
-def deletePost(request):
+def delete_post(request, id):
     if request.method == "POST":
         print ('-'*40)
+        user_id = request.POST['user']
+        photo = Photo.objects.get(id=request.POST['photo'])
+
+        # delete photo object from photo model - this will remove file from media folder (uses django_cleanup)
+        # post object will delete on cascade
+        photo.delete()
+
+        # upon successful delete, get the previous path and return user to it (album or dashboard)
+        previous_page = urlparse(request.POST['previous'])
+
+        if previous_page.path == ('/kittenstagram/myAlbum/' +user_id):
+            # return user to their album page
+            return redirect(reverse('social_media:myAlbum', kwargs={'id':user_id}))
+        else:
+            # return user to the dashboard
+            return redirect(reverse('social_media:index'))
+
+
+
+
+
+
+#####
