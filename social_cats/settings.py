@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'apps.login_reg',
     'apps.social_media',
     'django_extensions',
+    'django_cleanup',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
