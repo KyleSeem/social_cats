@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'apps.social_media',
     'django_extensions',
     'django_cleanup',
+    'django.contrib.humanize',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -129,11 +129,17 @@ def new_post(request):
 # create and save new comment for specified post
 def new_comment(request, id):
     if request.method == "POST":
-        id = id
+        print ('-'*40)
+        # id = id
+        post = Post.objects.get(id=request.POST['post'])
         form = NewCommentForm(request.POST)
+
+        # save new comment and update post's comment count
         if form.is_valid():
             comment = form.save()
-            return redirect(reverse('social_media:viewPost', kwargs={'pk':id}))
+            post.com_count += 1
+            post.save()
+            return redirect(reverse('social_media:viewPost', kwargs={'pk':post.id}))
         else:
             ########### make some error
             print ('invalid comment')
@@ -144,7 +150,6 @@ def new_comment(request, id):
 # delete post and all associated objects (comments, photo)
 def delete_post(request, id):
     if request.method == "POST":
-        print ('-'*40)
         user_id = request.POST['user']
         photo = Photo.objects.get(id=request.POST['photo'])
 

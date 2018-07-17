@@ -133,7 +133,8 @@ body {
     }
 
     #viewPost img.pt {
-        max-width: 30vw;
+        /* max-width: 30vw; */
+        max-height: 60vh;
     }
     #viewPost div.flex-xl-row.ls {
         /* max-height: 60vh; */

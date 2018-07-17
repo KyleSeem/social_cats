@@ -3,38 +3,41 @@
 
 {% block title %}KittenStagram | Home{% endblock %}
 
+{% load humanize %}
 
 
 {% block content %}
 
-<div>
-    {% for photo in photos %}
-        <p>User: {{ photo.user.id }}, {{ photo.user.username }} | Photo ID: {{ photo.id }} | Photo: {{ photo.photo }}</p>
-    {% endfor %}
 
-    {% for post in posts %}
-        <p>CAPTION: {{ post.caption }} | Post ID: {{ post.id }} | Photo ID: {{ post.photo.id }}</p>
-    {% endfor %}
-</div>
-
-<div class="grid">
+<div class="grid mb-5">
     <div class="grid-sizer"></div>
     {% if posts %}
         {% for post in posts %}
             <div id="gridItem{{post.id}}" class="grid-item">
                 <div class="rounded p-2 bg-white">
+
                     <div class="media m-2">
-                        <img id="" class="mr-3" src="/static/social_media/img/frame1.png" alt="" style="width:15%;" />
+                        <img id="" class="mr-3" src="/static/social_media/img/frame1.png" alt="" style="width:2.5em;" />
                         <div class="media-body">
-                            <h5 class="mt-0">{{ post.user.username }} <small>at {{ post.created_at|date:"g:i A" }}</small></h5>
-                            {{ post.caption }}
+                            <h5 class="mt-0">{{ post.user.username }} <small> | {{ post.created_at|naturaltime }}</small></h5>
+                            <span class="d-none d-lg-block d-xl-block">{{ post.caption }}</span>
                         </div>
                     </div>
+                <!-- only shows for lg and xl screens -->
+                    <div class="d-block d-lg-none d-xl-none text-center px-2 py-0">
+                        {{ post.caption }}
+                    </div>
 
+                <!-- click image takes to image/post page -->
                     <a href="{% url 'social_media:viewPost' post.id %}">
                         <img id="grid_image" class="img-fluid border-0 brick" src="/media/{{ post.photo.photo }}" alt="image for post id: {{ post.id }}" />
                     </a>
-                    <span class="ml-1"><small>{{ post.created_at|date:"j M y" }}</small></span>
+                    <span class="ml-1"><small>{{ post.created_at|date:"g:i A - j M y" }}</small></span>
+                    {% if post.com_count == 1 %}
+                        <span class="mr-1 float-right"><small>{{ post.com_count }} comment</small></span>
+                    {% else %}
+                        <span class="mr-1 float-right"><small>{{ post.com_count }} comments</small></span>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}

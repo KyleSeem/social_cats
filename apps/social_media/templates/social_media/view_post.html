@@ -3,35 +3,76 @@
 
 {% block title %}KittenStagram | Home{% endblock %}
 
+{% load humanize %}
 
 {% block content %}
+
 
 {% include 'social_media/modals/delete_modal.html' %}
 
 <section id="viewPost" class="m-auto p-2">
     <div class="rounded p-2 bg-white position-relative">
+        <!-- if viewed post belongs to signed in user, user sees delete option -->
         {% if post.user.id == request.session.sessionUserID %}
-            <button class="position-absolute text-info bg-white border-0 m-0 p-0" type="button" data-toggle="modal" data-target="#deleteModal{{post.id}}" style="right:1em;">
+            <button class="close mx-1" type="button" data-toggle="modal" data-target="#deleteModal{{post.id}}" title="delete post">
                 <i class="fas fa-trash-alt text-info"></i>
+            </button>
+
+
+<!-- REVIEW ONCE NAV BAR COLLAPSE IS UPDATED -->
+        {% else %}
+            <button type="button" class="close" onClick="javascript:history.go(-1);" title="go back">
+                <span aria-hidden="true">&times;</span>
             </button>
         {% endif %}
 
-        <div class="media p-2">
-            <img id="" class="mr-3" src="/static/social_media/img/frame1.png" alt="" style="width:2.5em;" />
-            <div class="media-body">
-                <h5>{{ post.user.username }} <small>at {{ post.created_at|date:"g:i A" }}</small></h5>
+
+    <!-- all device sizes except lg and xl -->
+        <div class="d-block d-lg-none d-xl-none">
+            <div class="d-flex align-items-center px-2 py-1">
+                <img id="" class="mr-3" src="/static/social_media/img/frame1.png" alt="" style="width:2.5em;" />
+                <div class="d-inline">
+                    <h5 class="m-0">{{ post.user.username }} - <small>{{ post.created_at|naturaltime }}</small></h5>
+                </div>
+            </div>
+            <div class="d-block px-2 py-0">
                 {{ post.caption }}
             </div>
         </div>
 
+    <!-- lg and xl device sizes only -->
+    <!-- additional nav options only show on lg and xl screens, included on nav bar collapse for all others -->
+        <div class="d-none d-lg-block d-xl-block">
+        <!-- myAlbum link and icon -->
+            <a class="close mx-1" href="{% url 'social_media:myAlbum' request.session.sessionUserID %}" title="my album"><i class="far fa-images pr-1"></i></a>
+        <!-- dashboard link and icon -->
+            <a class="close mx-1" href="{% url 'social_media:index' %}" title="main"><i class="fas fa-home text-primary"></i></a>
+
+        <!-- post details -->
+            <div class="d-flex align-items-center px-2 py-1">
+                <img id="" class="mr-3" src="/static/social_media/img/frame1.png" alt="" style="width:2.5em;" />
+                <span class="d-inline">
+                    <h5 class="m-0 d-inline">{{ post.user.username }}</h5>
+                    <span class="text-secondary">|<small> {{ post.created_at|date:"j M y - g:i A" }}</small>|</span>
+                    <div class="d-inline">
+                        {{ post.caption }}
+                    </div>
+                </span>
+            </div>
+        </div>
+
+
+
+    <!-- post display body -->
         <div class="d-xl-flex">
-    <!-- post image -->
+        <!-- post image -->
             <div class="flex-xl-row">
-                <img class="img-fluid rounded mt-2 {{post.photo.orientation}}" src="/media/{{ post.photo.photo }}" alt="image for post id: {{ post.id }}" />
-                <span class="d-block pl-1"><small>{{ post.created_at|date:"g:i A - j M y" }}</small></span>
+                <img class="img-fluid rounded mt-lg-2 {{post.photo.orientation}}" src="/media/{{ post.photo.photo }}" alt="image for post id: {{ post.id }}" />
+                <!-- show time stamp here for all devices except lg and xl -->
+                <span class="d-block d-lg-none d-xl-none pl-1"><small>{{ post.created_at|date:"g:i A - j M y" }}</small></span>
             </div>
 
-    <!-- comments area -->
+        <!-- comments area -->
             <div class="flex-xl-row comments">
                 <ul class="list-group mt-2">
                     <li class="list-group-item p-2">
@@ -45,7 +86,7 @@
                                 <div class="col">
                                     <div class="form-group mb-0">
                                         <label class="sr-only" for="comment">Comment</label>
-                                        <input id="comment" type="text" name="comment" class="form-control" placeholder="add comment..." />
+                                        <input id="comment" type="text" name="comment" class="form-control" placeholder="add comment..." required />
                                     </div>
                                 </div>
 
