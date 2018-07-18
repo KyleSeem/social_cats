@@ -48,20 +48,26 @@ body {
 /* fluid container below navbar */
     #main-container {
         padding-top: 8.5em;
-        /* padding-top: 11.5em; */
     }
 
 /* modals modal */
     div.modal-dialog {
         max-width: fit-content;
     }
-    .post_image {
-        max-width: 100%;
+    /* .post_image { */
+        /* max-width: 100%; */
         /* max-height:50vh; */
+    /* } */
+    #newPostHeader {
+        font-size: 2em;
+        font-family: 'Gochi Hand', cursive;
+        font-family: 'Patrick Hand SC', cursive;
     }
-    div#commentsInner {
-        max-height: 30vh;
+    #newPostModal img {
+        max-height: 60vh;
     }
+
+
 
 /* isotope */
     .grid-sizer,
@@ -123,21 +129,34 @@ body {
     #viewPost {
         max-width: 90%;
         width: fit-content;
+        /* max-height: 60vw; */
     }
-    #viewPost div.flex-xl-row {
+    #viewPost div.my_cols {
         margin: .5em;
         margin-top: -.5em;
+        max-height: 60vh;
     }
-    #viewPost div.flex-xl-row.comments {
-        min-width: 40vw;
+    #viewPost div.my_cols.comments {
+        max-width: 35vw;
+        /* overflow: scroll; */
     }
-
+    #viewPost div.my_cols.comments ul{
+        height: 90%;
+        overflow: scroll;
+    }
     #viewPost img.pt {
         /* max-width: 30vw; */
         max-height: 60vh;
     }
-    #viewPost div.flex-xl-row.ls {
-        /* max-height: 60vh; */
+    #viewPost img.ls {
+        /* max-width: 30vw; */
+        max-height: 60vh;
+    }
+    #commentForm {
+        height: 10%;
+    }
+    #newPostModal img {
+        max-height: 70vh;
     }
 }
 
