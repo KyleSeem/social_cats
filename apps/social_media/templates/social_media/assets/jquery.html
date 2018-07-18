@@ -19,8 +19,6 @@
 
     // new post - when image selected, launches modal and shows image preview
         function readURL(input) {
-            console.log(input);
-            console.log(input.files);
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
@@ -30,7 +28,6 @@
 
                     image.onload = function() {
                         var imgOr;
-                        // console.log(this.width , this.height);
                     // determine proper image orientation (portrait or landscape - ratio 1:1 treated as portrait)
                         if (this.width >= this.height) {
                             imgOr = 'ls';
@@ -38,7 +35,7 @@
                             imgOr = 'pt';
                         }
                     // create the html for the image preview - orientation added to class for sizing (see style.css)
-                        var imagePreview = '<img id="selectedImageFile" class="img-thumbnail ' + imgOr + '" src="' + this.src + '" alt="selected image file" style="border:none;" />';
+                        var imagePreview = '<img id="selectedImageFile" class="img-fluid rounded ' + imgOr + '" src="' + this.src + '" alt="selected image file" style="border:none;" />';
                     // create inner html for image preview
                         $('#imgPreview').html(imagePreview);
                     // update hidden input value for image orientation
@@ -48,13 +45,18 @@
 
                 reader.readAsDataURL(input.files[0]);
             }
-        }
+        };
 
         $(function() {
             $('#photoInput').change(function() {
                 $('#newPostModalButton').trigger('click');
                 readURL(this);
             });
+        });
+
+        // focus on text area once new post modal has loaded
+        $('#newPostModal').on('shown.bs.modal', function() {
+            $('#caption').focus();
         });
 
 
