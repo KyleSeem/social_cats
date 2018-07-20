@@ -37,8 +37,12 @@ body {
         #myNav div.dropdown-menu {
             background-color: #afbbc5;
         }
+        #myNav div.dropdown-menu a {
+            color: rgba(0,0,0,.5);
+        }
         #myNav div.dropdown-menu a:hover {
             background-color: #9ba9b6;
+            color: rgba(0,0,0,.9);
         }
         #myNav div.dropdown-divider {
             border-top: 1px solid #9ba9b6;

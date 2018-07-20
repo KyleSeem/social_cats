@@ -7,14 +7,19 @@
 
 
     <nav id="myNav" class="navbar navbar-expand-lg navbar-light">
-    <!-- brand icon - routes to dashboard on-click -->
-        <a class="navbar-brand" href="{%url 'social_media:index' %}">
+    <!-- brand icon - routes to dashboard on-click when lg or xl -->
+        <a class="navbar-brand d-none d-lg-inline-block d-xl-inline-block" href="{%url 'social_media:index' %}">
             <img id="myIcon" alt="Brand" src="/static/social_media/img/icon.png" />
         </a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+    <!-- brand image used as toggle button when collapsed - md, sm, xs -->
+        <button class="d-lg-none d-xl-none" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <img id="myIcon" alt="open menu" src="/static/social_media/img/icon.png" />
         </button>
+
+        <div class="d-lg-none d-xl-none">
+            <span class="pr-1">Hi, {{ request.session.sessionUserName }}!</span>
+        </div>
 
         <!-- all nav bits incuded in collapse -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -34,25 +39,33 @@
                     <li class="d-none">
                         <button id="newPostModalButton" role="button" data-toggle="modal" data-target="#newPostModal"></button>
                     </li>
-                </ul>
-
-                <ul class="nav navbar-nav mr-1">
-                    <li class="nav-item dropdown">
-                        <a id="userDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="pr-1">Hi, {{ request.session.sessionUserName }}!</span>
-                            <i class="far fa-user-circle"></i>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{% url 'social_media:myAccount' %}">My Account</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">about this site</a>
-                            <a class="dropdown-item" href="#">about the developer</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'login_reg:logout' %}"><i>Logout</i></a>
-                        </div>
+                    <li class="nav-item d-lg-none d-xl-none">
+                        <a class="nav-link" href="{% url 'social_media:myAccount' %}"><i class="fas fa-cog pr-1"></i>My Account</a>
+                    </li>
+                    <li class="nav-item d-lg-none d-xl-none">
+                        <a class="nav-link" href="#"><i class="far fa-question-circle pr-1"></i>About Site</a>
+                    </li>
+                    <li class="nav-item d-lg-none d-xl-none">
+                        <a class="nav-link" href="{% url 'login_reg:logout' %}"><i class="fas fa-sign-out-alt pr-1"></i><i>Logout</i></a>
                     </li>
                 </ul>
+            </div>
+    <!-- close navbar-collapse -->
 
-            </div> <!-- close navbar-collapse -->
+            <ul class="nav navbar-nav mr-1 d-none d-lg-inline d-xl-inline">
+                <li class="nav-item dropdown">
+                    <a id="userDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="pr-1">Hi, {{ request.session.sessionUserName }}!</span>
+                        <i class="far fa-user-circle"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="userDropdown" style="min-width:9rem;">
+                        <a class="nav-link" href="{% url 'social_media:myAccount' %}"><i class="fas fa-cog mx-1 pr-1"></i>My Account</a>
+                        <a class="nav-link" href="#"><i class="far fa-question-circle mx-1 pr-1"></i>About Site</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="nav-link" href="{% url 'login_reg:logout' %}"><i class="fas fa-sign-out-alt mx-1 pr-1"></i><i>Logout</i></a>
+                    </div>
+                </li>
+            </ul>
+
         </div> <!-- close container-fluid -->
 </header> <!-- close fixed header -->
