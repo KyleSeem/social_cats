@@ -31,7 +31,7 @@
                         <form id="img_upload_form" enctype="multipart/form-data" runat="server">
                             {% csrf_token %}
                             <input type="hidden" name="user" id="user" value="{{ request.session.sessionUserID }}" />
-                            <label id="addPhotoLabel" class="nav-link mb-0" for="photoInput"><i class="far fa-plus-square pr-1"></i> New Post</label>
+                            <label id="addPhotoLabel" class="nav-link mb-0" for="photoInput"><i class="far fa-plus-square pr-1"></i> New Post</label>                            
                             <input id="photoInput" class="d-none" type="file" name="photo" />
                         </form>
                     </li>

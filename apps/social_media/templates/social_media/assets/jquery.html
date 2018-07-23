@@ -16,6 +16,23 @@
             $grid.isotope('layout');
         });
 
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+
+    // if user signed in as guest, disable all write functions and apply tooltips
+        if ({{request.session.sessionUserID}} == 0) {
+            console.log('guest user');
+            $('fieldset').attr('disabled', true);
+            $('#addPhotoLabel').attr('for', "");
+
+            $('form').attr({'data-toggle':"tooltip", 'data-placement':"top", 'title':"sign in to use this feature"});
+        }
+        else {
+            console.log('real user');
+            $('fieldset').attr('disabled', false);
+        }
 
     // new post - when image selected, launches modal and shows image preview
         function readURL(input) {
