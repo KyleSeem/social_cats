@@ -30,7 +30,9 @@
     <!-- all device sizes except lg and xl -->
         <div class="d-block d-lg-none d-xl-none">
             <div class="d-flex align-items-center px-2 py-1">
-                <img id="" class="mr-3" src="/static/social_media/img/frame1.png" alt="" style="width:2.5em;" />
+                <a href="{% url 'social_media:myAlbum' request.session.sessionUserID %}">
+                    <img id="" class="mr-3" src="/static/social_media/img/frame1.png" alt="" style="width:2.5em;" />
+                </a>
                 <div class="d-inline">
                     <h5 class="m-0">{{ post.user.username }} - <small>{{ post.created_at|naturaltime }}</small></h5>
                 </div>
@@ -41,7 +43,7 @@
         </div>
 
     <!-- lg and xl device sizes only -->
-    <!-- additional nav options only show on lg and xl screens, included on nav bar collapse for all others -->
+        <!-- additional nav options only show on lg and xl screens, included on nav bar collapse for all others -->
         <div class="d-none d-lg-block d-xl-block">
         <!-- myAlbum link and icon -->
             <a class="close mx-1" href="{% url 'social_media:myAlbum' request.session.sessionUserID %}" title="my album"><i class="far fa-images pr-1"></i></a>
@@ -50,7 +52,9 @@
 
         <!-- post details -->
             <div class="d-flex align-items-center px-2 py-1">
-                <img id="" class="mr-3" src="/static/social_media/img/frame1.png" alt="" style="width:2.5em;" />
+                <a href="{% url 'social_media:myAlbum' request.session.sessionUserID %}">
+                    <img id="" class="mr-3" src="/static/social_media/img/frame1.png" alt="" style="width:2.5em;" />
+                </a>
                 <span class="d-inline" style="font-size:1.25em;">
                     <h4 class="m-0 d-inline">{{ post.user.username }}</h4>
                     <span class="text-secondary">|<small> {{ post.created_at|date:"j M y - g:i A" }}</small>|</span>
@@ -103,7 +107,7 @@
                         <li class="list-group-item p-2">
                             <div class="media">
                                 <!-- eventually make this link to other users' albums -->
-                                <a class="pr-3" href="#">
+                                <a class="pr-3" href="{% url 'social_media:myAlbum' comment.user.id %}">
                                     <img src="/static/social_media/img/frame1.png" alt="" style="width:2.5em;" />
                                 </a>
                                 <div class="media-body">

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# apps/login_reg/models.py
+
 from __future__ import unicode_literals
 
 from django.db import models
@@ -15,24 +17,18 @@ class UserManager(models.Manager):
 
         alerts = []
 
-        if len(email) < 1:
-            alerts.append('Please enter email address')
-
         try:
             user = User.objects.get(email=email)
         except:
-            print ('EMAIL NOT REGISTERED')
-            alerts.append('The email address "{}" is either incorrect or has not been registered'.format(email))
+            alerts.append('Invalid email address.')
+            # alerts.append('Email is either incorrect or has not yet been registered.')
             return (False, alerts)
         else:
             if email == user.email:
                 if bcrypt.hashpw(password.encode(), user.pw_hashed.encode()) == user.pw_hashed:
-                    print ('PW Match')
                     return (True, user.id, user.username)
-                    # return (True, user.id)
                 else:
-                    print ('NO MATCH')
-                    alerts.append('Incorrect password')
+                    alerts.append('Incorrect password.')
 
             if alerts:
                 return (False, alerts)
@@ -51,19 +47,17 @@ class UserManager(models.Manager):
             user = User.objects.get(email=email)
         except:
             if len(username) < 2:
-                alerts.append('Username must contain at least 2 characters')
+                alerts.append('Username must contain at least 2 characters.')
             elif not str.isalnum(username):
-                alerts.append('Username may only contain letters and numbers')
+                alerts.append('Username may only contain letters and numbers.')
 
-            if len(email) < 1:
-                alerts.append('Email required')
-            elif not EMAIL_REGEX.match(email):
-                alerts.append('Invalid email address')
+            if not EMAIL_REGEX.match(email):
+                alerts.append('Invalid email address.')
 
             if len(password) < 8:
-                alerts.append('Password must be at least 8 characters in length')
+                alerts.append('Password must be at least 8 characters in length.')
             elif password != pw_verify:
-                alerts.append('Passwords do not match')
+                alerts.append('Passwords do not match.')
 
             if alerts:
                 return (False, alerts)
@@ -74,7 +68,6 @@ class UserManager(models.Manager):
                 return (True, user.id, user.username)
 
         else:
-            print ('USER ALREADY EXISTS')
             alerts.append('The email address "{}" has already been registered.'.format(email))
             return (False, alerts)
 

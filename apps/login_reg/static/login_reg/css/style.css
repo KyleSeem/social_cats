@@ -1,24 +1,40 @@
-.container {
-    margin: auto;
+html {
+    font-size: 1em;
+}
+body {
+    background-image: url("../img/yarn-bright.png");
+    background-repeat: repeat;
 }
 
-    article {
-        margin-top: 15px;
+/* header and nav */
+    header.page-header {
+        border-bottom: none;
+        background: #9ba9b6;
     }
-        h3 {
-            border-bottom: 1px solid #cccccc;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-        label.control-label {
-            font-size: 1.15em;
-            padding-right: 0px;
-        }
-        .btn-primary {
-            float: right;
+        header h1 {
+            font-size: 2.75em;
+            text-align: center;
+            font-family: 'Leckerli One', cursive;
+            color: #000;
         }
 
 
-        /* font-family: 'Pacifico', cursive;
-        font-family: 'Satisfy', cursive;
-        font-family: 'Leckerli One', cursive; */
+/* ------------------------------------------------ */
+/* ------- MEDIUM DEVICES/SCREENS ------- */
+@media screen and (min-width: 768px) {
+    header h1 {
+        font-size: 6em;
+    }
+}
+
+/* ------------------------------------------------ */
+/* ------- LARGE DEVICES/SCREENS ------- */
+
+@media screen and (min-width: 992px) {
+    header h1 {
+        /* font-size: 6.25em; */
+    }
+    #myIcon {
+        width: 3.75em;
+    }
+}
