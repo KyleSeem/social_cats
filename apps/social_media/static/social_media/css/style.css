@@ -162,6 +162,12 @@ body {
     #newPostModal img {
         max-height: 70vh;
     }
+
+/* isotope */
+    .grid-sizer,
+    .grid-item {
+        width: 25%;
+    }
 }
 
 
