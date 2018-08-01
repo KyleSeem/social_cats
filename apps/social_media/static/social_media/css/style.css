@@ -67,6 +67,7 @@ body {
         font-family: 'Gochi Hand', cursive;
         font-family: 'Patrick Hand SC', cursive;
     }
+    #cropPicModal img,
     #newPostModal img {
         max-height: 60vh;
     }
@@ -95,6 +96,42 @@ body {
         color: white;
         background: red;
     }
+
+    #myAvatar {
+        width: 100%;
+    }
+
+    .fas.fa-pencil-alt {
+        color: #7d7d7d;
+    }
+    #profilePic label:hover {
+        cursor: pointer;
+    }
+
+/* ------------------------------------------------ */
+/* ------- MEDIUM DEVICES/SCREENS ------- */
+
+@media screen and (min-width: 768px) {
+/* header and nav */
+    header h1 {
+        font-size: 3.5em;
+    }
+/* isotope */
+    .grid-sizer,
+    .grid-item {
+        width: 50%;
+    }
+
+/* fluid container below navbar */
+    #main-container {
+        padding-top: 10em;
+    }
+
+    #myAvatar {
+        width: 50%;
+    }
+}
+
 
 /* ------------------------------------------------ */
 /* ------- LARGE DEVICES/SCREENS ------- */
@@ -159,6 +196,7 @@ body {
     #commentForm {
         height: 10%;
     }
+    #cropPicModal img,
     #newPostModal img {
         max-height: 70vh;
     }
@@ -168,6 +206,21 @@ body {
     .grid-item {
         width: 25%;
     }
+    #myAlbumGrid .grid-sizer,
+    .grid-item {
+        width: 33.333%;
+    }
+
+    #myAvatar {
+        /* width: 25%; */
+    }
+    div#profilePic {
+        width: 300px;
+        height: 300px;
+        background-image: url("../img/avatar_300.jpg");
+    }
+
+
 }
 
 

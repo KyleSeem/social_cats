@@ -20,7 +20,10 @@ def upload_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<YYYY-MM-DD>/<filename>_<hhmmss>
     return 'user_{0}/{1}/{2}_{3}'.format(instance.user.id, dt[0], filename, time[0])
 
-
+# save path for users' profile picture
+def profile_pic_path(instance, filename):
+    # save to user's media folder in profilePic subfolder - should only ever be one image saved here
+    return 'user_{0}/profilePic/{1}'.format(instance.user.id, filename)
 
 
 # just the uploaded image with user connection
@@ -56,3 +59,19 @@ class Comment(models.Model):
 
     class Meta:
         db_table = 'comments'
+
+# user's designated profile picture
+class ProfilePic(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    photo = models.ImageField(upload_to=profile_pic_path)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+# user's additional personal details (all optional)
+class Profile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    nickname = models.CharField(max_length=55, blank=True)
+    bio = models.TextField(max_length=1000, blank=True)
+    location = models.CharField(max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

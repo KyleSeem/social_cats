@@ -6,18 +6,115 @@
 {% block title %}KittenStagram | My Account{% endblock %}
 
 
-
 {% block content %}
-<section>
-    <h1>This MIGHT be used to change themes etc - may be deleted</h1>
-    <h4>Things to include:</h4>
-    <ul>
-        <li>profile image</li>
-        <li>theme preference</li>
-        <li>bio</li>
-        <li>top 3 (ish) posts or most recent</li>
-        <li></li>
-        <li></li>
-    </ul>
+{% include 'social_media/modals/crop_pic_modal.html' %}
+
+<div class="d-none">
+    <button id="cropPicModalButton" role="button" data-toggle="modal" data-target="#cropPicModal"></button>
+</div>
+
+<section class="rounded bg-white p-3 d-block d-md-none">
+    <div id="profilePic" class="d-md-inline-flex">
+        <a class="" role="button" href="">
+            <img id="myAvatar" class="border rounded" src="/static/social_media/img/avatar.jpg" alt="profile pic" />
+        </a>
+    </div>
+
+<!-- account details for sm, xs -->
+    <div class="mt-2">
+        <ul class="list-group">
+            <button class="list-group-item text-left bg-light" type="button" data-toggle="collapse" data-target="#accountGroup" aria-expanded="false" aria-controls="accountGroup">Account</button>
+            <span id="accountGroup" class="collapse">
+                <li class="list-group-item">
+                    Username: <br>
+                    <span class="text-secondary">{{ user.username }}</span>
+                </li>
+                <li class="list-group-item">
+                    Email: <br>
+                    <span class="text-secondary">{{ user.email }}</span>
+                </li>
+                <li class="list-group-item">
+                    Item <br>
+                    <span class="text-secondary">detail</span>
+                </li>
+                <!-- <li class="list-group-item">Item <span class="float-right"><i class="fas fa-pencil-alt"></i></span></li> -->
+            </span>
+
+            <button class="list-group-item text-left bg-light" type="button" data-toggle="collapse" data-target="#accountSettings" aria-expanded="false" aria-controls="accountSettings">Settings</button>
+            <span id="accountSettings" class="collapse">
+                <li class="list-group-item">Item</li>
+                <li class="list-group-item">Item</li>
+                <li class="list-group-item">Item</li>
+            </span>
+        </ul>
+    </div>
+</section>
+
+<!-- account details for md, lg, xl -->
+
+<section class="rounded bg-white p-3 d-none d-md-block w-75 m-auto">
+    <div class="d-flex">
+        <div class=""  style="width: 33.333%!important;">
+            <div class="w-100 border rounded">
+                <!-- {% if myPic %} -->
+
+                <!-- {% endif %} -->
+                <div id="profilePic" class="d-flex m-auto justify-content-center" style="font-size:4em;">
+                    <form id="profile_pic_form" class=" align-self-center" enctype="multipart/form-data" action="set_profile_pic" method="POST">
+                    <!-- <form id="profile_pic_form" class=" align-self-center" enctype="multipart/form-data" runat="server"> -->
+                        {% csrf_token %}
+                        <input type="hidden" name="user" id="user" value="{{ request.session.sessionUserID }}" />
+                        <label class="btn-link border rounded-circle px-3 m-0" for="picInput" style="opacity:0.2; background:#f8f9fa;">
+                            <i class="fas fa-plus"></i>
+                        </label>
+                        <input id="picInput" class="d-none" type="file" name="photo" />
+                    </form>
+                </div>
+                <!-- <a class="" role="button" href="">
+                    <img id="" class="img-fluid border rounded" src="/static/social_media/img/avatar.jpg" alt="profile pic" />
+                </a> -->
+
+
+            </div>
+            {{ profilePic.id }}
+            {% for a in all %}
+                <p>id: {{ a.id }}</p>
+            {% endfor %}
+            <ul class="list-group mt-3">
+                <li class="list-group-item bg-light">Account Details</li>
+                <li class="list-group-item">
+                    Username: <span class="text-secondary pl-2">{{ user.username }}</span>
+                </li>
+                <li class="list-group-item">
+                    Email: <span class="text-secondary pl-2">{{ user.email }}</span>
+                </li>
+                <li class="list-group-item">
+                    Item: <span class="text-secondary pl-2">detail</span>
+                </li>
+
+
+            </ul>
+
+        </div>
+
+
+
+        <div class="ml-3" style="width: 66.666%!important;">
+        <!-- <div class="w-75 ml-3"> -->
+            <!-- <div class="d-none d-md-block"> -->
+                <ul class="list-group">
+                    <li class="list-group-item bg-light">Account</li>
+                    <li class="list-group-item">Item</li>
+                    <li class="list-group-item">Item</li>
+                    <li class="list-group-item">Item</li>
+
+                    <li class="list-group-item bg-light">Settings</li>
+
+
+                </ul>
+        <!-- </div> -->
+        </div>
+    </div>
+
 </section>
 {% endblock %}

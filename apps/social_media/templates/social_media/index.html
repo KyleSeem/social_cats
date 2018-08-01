@@ -22,11 +22,11 @@
                         <img id="" class="mr-3" src="/static/social_media/img/frame1.png" alt="" style="width:2.5em;" />
                         <div class="media-body">
                             <h5 class="mt-0">{{ post.user.username }} <small> | {{ post.created_at|naturaltime }}</small></h5>
-                            <span class="d-none d-lg-block d-xl-block">{{ post.caption }}</span>
+                            <span class="d-none d-lg-block">{{ post.caption }}</span>
                         </div>
                     </div>
                 <!-- only shows for lg and xl screens -->
-                    <div class="d-block d-lg-none d-xl-none px-2 py-0">
+                    <div class="d-block d-lg-none px-2 py-0">
                         {{ post.caption }}
                     </div>
 

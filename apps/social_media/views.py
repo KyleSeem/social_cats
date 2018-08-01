@@ -4,10 +4,12 @@
 from __future__ import unicode_literals
 import os
 
+from django.template import RequestContext
+
 from django.views.generic import ListView, DetailView, UpdateView
 
 from PIL import Image
-from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404, render_to_response
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -15,8 +17,8 @@ from django.http import JsonResponse
 from datetime import datetime
 from urlparse import urlparse
 from os.path import splitext, basename
-from .models import User, Photo, Post, Comment
-from .forms import PhotoUploadForm, NewPostForm, NewCommentForm
+from .models import User, Photo, Post, Comment, Profile, ProfilePic
+from .forms import PhotoUploadForm, NewPostForm, NewCommentForm, ProfilePicForm
 
 
 # session info: userID is id of logged in user, thisUser is username of logged in user
@@ -86,16 +88,32 @@ class ViewPostDetailView(DetailView):
 
 
 # MYACCOUNT - user's acount page
-def myAccount(request, **kwargs):
-    ##### add validation to show only user's info OR change to id kwarg
+# def myAccount(request, **kwargs):
+#     ##### add validation to show only user's info OR change to id kwarg
+#
+#     context = {
+#         'users':User.objects.all(),
+#         'nav_account':'active',
+#     }
+#     return render(request, 'social_media/account.html', context)
 
-    context = {
-        'users':User.objects.all(),
-        'nav_account':'active',
-    }
-    return render(request, 'social_media/account.html', context)
 
+class MyAccountListView(ListView):
+    model = User
+    template_name = 'social_media/account.html'
 
+    def get_queryset(self):
+        return User.objects.all()
+
+    def get_context_data(self, **kwargs):
+        id = self.kwargs['pk']
+
+        context = super(MyAccountListView, self).get_context_data(**kwargs)
+        context['user'] = User.objects.get(id=id)
+        context['profilePic'] = ProfilePic.objects.filter(user=id)
+        context['all'] = ProfilePic.objects.all()
+
+        return context
 
 
 
@@ -168,8 +186,34 @@ def delete_post(request, id):
             return redirect(reverse('social_media:index'))
 
 
+# set profile picture
+def set_profile_pic(request):
+    id = request.session['sessionUserID']
+    print ('session user id', id)
+
+    if request.method == "POST":
+        form = ProfilePicForm(request.POST, request.FILES)
+        if form.is_valid():
+            print 'valid'
+            form.save()
+            # return redirect('set_profile_pic')
+            return redirect(reverse('social_media:myAlbum', kwargs={'id':id}))
+        else:
+            print 'NOT VALID!!!'
+            return redirect(reverse('social_media:myAlbum', kwargs={'id':id}))
+    # else:
+    #     form = ProfilePicForm()
+    # return redirect(reverse('social_media:myAlbum', kwargs={'id':id}))
 
 
+
+
+###### ERRORS ######
+def handler404(request):
+    response = render_to_response('404.html', {},
+        context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
 
 
 #####

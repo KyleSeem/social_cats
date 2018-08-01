@@ -23,58 +23,128 @@
 
     // if user signed in as guest, disable all write functions and apply tooltips
         if ({{request.session.sessionUserID}} == 0) {
-            console.log('guest user');
+            // console.log('guest user');
             $('fieldset').attr('disabled', true);
             $('#addPhotoLabel').attr('for', "");
 
             $('form').attr({'data-toggle':"tooltip", 'data-placement':"top", 'title':"sign in to use this feature"});
         }
-        else {
-            console.log('real user');
-            $('fieldset').attr('disabled', false);
-        }
+        // else {
+        //     console.log('real user');
+        //     $('fieldset').attr('disabled', false);
+        // }
 
     // new post - when image selected, launches modal and shows image preview
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
 
-                reader.onload = function(e) {
-                    var image = new Image();
-                    image.src = e.target.result;
 
-                    image.onload = function() {
-                        var imgOr;
-                    // determine proper image orientation (portrait or landscape - ratio 1:1 treated as portrait)
-                        if (this.width >= this.height) {
-                            imgOr = 'ls';
-                        } else {
-                            imgOr = 'pt';
+        $('#photoInput').change(function() {
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        var image = new Image();
+                        image.src = e.target.result;
+
+                        image.onload = function() {
+                            var imgOr;
+                        // determine proper image orientation (portrait or landscape - ratio 1:1 treated as portrait)
+                            if (this.width >= this.height) {
+                                imgOr = 'ls';
+                            } else {
+                                imgOr = 'pt';
+                            }
+                        // create the html for the image preview - orientation added to class for sizing (see style.css)
+                            var imagePreview = '<img id="selectedImageFile" class="img-fluid rounded ' + imgOr + '" src="' + this.src + '" alt="selected image file" style="border:none;" />';
+                        // create inner html for image preview
+                            $('.imgPreview').html(imagePreview);
+                        // update hidden input value for image orientation
+                            $('#orientation')[0].value = imgOr;
+
                         }
-                    // create the html for the image preview - orientation added to class for sizing (see style.css)
-                        var imagePreview = '<img id="selectedImageFile" class="img-fluid rounded ' + imgOr + '" src="' + this.src + '" alt="selected image file" style="border:none;" />';
-                    // create inner html for image preview
-                        $('#imgPreview').html(imagePreview);
-                    // update hidden input value for image orientation
-                        $('#orientation')[0].value = imgOr;
                     }
+
+                    reader.readAsDataURL(input.files[0]);
                 }
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        };
-
-        $(function() {
-            $('#photoInput').change(function() {
-                $('#newPostModalButton').trigger('click');
-                readURL(this);
-            });
+            };
+            $('#newPostModalButton').trigger('click');
+            readURL(this);
         });
+
+
+
 
         // focus on text area once new post modal has loaded
         $('#newPostModal').on('shown.bs.modal', function() {
             $('#caption').focus();
         });
+
+
+// CROPPER STUFF
+
+        $('#picInput').change(function() {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#image').attr("src", e.target.result);
+                    $('#cropPicModal').modal("show");
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        /* SCRIPTS TO HANDLE THE CROPPER BOX */
+        var $image = $("#image");
+        var cropBoxData;
+        var canvasData;
+
+        $('#cropPicModal').on("shown.bs.modal", function() {
+            $image.cropper({
+                viewMode: 1,
+                aspectRatio: 1/1,
+                minCropBoxWidth: 300,
+                minCropBoxHeight: 300,
+                ready: function() {
+                    $image.cropper("setCanvasData", canvasData);
+                    $image.cropper("setCropBoxData", cropBoxData);
+                }
+            });
+        }).on("hidden.bs.modal", function() {
+            cropBoxData = $image.cropper("getCropBoxData");
+            canvasData = $image.cropper("getCanvasData");
+            $image.cropper("destroy");
+        });
+
+        $(".js-zoom-in").click(function() {
+            $image.cropper("zoom", 0.1);
+        });
+
+        $(".js-zoom-out").click(function() {
+            $image.cropper("zoom", -0.1);
+        });
+
+
+
+        /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
+        $(".js-crop-and-upload").click(function () {
+            var cropData = $image.cropper("getData");
+            console.log(cropData);
+
+            $("#id_x").val(cropData["x"]);
+            $("#id_y").val(cropData["y"]);
+            $("#id_width").val(cropData["width"]);
+            $("#id_height").val(cropData["height"]);
+            $("#profile_pic_form").submit();
+        });
+
+
+
+
+
+
+
+
+
 
 
     });
