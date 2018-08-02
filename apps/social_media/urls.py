@@ -20,5 +20,5 @@ urlpatterns = [
     url(r'^new_post$', views.new_post, name='new_post'),
     url(r'^new_comment/(?P<id>\d+)$', views.new_comment, name='new_comment'),
     url(r'^delete_post/(?P<id>\d+)$', views.delete_post, name='delete_post'),
-    url(r'^set_profile_pic$', views.set_profile_pic, name='set_profile_pic'),
+    url(r'^set_avatar$', views.set_avatar, name='set_avatar'),
 ]

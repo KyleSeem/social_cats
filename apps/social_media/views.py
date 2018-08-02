@@ -17,8 +17,8 @@ from django.http import JsonResponse
 from datetime import datetime
 from urlparse import urlparse
 from os.path import splitext, basename
-from .models import User, Photo, Post, Comment, Profile, ProfilePic
-from .forms import PhotoUploadForm, NewPostForm, NewCommentForm, ProfilePicForm
+from .models import User, Photo, Post, Comment, Profile, Avatar
+from .forms import PhotoUploadForm, NewPostForm, NewCommentForm, AvatarForm
 
 
 # session info: userID is id of logged in user, thisUser is username of logged in user
@@ -41,6 +41,7 @@ class DashboardListView(ListView):
         context['photos'] = Photo.objects.all()
         context['comments'] = Comment.objects.all()
         context['nav_dashboard'] = 'active'
+
         return context
 
 
@@ -88,16 +89,6 @@ class ViewPostDetailView(DetailView):
 
 
 # MYACCOUNT - user's acount page
-# def myAccount(request, **kwargs):
-#     ##### add validation to show only user's info OR change to id kwarg
-#
-#     context = {
-#         'users':User.objects.all(),
-#         'nav_account':'active',
-#     }
-#     return render(request, 'social_media/account.html', context)
-
-
 class MyAccountListView(ListView):
     model = User
     template_name = 'social_media/account.html'
@@ -110,8 +101,8 @@ class MyAccountListView(ListView):
 
         context = super(MyAccountListView, self).get_context_data(**kwargs)
         context['user'] = User.objects.get(id=id)
-        context['profilePic'] = ProfilePic.objects.filter(user=id)
-        context['all'] = ProfilePic.objects.all()
+        context['avatar'] = Avatar.objects.get(user=id)
+        context['form'] = AvatarForm()
 
         return context
 
@@ -186,24 +177,25 @@ def delete_post(request, id):
             return redirect(reverse('social_media:index'))
 
 
-# set profile picture
-def set_profile_pic(request):
-    id = request.session['sessionUserID']
-    print ('session user id', id)
+# set profile picture/avatar
+def set_avatar(request):
 
+    id = request.session['sessionUserID']
     if request.method == "POST":
-        form = ProfilePicForm(request.POST, request.FILES)
+        print ('-'*40)
+        print ('session user id', id)
+
+        form = AvatarForm(request.POST, request.FILES)
         if form.is_valid():
             print 'valid'
             form.save()
-            # return redirect('set_profile_pic')
-            return redirect(reverse('social_media:myAlbum', kwargs={'id':id}))
+            return redirect(reverse('social_media:myAccount', kwargs={'pk':id}))
         else:
             print 'NOT VALID!!!'
-            return redirect(reverse('social_media:myAlbum', kwargs={'id':id}))
-    # else:
-    #     form = ProfilePicForm()
-    # return redirect(reverse('social_media:myAlbum', kwargs={'id':id}))
+            return redirect(reverse('social_media:myAccount', kwargs={'pk':id}))
+    else:
+        form = AvatarForm()
+    return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
 
 
 

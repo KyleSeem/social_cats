@@ -24,11 +24,11 @@
 </div>
 {% endif %}
 
-<div id="myAlbumGrid" class="grid">
-    <div class="grid-sizer"></div>
+<div class="grid">
+    <div class="grid-sizer album"></div>
     {% if posts %}
         {% for post in posts %}
-            <div class="grid-item">
+            <div class="grid-item album">
                 <div class="rounded p-2 bg-white">
                     <a href="{% url 'social_media:viewPost' post.id %}">
                         <img class="img-thumbnail" style="border:none;" src="/media/{{ post.photo.photo }}" alt="{{ photo.id }}" />

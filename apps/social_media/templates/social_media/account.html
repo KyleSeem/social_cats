@@ -9,12 +9,12 @@
 {% block content %}
 {% include 'social_media/modals/crop_pic_modal.html' %}
 
-<div class="d-none">
-    <button id="cropPicModalButton" role="button" data-toggle="modal" data-target="#cropPicModal"></button>
-</div>
+<!-- <div class="d-none">
+    <button id="cropPhotoModalButton" role="button" data-toggle="modal" data-target="#cropPhotoModal"></button>
+</div> -->
 
 <section class="rounded bg-white p-3 d-block d-md-none">
-    <div id="profilePic" class="d-md-inline-flex">
+    <div id="avatarWrapper" class="d-md-inline-flex">
         <a class="" role="button" href="">
             <img id="myAvatar" class="border rounded" src="/static/social_media/img/avatar.jpg" alt="profile pic" />
         </a>
@@ -35,7 +35,7 @@
                 </li>
                 <li class="list-group-item">
                     Item <br>
-                    <span class="text-secondary">detail</span>
+                    <span class="text-secondary">id: {{ user.id }} | session id: {{ request.session.sessionUserID }}</span>
                 </li>
                 <!-- <li class="list-group-item">Item <span class="float-right"><i class="fas fa-pencil-alt"></i></span></li> -->
             </span>
@@ -56,30 +56,25 @@
     <div class="d-flex">
         <div class=""  style="width: 33.333%!important;">
             <div class="w-100 border rounded">
-                <!-- {% if myPic %} -->
-
-                <!-- {% endif %} -->
-                <div id="profilePic" class="d-flex m-auto justify-content-center" style="font-size:4em;">
-                    <form id="profile_pic_form" class=" align-self-center" enctype="multipart/form-data" action="set_profile_pic" method="POST">
-                    <!-- <form id="profile_pic_form" class=" align-self-center" enctype="multipart/form-data" runat="server"> -->
-                        {% csrf_token %}
-                        <input type="hidden" name="user" id="user" value="{{ request.session.sessionUserID }}" />
-                        <label class="btn-link border rounded-circle px-3 m-0" for="picInput" style="opacity:0.2; background:#f8f9fa;">
-                            <i class="fas fa-plus"></i>
-                        </label>
-                        <input id="picInput" class="d-none" type="file" name="photo" />
-                    </form>
-                </div>
-                <!-- <a class="" role="button" href="">
-                    <img id="" class="img-fluid border rounded" src="/static/social_media/img/avatar.jpg" alt="profile pic" />
-                </a> -->
-
+                {% if avatar %}
+                    <div class="">
+                        <img class="img-thumbnail" src="/{{ avatar.file.url }}" alt="avatar" >
+                    </div>
+                {% else %}
+                    <div id="avatarWrapper" class="d-flex m-auto justify-content-center" style="font-size:4em;">
+                        <form id="upload_form" class=" align-self-center" enctype="multipart/form-data" action="{% url 'social_media:set_avatar' %}" method="POST">
+                            {% csrf_token %}
+                            <label class="btn-link border rounded-circle px-3 m-0" for="id_file" style="opacity:0.2; background:#f8f9fa;">
+                                <i class="fas fa-plus"></i>
+                            </label>
+                            <div class="d-none">
+                                {{ form }}
+                            </div>
+                        </form>
+                    </div>
+                {% endif %}
 
             </div>
-            {{ profilePic.id }}
-            {% for a in all %}
-                <p>id: {{ a.id }}</p>
-            {% endfor %}
             <ul class="list-group mt-3">
                 <li class="list-group-item bg-light">Account Details</li>
                 <li class="list-group-item">
@@ -89,7 +84,7 @@
                     Email: <span class="text-secondary pl-2">{{ user.email }}</span>
                 </li>
                 <li class="list-group-item">
-                    Item: <span class="text-secondary pl-2">detail</span>
+                    Item: <span class="text-secondary pl-2"><span class="text-secondary">id: {{ user.id }} | session id: {{ request.session.sessionUserID }}</span></span>
                 </li>
 
 
@@ -109,8 +104,6 @@
                     <li class="list-group-item">Item</li>
 
                     <li class="list-group-item bg-light">Settings</li>
-
-
                 </ul>
         <!-- </div> -->
         </div>
