@@ -214,11 +214,11 @@ body {
     #myAvatar {
         /* width: 25%; */
     }
-    div#avatarWrapper {
+    /* div#avatarWrapper {
         width: 300px;
         height: 300px;
         background-image: url("../img/avatar_300.jpg");
-    }
+    } */
 
 
 }

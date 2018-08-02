@@ -8,26 +8,6 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from .models import User
 
-####### NAVIGATION #######
-
-# route to login form - default landing page
-def user_login(request):
-    # User.objects.all().delete()
-    request.session.clear()
-    context = {
-        'users':User.objects.all()
-    }
-    return render(request, 'login_reg/login.html', context)
-
-# route to registration form
-def reg_form(request):
-    request.session.clear()
-    context = {
-        'users':User.objects.all()
-    }
-    return render(request, 'login_reg/register.html', context)
-
-
 # login as guest - read-only access
 def guest(request):
     request.session.clear()
@@ -39,17 +19,22 @@ def guest(request):
 
 ####### CRUD #######
 
-# login - validate form data
+# login
 def login(request):
-    request.session['log_email'] = request.POST['log_email']
+    if request.method == "GET":
+        context = {
+            'users':User.objects.all()
+        }
+        return render(request, 'login_reg/login.html', context)
 
     if request.method == "POST":
+        request.session['log_email'] = request.POST['log_email']
         verify = User.userManager.login(request.POST)
 
         if verify[0] == False:
             for alert in verify[1]:
                 messages.add_message(request, messages.INFO, alert)
-            return redirect(reverse('login_reg:user_login'))
+            return redirect(reverse('login_reg:login'))
 
         elif verify[0] == True:
             request.session.clear()
@@ -59,23 +44,30 @@ def login(request):
 
     elif request.method == "GET":
         # request.session.clear()
-        return redirect(reverse('login_reg:user_login'))
+        return redirect(reverse('login_reg:login'))
 
 
-# register - validate form data
+# register
 def register(request):
-    # keep user input in form if user data returns with errors
-    request.session['username'] = request.POST['username']
-    request.session['email'] = request.POST['email']
-    request.session['password'] = request.POST['password']
+    if request.method == "GET":
+        context = {
+            'users':User.objects.all()
+        }
+        return render(request, 'login_reg/register.html', context)
+
 
     if request.method == "POST":
+        # keep user input in form if user data returns with errors
+        request.session['username'] = request.POST['username']
+        request.session['email'] = request.POST['email']
+        request.session['password'] = request.POST['password']
+
         verify = User.userManager.register(request.POST)
 
         if verify[0] == False:
             for alert in verify[1]:
                 messages.add_message(request, messages.INFO, alert)
-            return redirect(reverse('login_reg:reg_form'))
+            return redirect(reverse('login_reg:register'))
 
         elif verify[0] == True:
             request.session.clear()
@@ -85,13 +77,13 @@ def register(request):
 
         else:
             request.session.clear()
-            return redirect(reverse('login_reg:reg_form'))
+            return redirect(reverse('login_reg:register'))
 
 
 # logout - clear session and return to landing page
 def logout(request):
     request.session.flush()
-    return redirect(reverse('login_reg:user_login'))
+    return redirect(reverse('login_reg:login'))
 
 
 # delete user - called from setting page in user account
@@ -104,4 +96,4 @@ def delete(request, id):
         alerts.append('The account registered under email address "{}" has been deleted'.format(user.email))
         user.delete()
         request.session.clear()
-        return redirect(reverse('login_reg:user_login'))
+        return redirect(reverse('login_reg:login'))

@@ -65,14 +65,14 @@ class Comment(models.Model):
 class Avatar(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     file = models.ImageField(upload_to=avatar_upload_path)
-    updated_at = models.DateTimeField(auto_now=True)
+    uploaded_at = models.DateTimeField(auto_now=True)
 
 
 # user's additional personal details (all optional)
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    nickname = models.CharField(max_length=55, blank=True)
-    bio = models.TextField(max_length=1000, blank=True)
-    location = models.CharField(max_length=255, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    # nickname = models.CharField(max_length=55, blank=True)
+    # bio = models.TextField(max_length=1000, blank=True)
+    # location = models.CharField(max_length=255, blank=True)
+    # created_at = models.DateTimeField(auto_now_add=True)
+    # updated_at = models.DateTimeField(auto_now=True)

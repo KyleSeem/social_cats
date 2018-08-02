@@ -98,10 +98,10 @@ class MyAccountListView(ListView):
 
     def get_context_data(self, **kwargs):
         id = self.kwargs['pk']
+        # Avatar.objects.all().delete()
 
         context = super(MyAccountListView, self).get_context_data(**kwargs)
         context['user'] = User.objects.get(id=id)
-        context['avatar'] = Avatar.objects.get(user=id)
         context['form'] = AvatarForm()
 
         return context
@@ -179,7 +179,7 @@ def delete_post(request, id):
 
 # set profile picture/avatar
 def set_avatar(request):
-
+    # avatars = Avatar.objects.all()
     id = request.session['sessionUserID']
     if request.method == "POST":
         print ('-'*40)
@@ -187,8 +187,19 @@ def set_avatar(request):
 
         form = AvatarForm(request.POST, request.FILES)
         if form.is_valid():
-            print 'valid'
-            form.save()
+            x = form.cleaned_data.get('x')
+            y = form.cleaned_data.get('y')
+            w = form.cleaned_data.get('width')
+            h = form.cleaned_data.get('height')
+            file = form.cleaned_data.get('file')
+
+            avatar = form.save()
+
+            image = Image.open(avatar.file)
+            cropped_image = image.crop((x, y, w+x, h+y))
+            resized_image = cropped_image.resize((300, 300), Image.ANTIALIAS)
+            resized_image.save(avatar.file.path)
+
             return redirect(reverse('social_media:myAccount', kwargs={'pk':id}))
         else:
             print 'NOT VALID!!!'
