@@ -179,12 +179,15 @@ def delete_post(request, id):
 
 # set profile picture/avatar
 def set_avatar(request):
-    # avatars = Avatar.objects.all()
     id = request.session['sessionUserID']
     if request.method == "POST":
-        print ('-'*40)
-        print ('session user id', id)
+        user = User.objects.get(id=id)
 
+    # if user already has an avatar, delete that avatar
+        if user.avatar:
+            user.avatar.delete()
+
+    # validate form and save or return error
         form = AvatarForm(request.POST, request.FILES)
         if form.is_valid():
             x = form.cleaned_data.get('x')
@@ -203,6 +206,7 @@ def set_avatar(request):
             return redirect(reverse('social_media:myAccount', kwargs={'pk':id}))
         else:
             print 'NOT VALID!!!'
+        ######## ADD ERROR MESSAGE AND RETURN ######
             return redirect(reverse('social_media:myAccount', kwargs={'pk':id}))
     else:
         form = AvatarForm()
