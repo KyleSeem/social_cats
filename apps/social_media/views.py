@@ -82,7 +82,8 @@ class ViewPostDetailView(DetailView):
 
         context = super(ViewPostDetailView, self).get_context_data(**kwargs)
         context['post'] = Post.objects.get(id=id)
-        context['comments'] = Comment.objects.filter(post=id).order_by('-created_at')
+        context['comments'] = Comment.objects.filter(post=id)
+        # context['comments'] = Comment.objects.filter(post=id).order_by('-created_at')
         context['users'] = User.objects.all()
 
         return context
@@ -98,10 +99,17 @@ class MyAccountListView(ListView):
 
     def get_context_data(self, **kwargs):
         id = self.kwargs['pk']
-        # Avatar.objects.all().delete()
+        user = User.objects.get(id=id)
+
+    # if user has an avatar already, use that, if not use default image
+        if hasattr(user, 'avatar') == True:
+            avatar = user.avatar.file.url
+        else:
+            avatar = 'static/social_media/img/avatar_300.jpg'
 
         context = super(MyAccountListView, self).get_context_data(**kwargs)
         context['user'] = User.objects.get(id=id)
+        context['avatar'] = avatar
         context['form'] = AvatarForm()
 
         return context
@@ -184,7 +192,8 @@ def set_avatar(request):
         user = User.objects.get(id=id)
 
     # if user already has an avatar, delete that avatar
-        if user.avatar:
+        if hasattr(user, 'avatar') == True:
+            print 'YEPPERS'
             user.avatar.delete()
 
     # validate form and save or return error

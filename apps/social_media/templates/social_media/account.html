@@ -18,11 +18,7 @@
 <!-- PAGE LAYOUT FOR SM, XS -->
     <section class="rounded bg-white p-3 d-block d-md-none">
         <label class="btn-link" for="id_file">
-            {% if user.avatar %}
-                <img class="avatar img-thumbnail p-2" src="/{{ user.avatar.file.url }}" alt="avatar" >
-            {% else %}
-                <img class="avatar img-thumbnail p-2" src="/static/social_media/img/avatar_300.jpg" alt="avatar" >
-            {% endif %}
+            <img class="avatar img-thumbnail p-2" src="/{{ avatar }}" alt="avatar" >
         </label>
 
         <div class="mt-2">
@@ -60,12 +56,7 @@
         <div class="d-flex">
             <div class=""  style="width: 33.333%!important;">
                 <div class="avatarWrapper position-relative">
-                    {% if user.avatar %}
-                        <img class="avatar img-thumbnail p-2" src="/{{ user.avatar.file.url }}" alt="avatar" >
-                    {% else %}
-                        <img class="avatar img-thumbnail p-2" src="/static/social_media/img/avatar_300.jpg" alt="avatar" >
-                    {% endif %}
-
+                    <img class="avatar img-thumbnail p-2" src="/{{ avatar }}" alt="avatar" >
                     <div class="middle">
                         <label class="btn-link border rounded-circle px-3 m-0" for="id_file" style="opacity:0.5; background:#f8f9fa; font-size:4em;">
                             <i class="fas fa-plus"></i>

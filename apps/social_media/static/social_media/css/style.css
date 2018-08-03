@@ -52,16 +52,13 @@ body {
 /* fluid container below navbar */
     #main-container {
         padding-top: 8.5em;
+        margin-bottom: 10vh;
     }
 
 /* modals modal */
     div.modal-dialog {
         max-width: fit-content;
     }
-    /* .post_image { */
-        /* max-width: 100%; */
-        /* max-height:50vh; */
-    /* } */
     #newPostHeader {
         font-size: 2em;
         font-family: 'Gochi Hand', cursive;
@@ -81,32 +78,42 @@ body {
         padding: .5em;
     }
 
-    #deleteImage {
-        float: right;
-        margin-bottom: -1em;
-        opacity: 0.7;
-        line-height: 0;
-        background: none;
-        border: none;
-        border-radius: 50%;
-        color: #dc3545;
-        font-size: 1.5em;
-    }
-    #deleteImage:hover {
-        color: white;
-        background: red;
-    }
-
-    #myAvatar {
-        width: 100%;
-    }
-
-    .fas.fa-pencil-alt {
+    /* .fas.fa-pencil-alt {
         color: #7d7d7d;
+    } */
+
+/* avatar-related */
+    .mini_avatar {
+        width: 10%;
     }
-    #avatarWrapper label:hover {
-        cursor: pointer;
+
+/* icon-related */
+    .icon-resize {
+        font-size: 1.2em;
     }
+
+}
+
+
+/* --------------------------------------- */
+/* ------- X-SMALL DEVICES/SCREENS ------- */
+
+@media screen and (max-width: 575.98px) {
+/* header and nav */
+    #myNav a, label {
+        font-size: .9em;
+    }
+    #myIcon {
+        width: 3em;
+    }
+
+/* avatar-related */
+    .mini_avatar {
+        width: 20%;
+    }
+
+
+}
 
 /* ------------------------------------------------ */
 /* ------- MEDIUM DEVICES/SCREENS ------- */
@@ -122,14 +129,14 @@ body {
         width: 50%;
     }
 
+
 /* fluid container below navbar */
     #main-container {
         padding-top: 10em;
     }
 
-    #myAvatar {
-        width: 50%;
-    }
+
+
 }
 
 
@@ -155,47 +162,24 @@ body {
     .grid-item {
         width: 33.333%;
     }
-
-    #viewPost {
-        max-width: 60vw;
+    .grid-sizer.album,
+    .grid-item.album {
+        width: 50%;
     }
 
-
+/* scrollable container */
+    .my-scroll {
+        max-height: 800px;
+        overflow: scroll;
+    }
 }
 
 /* ------------------------------------------------ */
 /* ------- X-LARGE DEVICES/SCREENS ------- */
 
 @media screen and (min-width: 1200px) {
-    #viewPost {
-        max-width: 90%;
-        width: fit-content;
-        /* max-height: 60vw; */
-    }
-    #viewPost div.my_cols {
-        margin: .5em;
-        margin-top: -.5em;
-        max-height: 60vh;
-    }
-    #viewPost div.my_cols.comments {
-        max-width: 35vw;
-        /* overflow: scroll; */
-    }
-    #viewPost div.my_cols.comments ul{
-        height: 90%;
-        overflow: scroll;
-    }
-    #viewPost img.pt {
-        /* max-width: 30vw; */
-        max-height: 60vh;
-    }
-    #viewPost img.ls {
-        /* max-width: 30vw; */
-        max-height: 60vh;
-    }
-    #commentForm {
-        height: 10%;
-    }
+
+/* modals */
     #cropPhotoModal img,
     #newPostModal img {
         max-height: 70vh;
@@ -211,15 +195,8 @@ body {
         width: 33.333%;
     }
 
-    #myAvatar {
-        /* width: 25%; */
-    }
-    /* div#avatarWrapper {
-        width: 300px;
-        height: 300px;
-        background-image: url("../img/avatar_300.jpg");
-    } */
-    .avatarWrapper:hover .avar.img-thumbnail {
+/* avatar-related */
+    .avatarWrapper:hover .avatar.img-thumbnail {
         opacity: 0.3;
     }
     .avatarWrapper:hover .middle {
@@ -243,27 +220,5 @@ body {
         -ms-transform: translate(-50%, -50%);
         text-align: center;
     }
-
-}
-
-
-/* --------------------------------------- */
-/* ------- X-SMALL DEVICES/SCREENS ------- */
-
-@media screen and (max-width: 575.98px) {
-/* header and nav */
-    #myNav a, label {
-        font-size: .9em;
-    }
-    #myIcon {
-        width: 3em;
-    }
-
-/* fluid container below navbar */
-    /* #main-container {
-        padding-top: 8.5em;
-        font-size: .9em;
-    } */
-
 
 }

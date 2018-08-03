@@ -20,6 +20,10 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
 
+        // switch visible icon on click
+        $('.icon-switch').on('click', function() {
+            $('i.switch').toggleClass('d-none');
+        });
 
     // if user signed in as guest, disable all write functions and apply tooltips
         if ({{request.session.sessionUserID}} == 0) {
