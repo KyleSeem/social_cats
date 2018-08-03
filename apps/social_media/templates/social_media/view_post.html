@@ -12,15 +12,16 @@
 
 <section class="col-lg-7 m-auto px-0 py-2">
     <div class="rounded p-2 p-md-3 bg-white">
-        <!-- if viewed post belongs to signed in user, user sees delete option -->
-        <div class="d-flex">
+
+    <!-- avatar and caption -->
+        <div class="d-flex pb-md-1">
             <div class="flex-grow-1">
                 <div class="media">
-                    <a class="mini_avatar mr-3" href="{% url 'social_media:myAlbum' post.user.id %}">
-                        <img class="rounded w-100" src="/{{ post.user.avatar.file.url }}" alt="user avatar" />
+                    <a class="mr-3" href="{% url 'social_media:myAlbum' post.user.id %}">
+                        <img class="post_avatar rounded" src="/{{ post.user.avatar.file.url }}" alt="user avatar" />
                     </a>
-                    <div class="align-self-center media-body">
-                        <h5 class="mb-1">{{ post.user.username }}</h5>
+                    <div class="media-body">
+                        <h5 class="mb-0">{{ post.user.username }} <small> | {{ post.created_at|naturaltime }}</small></h5>
                         {{ post.caption }}
                     </div>
                 </div>
@@ -63,7 +64,7 @@
                     <label id="commentLabel" class="sr-only" for="comment">Comment</label>
                     <textarea id="comment" class="form-control border-0 w-100" maxlength="255" rows="3" name="comment" placeholder="add comment..." required></textarea>
                 </div>
-                <div class="text-right">
+                <div class="text-right mr-2">
                     <button class="btn btn-primary py-0 px-2" type="submit">comment</button>
                 </div>
                 <!-- </fieldset> -->
@@ -72,14 +73,14 @@
 
     <!-- all comments div -->
 
-        <div class="border-top my-scroll my-2 px-1 px-md-0">
+        <div class="border-top my-scroll my-2">
             {% for comment in comments %}
                 <div class="media border-bottom py-2 py-md-3">
-                    <a class="mini_avatar mr-3" href="{% url 'social_media:myAlbum' comment.user.id %}">
-                        <img class="rounded w-100" src="/{{ comment.user.avatar.file.url }}" alt="user avatar" />
+                    <a class="mr-2 mr-md-3" href="{% url 'social_media:myAlbum' comment.user.id %}">
+                        <img class="comment_avatar rounded" src="/{{ comment.user.avatar.file.url }}" alt="user avatar" />
                     </a>
                     <div class="media-body">
-                        <h6 class="mb-1">{{ comment.user.username }} <small>at {{ comment.created_at|date:"g:i A - j M y" }}</small></h6>
+                        <h6 class="mb-0">{{ comment.user.username }} <small>at {{ comment.created_at|date:"g:i A - j M y" }}</small></h6>
                         {{ comment.comment }}
                     </div>
                 </div>

@@ -83,16 +83,22 @@ body {
     } */
 
 /* avatar-related */
-    .mini_avatar {
-        width: 10%;
+    .post_avatar {
+        width: 50px;
     }
+    .comment_avatar {
+        width: 45px;
+    }
+
 
 /* icon-related */
     .icon-resize {
         font-size: 1.2em;
     }
 
-}
+
+/* ----------- end general ----------------- */
+
 
 
 /* --------------------------------------- */
@@ -107,10 +113,6 @@ body {
         width: 3em;
     }
 
-/* avatar-related */
-    .mini_avatar {
-        width: 20%;
-    }
 
 
 }
@@ -135,6 +137,13 @@ body {
         padding-top: 10em;
     }
 
+/* avatar-related */
+    .post_avatar {
+        width: 70px;
+    }
+    .comment_avatar {
+        width: 60px;
+    }
 
 
 }
