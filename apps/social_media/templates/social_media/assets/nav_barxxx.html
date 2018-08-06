@@ -1,6 +1,5 @@
 
 {% include 'social_media/modals/new_post_modal.html' %}
-{% include 'social_media/modals/crop_pic_modal.html' %}
 
 <header class="page-header fixed-top">
 
@@ -31,9 +30,11 @@
                     <li class="nav-item {{ nav_myAlbum }}"><a class="nav-link" href="{%url 'social_media:myAlbum' request.session.sessionUserID %}"><i class="far fa-images pr-1"></i>My Album</a></li>
 
                     <li class="nav-item">
-                        <label id="addPhotoLabel" class="nav-link mb-0" for="id_photo"><i class="far fa-plus-square pr-1"></i> New Post</label>
-                        <form id="img_upload_form" class="d-none" enctype="multipart/form-data">
+                        <label id="addPhotoLabel" class="nav-link mb-0" for="photo"><i class="far fa-plus-square pr-1"></i> New Post</label>
+                        <form id="img_upload_form" enctype="multipart/form-data" runat="server">
                             {% csrf_token %}
+                            <!-- <input type="hidden" name="user" id="user" value="{{ request.session.sessionUserID }}" />
+                            <input id="photoInput" class="d-none" type="file" name="photo" /> -->
                             {{ photoUploadForm }}
                         </form>
                     </li>

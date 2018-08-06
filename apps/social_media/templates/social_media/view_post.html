@@ -10,7 +10,7 @@
 
 {% include 'social_media/modals/delete_modal.html' %}
 
-<section class="col-lg-7 m-auto px-0 py-2">
+<div class="d-flex justify-content-center px-0 py-2">
     <div class="rounded p-2 p-md-3 bg-white">
 
     <!-- avatar and caption -->
@@ -39,7 +39,8 @@
 
     <!-- image, timestamp, add comment toggle -->
         <div class="mt-2">
-            <img class="rounded w-100" src="/media/{{ post.photo.photo }}" alt="image for post id: {{ post.id }}">
+            <img class="rounded img-fluid" src="/media/{{ post.photo.photo }}" alt="image for post id: {{ post.id }}">
+            <!-- <img class="rounded w-100" src="/media/{{ post.photo.photo }}" alt="image for post id: {{ post.id }}"> -->
             <div class="row p-2">
                 <div class="col">
                     <small>{{ post.created_at|date:"g:i A - j M y" }}</small>
@@ -89,7 +90,7 @@
 
 
     </div>
-</section>
+</div>
 
 
 {% endblock %}

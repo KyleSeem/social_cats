@@ -1,0 +1,169 @@
+<!-- /templates/social_media/assets/jquery.html -->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+    // isotope layout defined
+        var $grid = $('.grid').isotope({
+            itemSelector: '.grid-item',
+            percentPosition: true,
+            masonry: {
+                columnWidth: '.grid-sizer'
+            }
+        });
+
+        $grid.imagesLoaded().progress(function() {
+            $grid.isotope('layout');
+        });
+
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        // switch visible icon on click
+        $('.icon-switch').on('click', function() {
+            $('i.switch').toggleClass('d-none');
+        });
+
+    // if user signed in as guest, disable all write functions and apply tooltips
+        if ({{request.session.sessionUserID}} == 0) {
+            // console.log('guest user');
+            $('fieldset').attr('disabled', true);
+            $('#addPhotoLabel').attr('for', "");
+
+            $('form').attr({'data-toggle':"tooltip", 'data-placement':"top", 'title':"sign in to use this feature"});
+        };
+
+
+
+        // $(".js-landscape-ratio").click(function() {
+        //     $image.cropper("setAspectRatio", 4/3);
+        // });
+        //
+        // $(".js-portrait-ratio").click(function() {
+        //     $image.cropper("setAspectRatio", 3/4);
+        // });
+        //
+        // $(".js-get-cropped-canvas").click(function() {
+        //
+        //
+        //
+        //
+        //     $(".freaky-friday").toggleClass('d-none');
+        //     // $canvas =
+        //
+        // });
+
+    // new post - when image selected, launches modal and shows image preview
+
+        // $("#id_photo").change(function() {
+        //     if (this.files && this.files[0]) {
+        //         var reader = new FileReader();
+        //         reader.onload = function(e) {
+        //             $("#image").attr("src", e.target.result);
+        //             $("#newPostModal").modal("show");
+        //         }
+        //         reader.readAsDataURL(this.files[0]);
+        //     }
+        // });
+        //
+        //
+        // // focus on text area once new post modal has loaded
+        // $('#newPostModal').on('shown.bs.modal', function() {
+        //     $image.cropper({
+        //         viewMode: 1,
+        //         aspectRatio: 4/3,
+        //         minCropBoxWidth: 100,
+        //         minCropBoxHeight: 100,
+        //         ready: function() {
+        //             $image.cropper("setCanvasData", canvasData);
+        //             $image.cropper("setCropBoxData", cropBoxData);
+        //         }
+        //     });
+        // }).on("hidden.bs.modal", function() {
+        //     cropBoxData = $image.cropper("getCropBoxData");
+        //     canvasData = $image.cropper("getCanvasData");
+        //     $image.cropper("destroy");
+        // });
+        //
+        // /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
+        // $(".js-crop-new_photo").click(function () {
+        //     var cropData = $image.cropper("getData");
+        //     console.log(cropData);
+        //     $("#id_user").val({{request.session.sessionUserID}})
+        //
+        //     $("#id_x").val(cropData["x"]);
+        //     $("#id_y").val(cropData["y"]);
+        //     $("#id_width").val(cropData["width"]);
+        //     $("#id_height").val(cropData["height"]);
+        //     // $("#new_post_form").submit();
+        //     console.log($("#new_post_form"));
+        // });
+
+// CROPPER STUFF
+
+        $("#id_file").change(function() {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $("#image").attr("src", e.target.result);
+                    $("#cropPhotoModal").modal("show");
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        var $image = $("#image");
+        var cropBoxData;
+        var canvasData;
+
+        $("#cropPhotoModal").on("shown.bs.modal", function() {
+            $image.cropper({
+                viewMode: 1,
+                aspectRatio: 1/1,
+                minCropBoxWidth: 300,
+                minCropBoxHeight: 300,
+                ready: function() {
+                    $image.cropper("setCanvasData", canvasData);
+                    $image.cropper("setCropBoxData", cropBoxData);
+                }
+            });
+        }).on("hidden.bs.modal", function() {
+            cropBoxData = $image.cropper("getCropBoxData");
+            canvasData = $image.cropper("getCanvasData");
+            $image.cropper("destroy");
+        });
+
+        $(".js-zoom-in").click(function() {
+            $image.cropper("zoom", 0.1);
+        });
+
+        $(".js-zoom-out").click(function() {
+            $image.cropper("zoom", -0.1);
+        });
+
+        /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
+        $(".js-crop-and-upload").click(function () {
+            var cropData = $image.cropper("getData");
+            console.log(cropData);
+            $("#id_user").val({{request.session.sessionUserID}})
+
+            $("#id_x").val(cropData["x"]);
+            $("#id_y").val(cropData["y"]);
+            $("#id_width").val(cropData["width"]);
+            $("#id_height").val(cropData["height"]);
+            $("#upload_form").submit();
+        });
+
+
+
+
+
+
+
+
+
+
+
+    });
+</script>

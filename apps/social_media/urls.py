@@ -10,7 +10,7 @@ handler404 = 'social_media.views.handler404'
 urlpatterns = [
     url(r'^dashboard$', DashboardListView.as_view(), name='index'),
 
-    url(r'^myAccount/(?P<pk>\d+)$', MyAccountListView.as_view(), name='myAccount'),
+    url(r'^myAccount/(?P<id>\d+)$', MyAccountListView.as_view(), name='myAccount'),
     # url(r'^myAccount$', views.myAccount, name='myAccount'),
 
     url(r'^myAlbum/(?P<id>\d+)$', MyAlbumListView.as_view(), name='myAlbum'),

@@ -9,29 +9,28 @@ from datetime import datetime
 from django.db import models
 from ..login_reg.models import User
 
+# define variables for desired date and time formats for save path structure
+upload_date_time = str(datetime.now())
+dt = upload_date_time.split(' ', 1)
+time = dt[1].split('.', 1)
 
 # save path for uploaded images
 def upload_path(instance, filename):
-    # define variables for desired date and time formats for save path structure
-    upload_date_time = str(datetime.now())
-    dt = upload_date_time.split(' ', 1)
-    time = dt[1].split('.', 1)
-
     # file will be uploaded to MEDIA_ROOT/user_<id>/<YYYY-MM-DD>/<filename>_<hhmmss>
-    return 'user_{0}/{1}/{2}_{3}'.format(instance.user.id, dt[0], filename, time[0])
+    return 'user_{0}/{1}/{2}_{3}'.format(instance.user.id, dt[0], time[0], filename)
 
 
 # save path for users' profile picture
 def avatar_upload_path(instance, filename):
     # save to user's media folder in avatar subfolder - should only ever be one image saved here
-    return 'user_{0}/avatar/{1}'.format(instance.user.id, filename)
+    return 'user_{0}/avatar/{1}_{2}'.format(instance.user.id, time[0], filename)
 
 
 # just the uploaded image with user connection
 class Photo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to=upload_path)
-    orientation = models.CharField(max_length=2)
+    # orientation = models.CharField(max_length=2)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

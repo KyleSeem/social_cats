@@ -76,6 +76,9 @@
                     <li class="list-group-item">
                         Item: <span class="text-secondary pl-2"><span class="text-secondary">id: {{ user.id }} | session id: {{ request.session.sessionUserID }}</span></span>
                     </li>
+                    <li class="list-group-item">
+                        Avatar: <span class="text-secondary">{{ user.avatar.file.filename }}</span>
+                    </li>
                 </ul>
             </div>
 
@@ -89,6 +92,7 @@
 
                     <li class="list-group-item bg-light">Settings</li>
                 </ul>
+                
             </div>
         </div>
 

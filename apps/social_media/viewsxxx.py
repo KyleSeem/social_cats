@@ -21,9 +21,10 @@ from .models import User, Photo, Post, Comment, Profile, Avatar
 from .forms import PhotoUploadForm, NewPostForm, NewCommentForm, AvatarForm
 
 
-# session info: userID is id of logged in user, user is username of logged in user
+# session info: userID is id of logged in user, thisUser is username of logged in user
 
 ###### NAVIGATION ######
+photoUploadForm = PhotoUploadForm()
 
 
 # DASHBOARD - landing page
@@ -41,7 +42,6 @@ class DashboardListView(ListView):
         context['users'] = User.objects.all()
         context['photos'] = Photo.objects.all()
         context['comments'] = Comment.objects.all()
-        context['photoUploadForm'] = PhotoUploadForm()
         context['nav_dashboard'] = 'active'
 
         return context
@@ -51,7 +51,7 @@ class DashboardListView(ListView):
 class MyAlbumListView(ListView):
     model = Post
     template_name = 'social_media/album.html'
-    context_object_name = 'user'
+    context_object_name = 'thisUser'
 
     def get_queryset(self):
         return Post.objects.all()
@@ -62,12 +62,11 @@ class MyAlbumListView(ListView):
         id = self.kwargs['id']
     # define context for user's album
         context = super(MyAlbumListView, self).get_context_data(**kwargs)
-        context['user'] = User.objects.get(id=id)
+        context['thisUser'] = User.objects.get(id=id)
         context['posts'] = Post.objects.filter(user=id).order_by('-created_at')
-        # context['photos'] = Photo.objects.filter(user=id)
+        context['photos'] = Photo.objects.filter(user=id)
         context['comments'] = Comment.objects.all()
-        # context['users'] = User.objects.all()
-        context['photoUploadForm'] = PhotoUploadForm()
+        context['users'] = User.objects.all()
         context['nav_myAlbum'] = 'active'
 
         return context
@@ -86,8 +85,8 @@ class ViewPostDetailView(DetailView):
         context = super(ViewPostDetailView, self).get_context_data(**kwargs)
         context['post'] = Post.objects.get(id=id)
         context['comments'] = Comment.objects.filter(post=id)
+        # context['comments'] = Comment.objects.filter(post=id).order_by('-created_at')
         context['users'] = User.objects.all()
-        context['photoUploadForm'] = PhotoUploadForm()
 
         return context
 
@@ -101,7 +100,7 @@ class MyAccountListView(ListView):
         return User.objects.all()
 
     def get_context_data(self, **kwargs):
-        id = self.kwargs['id']
+        id = self.kwargs['pk']
         user = User.objects.get(id=id)
 
     # if user has an avatar already, use that, if not use default image
@@ -114,7 +113,6 @@ class MyAccountListView(ListView):
         context['user'] = User.objects.get(id=id)
         context['avatar'] = avatar
         context['form'] = AvatarForm()
-        context['photoUploadForm'] = PhotoUploadForm()
 
         return context
 
@@ -125,48 +123,20 @@ class MyAccountListView(ListView):
 
 # create and save new photo and new post objects
 def new_post(request):
-    id = request.session['sessionUserID']
     if request.method == "POST":
-        user = User.objects.get(id=id)
-        request.POST['user'] = id
-
         photo_form = PhotoUploadForm(request.POST, request.FILES)
         post_form = NewPostForm(request.POST)
 
         # if BOTH forms pass validation
         if all([photo_form.is_valid(), post_form.is_valid()]):
-            x = photo_form.cleaned_data.get('x')
-            y = photo_form.cleaned_data.get('y')
-            w = photo_form.cleaned_data.get('width')
-            h = photo_form.cleaned_data.get('height')
-            photo = photo_form.cleaned_data.get('photo')
-
-
             # save new photo object
             new_photo = photo_form.save()
-
-            image = Image.open(new_photo.photo)
-            cropped_image = image.crop((x, y, w+x, h+y))
-            if w > h:
-                print 'landscape'
-                resized_image = cropped_image.resize((700, 525), Image.ANTIALIAS)
-            elif w < h:
-                print 'portrait'
-                resized_image = cropped_image.resize((525, 700), Image.ANTIALIAS)
-            elif w == h:
-                print 'square'
-                resized_image = cropped_image.resize((700, 700), Image.ANTIALIAS)
-
-            resized_image.save(new_photo.photo.path)
-
             # save new post (uses default as placeholder for photo field)
             new_post = post_form.save()
             # get new_post object and update photo field with new_photo object
             new_post.photo = Photo.objects.get(id=new_photo.id)
             # save changes to new_post object
             new_post.save()
-
-            print "IS VALID"
 
             return redirect(reverse('social_media:index'))
 
@@ -222,19 +192,15 @@ def set_avatar(request):
     id = request.session['sessionUserID']
     if request.method == "POST":
         user = User.objects.get(id=id)
-        request.POST['user'] = id
 
     # if user already has an avatar, delete that avatar
         if hasattr(user, 'avatar') == True:
             print 'YEPPERS'
             user.avatar.delete()
-        else:
-            print "NO AVATAR"
 
     # validate form and save or return error
         form = AvatarForm(request.POST, request.FILES)
         if form.is_valid():
-            print "VALID"
             x = form.cleaned_data.get('x')
             y = form.cleaned_data.get('y')
             w = form.cleaned_data.get('width')
@@ -248,11 +214,11 @@ def set_avatar(request):
             resized_image = cropped_image.resize((300, 300), Image.ANTIALIAS)
             resized_image.save(avatar.file.path)
 
-            return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
+            return redirect(reverse('social_media:myAccount', kwargs={'pk':id}))
         else:
             print 'NOT VALID!!!'
         ######## ADD ERROR MESSAGE AND RETURN ######
-            return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
+            return redirect(reverse('social_media:myAccount', kwargs={'pk':id}))
     else:
         form = AvatarForm()
     return redirect(reverse('social_media:myAccount', kwargs={'id':id}))

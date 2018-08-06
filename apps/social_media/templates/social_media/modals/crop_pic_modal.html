@@ -2,36 +2,38 @@
 
 <!-- template for cropping profile picture modal -->
 
-<div id="cropPhotoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cropPhotoModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div id="cropPhotoModal" class="modal fade avatar-modal" tabindex="-1" role="dialog" aria-labelledby="cropPhotoModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered mx-auto" role="document">
         <div class="modal-content">
         <!-- modal header -->
             <div class="modal-header py-1">
-                <!-- <strong id="newPostHeader" class="modal-title">Post a mew photo</strong> -->
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
         <!-- modal body -->
-                <div class="modal-body">
-                    <img src="" id="image" style="max-width:100%;">
+            <div class="modal-body">
+                <div class="" style="max-width: 100%;">
+                    <img src="" id="cropImage" style="max-width:100%;">
                 </div>
-        <!-- modal footer -->
-                <div class="modal-footer">
-                    <div class="btn-group pull-left" role="group">
-                        <button type="button" class="btn btn-info js-zoom-in">
-                            <i class="fas fa-search-plus"></i>
-                        </button>
-                        <button type="button" class="btn btn-info js-zoom-out">
-                            <i class="fas fa-search-minus"></i>
-                        </button>
-                    </div>
 
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary js-crop-and-upload">Set Profile Pic</button>
+            </div>
+
+    <!-- modal footer -->
+            <div class="modal-footer">
+                <div class="btn-group pull-left" role="group">
+                    <button type="button" class="btn btn-info js-zoom-in">
+                        <i class="fas fa-search-plus"></i>
+                    </button>
+                    <button type="button" class="btn btn-info js-zoom-out">
+                        <i class="fas fa-search-minus"></i>
+                    </button>
                 </div>
-            </form>
+
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary js-crop-and-upload">Set Profile Pic</button>
+            </div>
 
         <!-- end of modal content -->
         </div>
