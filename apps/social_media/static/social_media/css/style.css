@@ -66,7 +66,7 @@ body {
     }
     #cropPhotoModal img,
     #newPostModal img {
-        max-height: 60vh;
+        max-height: 55vh;
     }
 
 
@@ -181,6 +181,11 @@ body {
         max-height: 800px;
         overflow: scroll;
     }
+
+    #newPostModal img {
+        max-height: 60vh;
+        /* max-height: 50vh; */
+    }
 }
 
 /* ------------------------------------------------ */
@@ -193,7 +198,8 @@ body {
         max-height: 70vh;
     }
     #newPostModal img {
-        max-height: 50vh;
+        max-height: 60vh;
+        /* max-height: 50vh; */
     }
 
 /* isotope */

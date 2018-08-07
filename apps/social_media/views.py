@@ -149,13 +149,13 @@ def new_post(request):
             cropped_image = image.crop((x, y, w+x, h+y))
             if w > h:
                 print 'landscape'
-                resized_image = cropped_image.resize((700, 525), Image.ANTIALIAS)
+                resized_image = cropped_image.resize((600, 450), Image.ANTIALIAS)
             elif w < h:
                 print 'portrait'
-                resized_image = cropped_image.resize((525, 700), Image.ANTIALIAS)
+                resized_image = cropped_image.resize((450, 600), Image.ANTIALIAS)
             elif w == h:
                 print 'square'
-                resized_image = cropped_image.resize((700, 700), Image.ANTIALIAS)
+                resized_image = cropped_image.resize((450, 450), Image.ANTIALIAS)
 
             resized_image.save(new_photo.photo.path)
 
@@ -233,6 +233,8 @@ def set_avatar(request):
 
     # validate form and save or return error
         form = AvatarForm(request.POST, request.FILES)
+        print request.POST
+        print request.FILES
         if form.is_valid():
             print "VALID"
             x = form.cleaned_data.get('x')
@@ -245,7 +247,7 @@ def set_avatar(request):
 
             image = Image.open(avatar.file)
             cropped_image = image.crop((x, y, w+x, h+y))
-            resized_image = cropped_image.resize((300, 300), Image.ANTIALIAS)
+            resized_image = cropped_image.resize((450, 450), Image.ANTIALIAS)
             resized_image.save(avatar.file.path)
 
             return redirect(reverse('social_media:myAccount', kwargs={'id':id}))

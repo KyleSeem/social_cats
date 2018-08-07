@@ -40,13 +40,13 @@
     <!-- image, timestamp, add comment toggle -->
         <div class="mt-2">
             <img class="rounded img-fluid" src="/media/{{ post.photo.photo }}" alt="image for post id: {{ post.id }}">
-            <!-- <img class="rounded w-100" src="/media/{{ post.photo.photo }}" alt="image for post id: {{ post.id }}"> -->
             <div class="row p-2">
                 <div class="col">
                     <small>{{ post.created_at|date:"g:i A - j M y" }}</small>
                 </div>
+        <!-- toggle comment button -->
                 <div class="col text-right">
-                    <a role="button" class="icon-switch" data-toggle="collapse" data-target="#commentFormToggle" aria-expanded="false">
+                    <a id="commentFormToggleButton" role="button" class="icon-switch" data-toggle="collapse" data-target="#commentFormToggle" aria-expanded="false">
                         <i class="far fa-comment text-primary icon-resize switch"></i>
                         <i class="fas fa-times text-secondary icon-resize switch d-none"></i>
                     </a>
@@ -63,7 +63,7 @@
                 <input id="post" type="hidden" name="post" value="{{ post.id }}" />
                 <div class="form-group">
                     <label id="commentLabel" class="sr-only" for="comment">Comment</label>
-                    <textarea id="comment" class="form-control border-0 w-100" maxlength="255" rows="3" name="comment" placeholder="add comment..." required></textarea>
+                    <textarea id="comment" class="form-control border-0 w-100" maxlength="255" rows="3" name="comment" placeholder="add comment..." autofocus required></textarea>
                 </div>
                 <div class="text-right mr-2">
                     <button class="btn btn-primary py-0 px-2" type="submit">comment</button>

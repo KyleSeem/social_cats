@@ -10,60 +10,13 @@
 {% include 'social_media/modals/crop_pic_modal.html' %}
 
 <!-- hidden form for avatar creation / used for all screen sizes -->
-<form id="avatar_upload_form" class="d-none" enctype="multipart/form-data" action="{% url 'social_media:set_avatar' %}" method="POST">
+<form id="upload_form" class="d-none" enctype="multipart/form-data" action="{% url 'social_media:set_avatar' %}" method="POST">
     {% csrf_token %}
     {{ form }}
 </form>
 
-
-<div class="rounded bg-white mx-auto p-3 col-xl-10">
-    <!-- avatar image -->
-    <div class="d-md-flex">
-        <div class="text-center col-md-4 p-0">
-            <label class="btn-link" for="id_file">
-                <img id="accountAvatar" class="img-fluid img-thumbnail p-2" src="/{{ avatar }}" alt="avatar">
-            </label>
-        </div>
-
-        <div class="flex-fill pl-md-3">
-            <ul class="list-group" style="word-wrap:break-word;">
-                <li class="list-group-item bg-light">Account Details</li>
-                <!-- <a class="list-group-item list-group-item-action" href="#">
-                    Username: <span class="text-secondary">{{ user.username }}</span>
-                </a> -->
-                <li class="list-group-item">
-                    Username: <span class="text-secondary">{{ user.username }}</span>
-                </li>
-                <li class="list-group-item">
-                    Email: <span class="text-secondary">thelongestemaileverconceivedsortof@email.com</span>
-                </li>
-                <li class="list-group-item">
-                    Avatar: <span class="text-secondary">{{ user.avatar.file }}</span>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="w-100 pt-2">
-        <ul class="list-group">
-            <li class="list-group-item bg-light">Profile</li>
-            <li class="list-group-item">Item</li>
-            <li class="list-group-item">Item</li>
-            <li class="list-group-item">Item</li>
-        </ul>
-
-        <ul class="list-group">
-            <li class="list-group-item bg-light">Settings</li>
-            <li class="list-group-item">Item</li>
-            <li class="list-group-item">Item</li>
-            <li class="list-group-item">Item</li>
-        </ul>
-    </div>
-</div>
-
 <!-- PAGE LAYOUT FOR SM, XS -->
-    <section class="rounded bg-white p-3 d-none">
-    <!-- <section class="rounded bg-white p-3 d-block d-md-none"> -->
+    <section class="rounded bg-white p-3 d-block d-md-none">
         <label class="btn-link" for="id_file">
             <img class="avatar img-thumbnail p-2" src="/{{ avatar }}" alt="avatar" >
         </label>
@@ -99,8 +52,7 @@
 
 
 <!-- PAGE LAYOUT FOR MD, LG, XL -->
-    <section class="rounded bg-white p-3 d-none  w-75 m-auto">
-    <!-- <section class="rounded bg-white p-3 d-none d-md-block w-75 m-auto"> -->
+    <section class="rounded bg-white p-3 d-none d-md-block w-75 m-auto">
         <div class="d-flex">
             <div class=""  style="width: 33.333%!important;">
                 <div class="avatarWrapper position-relative">

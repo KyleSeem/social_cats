@@ -40,6 +40,8 @@
 
 
 
+
+// will try to consolidate cropper code in the future
 // CROPPER STUFF
         $("#id_photo").change(function() {
             if (this.files && this.files[0]) {
@@ -94,7 +96,6 @@
         // set avatar modal stuff
         $("#cropPhotoModal").on("shown.bs.modal", function() {
             $image = $cropImage;
-            console.log('crop image?', $image);
 
             $image.cropper({
                 viewMode: 1,
@@ -139,12 +140,10 @@
         $(".js-crop-and-post-new").click(function() {
             var cropData = $image.cropper("getData");
             // console.log(cropData);
-            //
             $("#id_x").val(cropData["x"]);
             $("#id_y").val(cropData["y"]);
             $("#id_width").val(cropData["width"]);
             $("#id_height").val(cropData["height"]);
-            // console.log($("#new_post_form"));
             // front-end form validation is skipped if use .submit() - clicking hidden submit button instead
             $('#submitNewPostButton').click()
         })
@@ -152,14 +151,12 @@
         // set avatar
         $(".js-crop-and-upload").click(function () {
             var cropData = $image.cropper("getData");
-            // console.log(cropData);
-            //
-            $("#id_x").val(cropData["x"]);
-            $("#id_y").val(cropData["y"]);
-            $("#id_width").val(cropData["width"]);
-            $("#id_height").val(cropData["height"]);
-            $("#upload_form").submit();
-            // console.log($("#upload_form"));
+            console.log(cropData);
+            $("#avatar_upload_form #id_x").val(cropData["x"]);
+            $("#avatar_upload_form #id_y").val(cropData["y"]);
+            $("#avatar_upload_form #id_width").val(cropData["width"]);
+            $("#avatar_upload_form #id_height").val(cropData["height"]);
+            $("#avatar_upload_form").submit();
         });
 
 
