@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'apps.login_reg',
     'apps.social_media',
     'django_extensions',
     'django_cleanup',
