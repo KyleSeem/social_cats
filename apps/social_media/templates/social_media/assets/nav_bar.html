@@ -21,20 +21,21 @@
 
         </div>
         <!-- not included in div above so will auto align to right -->
-        <span class="d-md-none navbar-text pr-1">Hi, {{ request.session.sessionUserName }}!</span>
+        <span class="d-md-none navbar-text text-capitalize pr-1">Hi, {{ user.username }}!</span>
 
 
         <!-- all nav bits incuded in collapse -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item {{ nav_dashboard }}"><a class="nav-link" href="{%url 'social_media:index' %}"><i class="fas fa-home pr-1"></i>Dashboard</a></li>
-                    <li class="nav-item {{ nav_myAlbum }}"><a class="nav-link" href="{%url 'social_media:myAlbum' request.session.sessionUserID %}"><i class="far fa-images pr-1"></i>My Album</a></li>
+                    <li class="nav-item {{ nav_dashboard }}"><a class="nav-link" href="{% url 'social_media:index' %}"><i class="fas fa-home pr-1"></i>Dashboard</a></li>
+                    <li class="nav-item {{ nav_myAlbum }}"><a class="nav-link" href="{% url 'social_media:myAlbum' user.id %}"><i class="far fa-images pr-1"></i>My Album</a></li>
 
                     <li class="nav-item">
                         <label id="addPhotoLabel" class="nav-link mb-0" for="id_photo"><i class="far fa-plus-square pr-1"></i> New Post</label>
                         <form id="img_upload_form" class="d-none" enctype="multipart/form-data">
                             {% csrf_token %}
-                            {{ photoUploadForm }}
+                            <!-- {{ photoUploadForm }} -->
+                            <input id="id_photo" type="file">
                         </form>
                     </li>
                     <!-- hidden button / jquery calls for modal -->
@@ -42,17 +43,13 @@
                         <button id="newPostModalButton" role="button" data-toggle="modal" data-target="#newPostModal"></button>
                     </li>
                     <li class="nav-item d-md-none">
-                        <a class="nav-link" href="{% url 'social_media:myAccount' request.session.sessionUserID %}"><i class="fas fa-cog pr-1"></i>My Account</a>
+                        <a class="nav-link" href="{% url 'social_media:myAccount' user.id %}"><i class="fas fa-cog pr-1"></i>My Account</a>
                     </li>
                     <li class="nav-item d-md-none">
                         <a class="nav-link" href="#"><i class="far fa-question-circle pr-1"></i>About Site</a>
                     </li>
                     <li class="nav-item d-md-none">
-                        {% if request.session.sessionUserID == 0 %}
-                            <a class="nav-link" href="{% url 'login_reg:logout' %}"><i class="fas fa-sign-out-alt mx-1 pr-1"></i><i>Sign In</i></a>
-                        {% else %}
-                            <a class="nav-link" href="{% url 'login_reg:logout' %}"><i class="fas fa-sign-out-alt mx-1 pr-1"></i><i>Logout</i></a>
-                        {% endif %}
+                        <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt mx-1 pr-1"></i><i>Logout</i></a>
                     </li>
                 </ul>
             </div>
@@ -61,18 +58,14 @@
             <ul class="nav navbar-nav mr-1 d-none d-md-inline">
                 <li class="nav-item dropdown">
                     <a id="userDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="pr-1">Hi, {{ request.session.sessionUserName }}!</span>
+                        <span class="text-capitalize pr-1">Hi, {{ user.username }}!</span>
                         <i class="far fa-user-circle"></i>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="userDropdown" style="min-width:9rem; left:-15px;">
-                        <a class="nav-link" href="{% url 'social_media:myAccount' request.session.sessionUserID %}"><i class="fas fa-cog mx-1 pr-1"></i>My Account</a>
+                        <a class="nav-link" href="{% url 'social_media:myAccount' user.id %}"><i class="fas fa-cog mx-1 pr-1"></i>My Account</a>
                         <a class="nav-link" href="#"><i class="far fa-question-circle mx-1 pr-1"></i>About Site</a>
                         <div class="dropdown-divider"></div>
-                        {% if request.session.sessionUserID == 0 %}
-                            <a class="nav-link" href="{% url 'login_reg:logout' %}"><i class="fas fa-sign-out-alt mx-1 pr-1"></i><i>Sign In</i></a>
-                        {% else %}
-                            <a class="nav-link" href="{% url 'login_reg:logout' %}"><i class="fas fa-sign-out-alt mx-1 pr-1"></i><i>Logout</i></a>
-                        {% endif %}
+                        <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt mx-1 pr-1"></i><i>Logout</i></a>
                     </div>
                 </li>
             </ul>

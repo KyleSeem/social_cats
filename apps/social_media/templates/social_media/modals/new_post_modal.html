@@ -16,7 +16,6 @@
         <!-- modal body -->
             <div class="modal-body">
                 <div class="" style="max-width:100%;">
-                    <!-- <div class="mb-2" style="max-width:600px;"> -->
                     <img id="newImage" class="" src="" style="max-width:100%;">
                 </div>
 
@@ -31,14 +30,14 @@
                     </div>
 
                     <div class="btn-group btn-group-toggle pull-left" role="group" data-toggle="buttons">
-                        <label class="btn btn-info active js-landscape-ratio"><i class="fas fa-crop-alt"></i>
-                            <input type="radio" name="ratio" id="ratioLandscape" autocomplete="off" checked>  4:3
+                        <label class="btn btn-info js-square-ratio active">
+                            <input type="radio" name="ratio" id="ratioSquare" autocomplete="off"> 1:1
                         </label>
                         <label class="btn btn-info js-portrait-ratio">
                             <input type="radio" name="ratio" id="ratioPortrait" autocomplete="off"> 3:4
                         </label>
-                        <label class="btn btn-info js-square-ratio">
-                            <input type="radio" name="ratio" id="ratioSquare" autocomplete="off"> 1:1
+                        <label class="btn btn-info js-landscape-ratio"><i class="fas fa-crop-alt"></i>
+                            <input type="radio" name="ratio" id="ratioLandscape" autocomplete="off" checked>  4:3
                         </label>
                     </div>
                 </div>
@@ -46,14 +45,12 @@
                 <div class="mt-2 w-100">
                     <form id="new_post_form" enctype="multipart/form-data" action="{% url 'social_media:new_post' %}" method="POST">
                         {% csrf_token %}
-                        <!-- {{ photoUploadForm }} -->
-                        <input id="id_user" name="user" type="hidden" value="{{ request.session.sessionUserID }}">
+                        <input id="id_user" name="user" type="hidden" value="{{ user.id }}">
                         <input id="id_photo" class="d-none" name="photo" type="file">
                         <input id="id_x" name="x" type="hidden">
                         <input id="id_y" name="y" type="hidden">
                         <input id="id_width" name="width" type="hidden">
                         <input id="id_height" name="height" type="hidden">
-                        <!-- <div class="d-none">{{ photoUploadForm }}</div> -->
                         <textarea name="caption" class="form-control" maxlength="255" rows="2" placeholder="add a caption..." required></textarea>
                         <button id="submitNewPostButton" class="d-none" type="submit">submit new post</button>
                     </form>

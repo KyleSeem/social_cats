@@ -26,13 +26,13 @@
         });
 
     // if user signed in as guest, disable all write functions and apply tooltips
-        if ({{request.session.sessionUserID}} == 0) {
-            // console.log('guest user');
-            $('fieldset').attr('disabled', true);
-            $('#addPhotoLabel').attr('for', "");
-
-            $('form').attr({'data-toggle':"tooltip", 'data-placement':"top", 'title':"sign in to use this feature"});
-        }
+        // if ({{request.session.sessionUserID}} == 0) {
+        //     // console.log('guest user');
+        //     $('fieldset').attr('disabled', true);
+        //     $('#addPhotoLabel').attr('for', "");
+        //
+        //     $('form').attr({'data-toggle':"tooltip", 'data-placement':"top", 'title':"sign in to use this feature"});
+        // }
         // else {
         //     console.log('real user');
         //     $('fieldset').attr('disabled', false);
@@ -71,32 +71,8 @@
         var $image;
         var cropBoxData;
         var canvasData;
-
-        // new post modal stuff
-        $("#newPostModal").on("shown.bs.modal", function() {
-            $image = $newImage;
-            console.log('new image?', $image);
-            $image.cropper({
-                viewMode: 1,
-                aspectRatio: 4/3,
-                minCropBoxWidth: 100,
-                minCropBoxHeight: 100,
-                zoomOnWheel: false,
-                ready: function() {
-                    $image.cropper("setCanvasData", canvasData);
-                    $image.cropper("setCropBoxData", cropBoxData);
-                }
-            });
-        }).on("hidden.bs.modal", function() {
-            cropBoxData = $image.cropper("getCropBoxData");
-            canvasData = $image.cropper("getCanvasData");
-            $image.cropper("destroy");
-        });
-
-        // set avatar modal stuff
-        $("#cropPhotoModal").on("shown.bs.modal", function() {
-            $image = $cropImage;
-
+    // initializes crop box as square
+        var setMyCropper = function() {
             $image.cropper({
                 viewMode: 1,
                 aspectRatio: 1/1,
@@ -108,6 +84,22 @@
                     $image.cropper("setCropBoxData", cropBoxData);
                 }
             });
+        };
+
+        // new post modal stuff
+        $("#newPostModal").on("shown.bs.modal", function() {
+            $image = $newImage;
+            setMyCropper();
+        }).on("hidden.bs.modal", function() {
+            cropBoxData = $image.cropper("getCropBoxData");
+            canvasData = $image.cropper("getCanvasData");
+            $image.cropper("destroy");
+        });
+
+        // set avatar modal stuff
+        $("#cropPhotoModal").on("shown.bs.modal", function() {
+            $image = $cropImage;
+            setMyCropper();
         }).on("hidden.bs.modal", function() {
             cropBoxData = $image.cropper("getCropBoxData");
             canvasData = $image.cropper("getCanvasData");

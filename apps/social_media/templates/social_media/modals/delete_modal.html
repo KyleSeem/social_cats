@@ -13,9 +13,7 @@
             <div class="modal-footer">
                 <form action="{% url 'social_media:delete_post' post.id %}" method="POST">
                     {% csrf_token %}
-                    <input type="hidden" name="user" id="user" value="{{ request.session.sessionUserID }}" />
-                    <input type="hidden" name="photo" id="photo" value="{{ post.photo.id }}" />
-                    <input type="hidden" name="previous" id="previous" value="{{ request.META.HTTP_REFERER }}" />
+                    <!-- <input id="post" name="post" type="hidden" value="{{ post.id }}"> -->
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Delete Post</button>
                 </form>
