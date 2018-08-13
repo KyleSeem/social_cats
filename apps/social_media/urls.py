@@ -1,24 +1,31 @@
 # apps/social_media/urls.py
 
 from django.conf.urls import url
+from django.contrib.auth import views as auth_views
+
 from . import views
-from views import DashboardListView, MyAlbumListView, ViewPostDetailView, MyAccountListView
+from views import MyAlbumListView, ViewPostDetailView, MyAccountListView
 
 app_name = 'social_media'
 handler404 = 'social_media.views.handler404'
 
 urlpatterns = [
-    url(r'^dashboard$', DashboardListView.as_view(), name='index'),
+    url(r'^$', views.index, name='index'),
 
-    url(r'^myAccount/(?P<id>\d+)$', MyAccountListView.as_view(), name='myAccount'),
-    # url(r'^myAccount$', views.myAccount, name='myAccount'),
+    url(r'^myAccount/(?P<id>\d+)$', views.MyAccountListView.as_view(), name='myAccount'),
+    url(r'^myAlbum/(?P<id>\d+)$', views.MyAlbumListView.as_view(), name='myAlbum'),
 
-    url(r'^myAlbum/(?P<id>\d+)$', MyAlbumListView.as_view(), name='myAlbum'),
+    url(r'^viewPost/(?P<pk>\d+)$', views.ViewPostDetailView.as_view(), name='viewPost'),
 
-    url(r'^viewPost/(?P<pk>\d+)$', ViewPostDetailView.as_view(), name='viewPost'),
-
-    url(r'^new_post$', views.new_post, name='new_post'),
+    url(r'^new_post/$', views.new_post, name='new_post'),
     url(r'^new_comment/(?P<id>\d+)$', views.new_comment, name='new_comment'),
-    url(r'^delete_post/(?P<id>\d+)$', views.delete_post, name='delete_post'),
-    url(r'^set_avatar$', views.set_avatar, name='set_avatar'),
+
+    url(r'^delete_post/(?P<pk>\d+)$', views.delete_post, name='delete_post'),
+
+    url(r'^set_avatar/$', views.set_avatar, name='set_avatar'),
+
+
+    # authentication urls
+    url(r'^login/$', auth_views.login, {'template_name':'registration/login.html'}, name='login'),
+    url(r'^register/$', views.register, name='register'),
 ]

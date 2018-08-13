@@ -3,26 +3,37 @@
 from PIL import Image
 from django import forms
 from django.core.files import File
-from .models import User, Photo, Post, Comment, Avatar, Profile
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from .models import Post, Comment, Profile
 
 
-class PhotoUploadForm(forms.ModelForm):
+class RegisterForm(UserCreationForm):
+    username = forms.CharField(max_length=60, error_messages={
+        'invalid': 'Username may only contain English letters, numbers, and @/./+/-/_ characters.',
+        'unique': 'Username already exists.'
+    })
+    email = forms.EmailField(max_length=254, help_text='Required', error_messages={'unique': 'Email has already been registered.'})
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')
+
+    # require unique email address
+    User._meta.get_field('email')._unique=True
+
+
+
+
+class NewPostForm(forms.ModelForm):
     x = forms.FloatField(widget=forms.HiddenInput())
     y = forms.FloatField(widget=forms.HiddenInput())
     width = forms.FloatField(widget=forms.HiddenInput())
     height = forms.FloatField(widget=forms.HiddenInput())
 
     class Meta:
-        model = Photo
-        # fields = ('user', 'photo')
-        fields = ('user', 'photo', 'x', 'y', 'width', 'height',)
-
-
-
-class NewPostForm(forms.ModelForm):
-    class Meta:
         model = Post
-        fields = ('user', 'caption',)
+        fields = ('user', 'photo', 'x', 'y', 'width', 'height', 'caption',)
 
 
 class NewCommentForm(forms.ModelForm):
@@ -38,9 +49,11 @@ class AvatarForm(forms.ModelForm):
     height = forms.FloatField(widget=forms.HiddenInput())
 
     class Meta:
-        model = Avatar
-        fields = ('user', 'file', 'x', 'y', 'width', 'height',)
+        # model = Avatar
+        # fields = ('user', 'file', 'x', 'y', 'width', 'height',)
 
+        model = Profile
+        fields = ('user', 'avatar', 'x', 'y', 'width', 'height',)
 
 
 
