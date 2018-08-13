@@ -60,7 +60,7 @@ ROOT_URLCONF = 'social_cats.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['./templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,6 +119,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 # ENV_PATH = os.path.abspath(os.path.dirname(__file__))
 # MEDIA_ROOT = os.path.join(ENV_PATH, 'media/')
