@@ -40,6 +40,7 @@ def index(request):
     newPostForm = NewPostForm()
     user = request.user
 
+
     context = {
         'user': user,
         'users': users,
@@ -193,8 +194,9 @@ def delete_post(request, pk):
     else:
         return redirect(reverse('social_media:viewPost', kwargs={'pk':pk}))
 
+
 # DELETE COMMENT - delete comment from user post
-# @login_required
+@login_required
 def delete_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     post = get_object_or_404(Post, pk=comment.post.id)
@@ -208,43 +210,33 @@ def delete_comment(request, pk):
 
 # AVATAR - set profile picture/avatar
 @login_required
-def set_avatar(request):
-    id = request.session['sessionUserID']
+def set_avatar(request, id):
+    print request.user.profile.avatar
     if request.method == "POST":
-        user = User.objects.get(id=id)
-        request.POST['user'] = id
-
-    # if user already has an avatar, delete that avatar
-        if hasattr(user, 'avatar') == True:
-            print 'YEPPERS'
-            user.avatar.delete()
-        else:
-            print "NO AVATAR"
-
-    # validate form and save or return error
-        form = AvatarForm(request.POST, request.FILES)
-        print request.POST
-        print request.FILES
+        # set form to target the profile associated with this user
+        form = AvatarForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             print "VALID"
             x = form.cleaned_data.get('x')
             y = form.cleaned_data.get('y')
             w = form.cleaned_data.get('width')
             h = form.cleaned_data.get('height')
-            file = form.cleaned_data.get('file')
+            avatar = form.cleaned_data.get('avatar')
 
-            avatar = form.save()
 
-            image = Image.open(avatar.file)
-            cropped_image = image.crop((x, y, w+x, h+y))
-            resized_image = cropped_image.resize((450, 450), Image.ANTIALIAS)
-            resized_image.save(avatar.file.path)
+            # profile = form.save()
+            #
+            # image = Image.open(profile.avatar)
+            # cropped_image = image.crop((x, y, w+x, h+y))
+            # resized_image = cropped_image.resize((450, 450), Image.ANTIALIAS)
+            # resized_image.save(profile.avatar.path)
 
             return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
         else:
             print 'NOT VALID!!!'
         ######## ADD ERROR MESSAGE AND RETURN ######
-            return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
+            # should there be a backup function that resets the avatar to default if error or if null?
+            # return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
     else:
         form = AvatarForm()
     return redirect(reverse('social_media:myAccount', kwargs={'id':id}))

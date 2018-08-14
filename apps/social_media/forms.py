@@ -53,7 +53,7 @@ class AvatarForm(forms.ModelForm):
         # fields = ('user', 'file', 'x', 'y', 'width', 'height',)
 
         model = Profile
-        fields = ('user', 'avatar', 'x', 'y', 'width', 'height',)
+        fields = ('avatar', 'x', 'y', 'width', 'height',)
 
 
 

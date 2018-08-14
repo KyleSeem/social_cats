@@ -11,6 +11,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
+
 # define variables for desired date and time formats for save path structure
 upload_date_time = str(datetime.now())
 dt = upload_date_time.split(' ', 1)
@@ -35,7 +37,8 @@ class Profile(models.Model):
     location = models.CharField(max_length=255, blank=True)
     dob = models.DateField(null=True, blank=True)
     bio = models.TextField(max_length=1000, blank=True)
-    avatar = models.ImageField(upload_to=avatar_upload_path, default='default_avatar/avatar.jpg', blank=True)
+    avatar = models.ImageField(upload_to=avatar_upload_path, null=True, blank=True)
+    # avatar = models.ImageField(upload_to=avatar_upload_path, blank=True, default='default_avatar/avatar.jpg')
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -59,6 +62,11 @@ class Profile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+
+# save file (as) to newly created profile
+@receiver(post_save, sender=User)
+def set_initial_avatar(sender, instance, **kwargs):
+    pass
 
 
 @receiver(post_save, sender=User)
@@ -96,3 +104,7 @@ class Comment(models.Model):
 
     class Meta:
         db_table = 'comments'
+
+
+
+####

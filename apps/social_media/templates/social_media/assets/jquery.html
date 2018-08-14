@@ -66,6 +66,10 @@
         });
 
 
+/* ACCOUNT PAGE */
+
+
+
 
 
 /* CROPPER FUNCTIONS */
@@ -84,12 +88,12 @@
         });
 
     // relates to avatar
-        $("#id_file").change(function() {
+        $("#id_avatar").change(function() {
             if (this.files && this.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                    $("#cropImage").attr("src", e.target.result);
-                    $("#cropPhotoModal").modal("show");
+                    $("#avatarImage").attr("src", e.target.result);
+                    $("#setAvatarModal").modal("show");
                 }
                 reader.readAsDataURL(this.files[0]);
             }
@@ -97,7 +101,7 @@
 
 // DEFINE VARIABLES
         var $newImage = $("#newImage");
-        var $cropImage = $("#cropImage");
+        var $avatarImage = $("#avatarImage");
         var $image;
         var cropBoxData;
         var canvasData;
@@ -130,8 +134,8 @@
         });
 
     // set avatar modal stuff
-        $("#cropPhotoModal").on("shown.bs.modal", function() {
-            $image = $cropImage;
+        $("#setAvatarModal").on("shown.bs.modal", function() {
+            $image = $avatarImage;
             setMyCropper();
         }).on("hidden.bs.modal", function() {
             cropBoxData = $image.cropper("getCropBoxData");
