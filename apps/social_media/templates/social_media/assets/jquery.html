@@ -22,7 +22,7 @@
 
         // switch visible icon on click
         $('.icon-switch').on('click', function() {
-            $('i.switch').toggleClass('d-none');
+            $('div.switch').toggleClass('d-none');
         });
 
     // if user signed in as guest, disable all write functions and apply tooltips
@@ -39,7 +39,18 @@
         // }
 
 
+    // VIEW POST PAGE - set max width of comments div to match width of image - keeps comments from growing
+        function adjustWidth() {
+            var $max_width = $('#postImage').width();
+            $('#commentWrapper').width($max_width);
+        };
+        adjustWidth();
 
+
+    // from the delete comment modal, if 'delete comment' is selected, submit delete comment form
+        $('#submitDeleteCommentButton').on('click', function() {
+            $('#deleteCommentForm').submit();
+        });
 
 // will try to consolidate cropper code in the future
 // CROPPER STUFF

@@ -19,8 +19,10 @@ urlpatterns = [
 
     url(r'^new_post/$', views.new_post, name='new_post'),
     url(r'^new_comment/(?P<id>\d+)$', views.new_comment, name='new_comment'),
+    # url(r'^new_comment/(?P<id>\d+)$', views.new_comment, name='new_comment'),
 
     url(r'^delete_post/(?P<pk>\d+)$', views.delete_post, name='delete_post'),
+    url(r'^delete_comment/(?P<pk>\d+)$', views.delete_comment, name='delete_comment'),
 
     url(r'^set_avatar/$', views.set_avatar, name='set_avatar'),
 

@@ -193,6 +193,17 @@ def delete_post(request, pk):
     else:
         return redirect(reverse('social_media:viewPost', kwargs={'pk':pk}))
 
+# DELETE COMMENT - delete comment from user post
+# @login_required
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    post = get_object_or_404(Post, pk=comment.post.id)
+
+    if request.method == "POST":
+        if request.user.id == comment.user.id:
+            comment.delete()
+
+    return redirect(reverse('social_media:viewPost', kwargs={'pk':post.id}))
 
 
 # AVATAR - set profile picture/avatar
