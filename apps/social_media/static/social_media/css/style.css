@@ -55,6 +55,19 @@ body {
         margin-bottom: 10vh;
     }
 
+    #ScrollToTopButton {
+        z-index: 99;
+        bottom: 20px;
+        right: 15px;
+        font-size: 1.75em;
+        width: 50px;
+        height: 50px;
+        opacity: 0.7;
+    }
+        #ScrollToTopButton i {
+            vertical-align: text-top;
+        }
+
 /* modals modal */
     div.modal-dialog {
         max-width: fit-content;
@@ -134,8 +147,19 @@ body {
 
 /* fluid container below navbar */
     #main-container {
-        padding-top: 10em;
+        padding-top: 10.5em;
     }
+
+    #ScrollToTopButton {
+        bottom: 25px;
+        right: 20px;
+        font-size: 2em;
+        width: 65px;
+        height: 65px;
+    }
+        #ScrollToTopButton i {
+            vertical-align: baseline;
+        }
 
 /* avatar-related */
     .post_avatar {
@@ -163,7 +187,7 @@ body {
 
 /* fluid container below navbar */
     #main-container {
-        padding-top: 14em;
+        padding-top: 14.5em;
     }
 
 /* isotope */
