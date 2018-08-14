@@ -3,6 +3,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
+// ISOTOPE FUNCTIONS
     // isotope layout defined
         var $grid = $('.grid').isotope({
             itemSelector: '.grid-item',
@@ -11,7 +12,7 @@
                 columnWidth: '.grid-sizer'
             }
         });
-
+    // load the images, allow in-time loading instead of waiting for all
         $grid.imagesLoaded().progress(function() {
             $grid.isotope('layout');
         });
@@ -20,40 +21,57 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
 
-        // switch visible icon on click
-        $('.icon-switch').on('click', function() {
-            $('div.switch').toggleClass('d-none');
+
+/* SCROLL TO TOP BUTTON FUNCTIONS */
+        var $document = this;
+
+    // when scrolling, call scroll button function
+        $(window).on('scroll', function() {
+            scrollButtonDisplay();
         });
 
-    // if user signed in as guest, disable all write functions and apply tooltips
-        // if ({{request.session.sessionUserID}} == 0) {
-        //     // console.log('guest user');
-        //     $('fieldset').attr('disabled', true);
-        //     $('#addPhotoLabel').attr('for', "");
-        //
-        //     $('form').attr({'data-toggle':"tooltip", 'data-placement':"top", 'title':"sign in to use this feature"});
-        // }
-        // else {
-        //     console.log('real user');
-        //     $('fieldset').attr('disabled', false);
-        // }
+    // show or hide scroll button based on scroll location
+        function scrollButtonDisplay() {
+            if ($document.body.scrollTop > 200 || $document.documentElement.scrollTop > 200) {
+                $('#ScrollToTopButton').removeClass('d-none');
+            }
+            else {
+                $('#ScrollToTopButton').addClass('d-none');
+            }
+        };
+
+    // take back to top on scroll button click
+        $('#ScrollToTopButton').on('click', function() {
+            $document.body.scrollTop = 0;
+            $document.documentElement.scrollTop = 0;
+        });
 
 
-    // VIEW POST PAGE - set max width of comments div to match width of image - keeps comments from growing
+/* VIEW POST PAGE */
+    // set max width of comments div to match width of image - keeps comments from growing
         function adjustWidth() {
             var $max_width = $('#postImage').width();
             $('#commentWrapper').width($max_width);
         };
         adjustWidth();
 
+    // for add comments toggle icons, switch visible icon on click
+        $('.icon-switch').on('click', function() {
+            $('div.switch').toggleClass('d-none');
+        });
 
     // from the delete comment modal, if 'delete comment' is selected, submit delete comment form
         $('#submitDeleteCommentButton').on('click', function() {
             $('#deleteCommentForm').submit();
         });
 
-// will try to consolidate cropper code in the future
-// CROPPER STUFF
+
+
+
+/* CROPPER FUNCTIONS */
+
+// grab data on file input change and launch cropper in modal
+    // relates to new post
         $("#id_photo").change(function() {
             if (this.files && this.files[0]) {
                 var reader = new FileReader();
@@ -65,6 +83,7 @@
             }
         });
 
+    // relates to avatar
         $("#id_file").change(function() {
             if (this.files && this.files[0]) {
                 var reader = new FileReader();
@@ -76,12 +95,13 @@
             }
         });
 
-        /* SCRIPTS TO HANDLE THE CROPPER BOX */
+// DEFINE VARIABLES
         var $newImage = $("#newImage");
         var $cropImage = $("#cropImage");
         var $image;
         var cropBoxData;
         var canvasData;
+
     // initializes crop box as square
         var setMyCropper = function() {
             $image.cropper({
@@ -97,7 +117,9 @@
             });
         };
 
-        // new post modal stuff
+// SCRIPTS TO HANDLE THE CROPPER BOX
+
+    // new post modal stuff
         $("#newPostModal").on("shown.bs.modal", function() {
             $image = $newImage;
             setMyCropper();
@@ -107,7 +129,7 @@
             $image.cropper("destroy");
         });
 
-        // set avatar modal stuff
+    // set avatar modal stuff
         $("#cropPhotoModal").on("shown.bs.modal", function() {
             $image = $cropImage;
             setMyCropper();
@@ -117,7 +139,7 @@
             $image.cropper("destroy");
         });
 
-    /* ADDITIONAL CROPPING FUNCTIONS */
+// ADDITIONAL CROPPING FUNCTIONS
         $(".js-zoom-in").click(function() {
             $image.cropper("zoom", 0.1);
         });
@@ -138,8 +160,9 @@
             $image.cropper("setAspectRatio", 1/1);
         });
 
-    /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
-        // new post
+//SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER
+
+    // new post
         $(".js-crop-and-post-new").click(function() {
             var cropData = $image.cropper("getData");
             // console.log(cropData);
@@ -151,7 +174,7 @@
             $('#submitNewPostButton').click()
         })
 
-        // set avatar
+    // set avatar
         $(".js-crop-and-upload").click(function () {
             var cropData = $image.cropper("getData");
             console.log(cropData);

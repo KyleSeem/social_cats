@@ -39,7 +39,7 @@
         </div>
 
     <!-- image, timestamp, add comment toggle -->
-        <div class="mt-2 ">
+        <div class="mt-2">
             <img id="postImage" class="rounded img-fluid" src="/{{ post.photo.url }}" alt="image for post id: {{ post.id }}">
             <div class="row p-2">
                 <div class="col">
@@ -47,14 +47,14 @@
                 </div>
         <!-- toggle comment button -->
                 <div class="col text-right">
-                    <a id="commentFormToggleButton" role="button" class="icon-switch" data-toggle="collapse" data-target="#commentFormToggle" aria-expanded="false">
+                    <a id="commentFormToggleButton" role="button" class="icon-switch btn btn-link p-0" data-toggle="collapse" data-target="#commentFormToggle" aria-expanded="false">
                         <div class="switch text-primary">
-                            <span class="d-none d-md-inline align-middle pr-1">comment</span>
-                            <i class="far fa-comment icon-resize align-middle"></i>
+                            <span class="d-none d-md-inline pr-1">comment</span>
+                            <i class="far fa-comment icon-resize align-text-top"></i>
                         </div>
                         <div class="switch text-secondary d-none">
-                            <span class="d-none d-md-inline align-middle pr-1">close</span>
-                            <i class="fas fa-times icon-resize align-middle"></i>
+                            <span class="d-none d-md-inline pr-1">close</span>
+                            <i class="fas fa-times icon-resize align-text-top"></i>
                         </div>
                     </a>
                 </div>
