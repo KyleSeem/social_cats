@@ -10,6 +10,7 @@ from django.views import generic
 from django.views.generic import ListView, DetailView, UpdateView
 
 from PIL import Image
+from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404, render_to_response
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -23,6 +24,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Post, Comment, Profile
 from .forms import NewPostForm, NewCommentForm, AvatarForm, RegisterForm
+
+
+
+
 
 
 
@@ -40,7 +45,6 @@ def index(request):
     newPostForm = NewPostForm()
     user = request.user
 
-
     context = {
         'user': user,
         'users': users,
@@ -50,7 +54,6 @@ def index(request):
         'newPostForm': newPostForm,
         'nav_dashboard': 'active',
     }
-
     return render(request, 'social_media/index.html', context=context)
 
 
@@ -66,7 +69,6 @@ class MyAlbumListView(generic.ListView):
         context = super(MyAlbumListView, self).get_context_data(**kwargs)
         context['posts'] = Post.objects.filter(user=id)
         context['nav_myAlbum'] = 'active'
-
 
         return context
 
@@ -84,6 +86,7 @@ class MyAccountListView(generic.ListView):
         context['form'] = AvatarForm()
 
         return context
+
 
 
 # VIEW POST - view selected post
@@ -224,12 +227,12 @@ def set_avatar(request, id):
             avatar = form.cleaned_data.get('avatar')
 
 
-            # profile = form.save()
-            #
-            # image = Image.open(profile.avatar)
-            # cropped_image = image.crop((x, y, w+x, h+y))
-            # resized_image = cropped_image.resize((450, 450), Image.ANTIALIAS)
-            # resized_image.save(profile.avatar.path)
+            profile = form.save()
+
+            image = Image.open(profile.avatar)
+            cropped_image = image.crop((x, y, w+x, h+y))
+            resized_image = cropped_image.resize((450, 450), Image.ANTIALIAS)
+            resized_image.save(profile.avatar.path)
 
             return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
         else:
