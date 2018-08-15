@@ -43,14 +43,18 @@
                     Avatar: <span class="text-secondary">{{ user.avatar.file }}</span>
                 </li>
             </ul>
+
+            <div class="mx-auto">
+                <a class="btn btn-info btn-large" href="{% url 'social_media:delete_avatar' user.id %}">Delete Avatar</a>
+            </div>
         </div>
     </div>
 
     <div class="w-100 pt-2">
         <ul class="list-group">
             <li class="list-group-item bg-light">Profile</li>
-            <li class="list-group-item">Item</li>
-            <li class="list-group-item">Item</li>
+            <li class="list-group-item">Sign up date: {{ user.profile.updated_at }}</li>
+            <li class="list-group-item">{{ user.profile.avatar }}</li>
             <li class="list-group-item">Item</li>
         </ul>
 

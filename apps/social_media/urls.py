@@ -25,6 +25,8 @@ urlpatterns = [
 
     url(r'^set_avatar/(?P<id>\d+)$', views.set_avatar, name='set_avatar'),
 
+    url(r'^delete_avatar/(?P<id>\d+)$', views.delete_avatar, name='delete_avatar'),
+
 
     # authentication urls
     url(r'^login/$', auth_views.login, {'template_name':'registration/login.html'}, name='login'),

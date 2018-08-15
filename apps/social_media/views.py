@@ -26,11 +26,6 @@ from .models import Post, Comment, Profile
 from .forms import NewPostForm, NewCommentForm, AvatarForm, RegisterForm
 
 
-
-
-
-
-
 # NOTE: class-based views get method_decorator for authentication, other views get login_required decorator
 
 ###### NAVIGATION ######
@@ -211,7 +206,7 @@ def delete_comment(request, pk):
     return redirect(reverse('social_media:viewPost', kwargs={'pk':post.id}))
 
 
-# AVATAR - set profile picture/avatar
+# SET AVATAR - set profile picture/avatar
 @login_required
 def set_avatar(request, id):
     print request.user.profile.avatar
@@ -225,7 +220,6 @@ def set_avatar(request, id):
             w = form.cleaned_data.get('width')
             h = form.cleaned_data.get('height')
             avatar = form.cleaned_data.get('avatar')
-
 
             profile = form.save()
 
@@ -244,7 +238,16 @@ def set_avatar(request, id):
         form = AvatarForm()
     return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
 
+# DELETE AVATAR - delete existing avatar - will force re-creation of default as avatar
+@login_required
+def delete_avatar(request, id):
 
+    # maybe have a get and post - get launches modal for confirmation, post completes
+    profile = Profile.objects.get(user=id)
+    profile.set_avatar_to_default()
+
+
+    return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
 
 
 ###### ERRORS ######

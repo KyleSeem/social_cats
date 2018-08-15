@@ -40,15 +40,12 @@ class Profile(models.Model):
     dob = models.DateField(null=True, blank=True)
     bio = models.TextField(max_length=1000, blank=True)
     avatar = models.ImageField(upload_to=avatar_upload_path, null=True, blank=True)
-    # avatar = models.ImageField(upload_to=avatar_upload_path, blank=True, default='default_avatar/avatar.jpg')
     # created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = 'user profile'
 
-    # def __str__(self):
-    #     return self.user
 
     def display_user_id(self):
         return self.user.id
@@ -57,35 +54,33 @@ class Profile(models.Model):
     def display_bio(self):
         # creating short string for admin site display
         return self.bio[:20] + '...'
-
     display_bio.short_description = "Bio"
 
+    # reset avatar to default
+    def set_avatar_to_default(self):
+        # if not self.avatar:
+        default = 'media/default_avatar/avatar.jpg'
+        d = open(default)
+        copyFile = ContentFile(d.read())
+        newName = default.split("/")[-1]
+        newDefault = self.avatar.save(newName, copyFile)
+        return self.avatar
 
-# create profile object and define default avatar when new user is created
-    # django_cleanup signals delete images after field is updated - this method
-    # will be used instead of just assigning the original image as default
+
+
+# create profile object and set default avatar when new user is created
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-
-        if not instance.profile.avatar:
-        # locate default image
-            default = 'media/default_avatar/avatar.jpg'
-        # open image file
-            d = open(default)
-        # copy original file as content file
-            copyFile = ContentFile(d.read())
-        # get name(only) of original image file (should be avatar.jpg unless default image is changed)
-            newName = default.split("/")[-1]
-        # save as avatar to user's avatar folder
-            newDefault = instance.profile.avatar.save(newName, copyFile)
+        instance.profile.set_avatar_to_default()
 
 
 # save user profile any time the user model is updated
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
 
 
 # whole post - includes user, photo and user-added caption
