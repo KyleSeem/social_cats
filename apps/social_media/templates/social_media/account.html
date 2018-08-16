@@ -8,6 +8,7 @@
 
 {% block content %}
 {% include 'social_media/modals/set_avatar_modal.html' %}
+{% include 'social_media/modals/delete_avatar_modal.html' %}
 
 <!-- hidden form for avatar creation / used for all screen sizes -->
 <form id="avatar_upload_form" class="d-none" enctype="multipart/form-data" action="{% url 'social_media:set_avatar' user.id %}" method="POST">
@@ -44,9 +45,7 @@
                 </li>
             </ul>
 
-            <div class="mx-auto">
-                <a class="btn btn-info btn-large" href="{% url 'social_media:delete_avatar' user.id %}">Delete Avatar</a>
-            </div>
+            <button class="btn btn-info btn-large" data-toggle="modal" data-target="#deleteAvatarModal">Delete Avatar</button>
         </div>
     </div>
 

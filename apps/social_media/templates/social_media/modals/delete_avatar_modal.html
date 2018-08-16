@@ -1,0 +1,20 @@
+
+
+<!-- delete avatar alert modal -->
+
+<div id="deleteAvatarModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteAvatarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <h4>Permanently delete this avatar?</h4>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="{% url 'social_media:delete_avatar' user.id %}">Delete Avatar</a>
+            </div>
+
+        </div>
+    </div>
+</div>
