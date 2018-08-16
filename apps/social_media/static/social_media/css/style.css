@@ -103,10 +103,42 @@ body {
         width: 45px;
     }
 
+    .avatarWrapper:hover .avatar.img-thumbnail {
+        opacity: 0.3;
+    }
+    .avatarWrapper:hover .middle {
+        opacity: 1;
+    }
+    #avatarLabel.btn-link:hover {
+        color: #007bff;
+    }
+    .avatar.img-thumbnail {
+        opacity: 1;
+        display: block;
+        width: 100%;
+        height: auto;
+        transition: .5s ease;
+        backface-visibility: hidden;
+    }
+    .middle {
+        transition: .5s ease;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+
 
 /* icon-related */
     .icon-resize {
         font-size: 1.2em;
+    }
+    a .fa-edit:hover {
+        color: #212529;
     }
 
 
@@ -234,32 +266,6 @@ body {
     .grid-sizer.album,
     .grid-item.album {
         width: 33.333%;
-    }
-
-/* avatar-related */
-    .avatarWrapper:hover .avatar.img-thumbnail {
-        opacity: 0.3;
-    }
-    .avatarWrapper:hover .middle {
-        opacity: 1;
-    }
-    .avatar.img-thumbnail {
-        opacity: 1;
-        display: block;
-        width: 100%;
-        height: auto;
-        transition: .5s ease;
-        backface-visibility: hidden;
-    }
-    .middle {
-        transition: .5s ease;
-        opacity: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        text-align: center;
     }
 
 }

@@ -241,11 +241,16 @@ def set_avatar(request, id):
 # DELETE AVATAR - delete existing avatar - will force re-creation of default as avatar
 @login_required
 def delete_avatar(request, id):
-
-    # maybe have a get and post - get launches modal for confirmation, post completes
     profile = Profile.objects.get(user=id)
     profile.set_avatar_to_default()
 
+    return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
+
+
+# UPDATE PROFILE (and/or User model)
+@login_required
+def update_profile(request, id):
+    print id
 
     return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
 

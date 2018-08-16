@@ -24,7 +24,6 @@
 
 /* SCROLL TO TOP BUTTON FUNCTIONS */
         var $document = this;
-
     // when scrolling, call scroll button function
         $(window).on('scroll', function() {
             scrollButtonDisplay();
@@ -60,8 +59,14 @@
 
 
 /* ACCOUNT PAGE */
-
-
+    // functionality only when using lap/desktop
+    // toggling display:none - allows hover effect defined in css to work
+    // but doesnt mess up the layout on smaller mobile screens
+        $('.avatarWrapper').on('mouseenter', function() {
+            $('.middle').toggleClass('d-none');
+        }).on('mouseleave', function() {
+            $('.middle').toggleClass('d-none');
+        });
 
 /* CROPPER FUNCTIONS */
 
