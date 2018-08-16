@@ -48,13 +48,6 @@
 
 
 /* VIEW POST PAGE */
-    // set max width of comments div to match width of image - keeps comments from growing
-        function adjustWidth() {
-            var $max_width = $('#postImage').width();
-            $('#commentWrapper').width($max_width);
-        };
-        adjustWidth();
-
     // for add comments toggle icons, switch visible icon on click
         $('.icon-switch').on('click', function() {
             $('div.switch').toggleClass('d-none');
@@ -67,8 +60,6 @@
 
 
 /* ACCOUNT PAGE */
-
-
 
 
 

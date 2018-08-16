@@ -77,7 +77,7 @@ body {
         font-family: 'Gochi Hand', cursive;
         font-family: 'Patrick Hand SC', cursive;
     }
-    #cropPhotoModal img,
+    #setAvatarModal img,
     #newPostModal img {
         max-height: 55vh;
     }
@@ -218,7 +218,7 @@ body {
 @media screen and (min-width: 1200px) {
 
 /* modals */
-    #cropPhotoModal img{
+    #setAvatarModal img{
         max-height: 70vh;
     }
     #newPostModal img {

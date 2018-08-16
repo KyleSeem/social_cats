@@ -11,7 +11,7 @@
 {% include 'social_media/modals/delete_post_modal.html' %}
 {% include 'social_media/modals/delete_comment_modal.html' %}
 
-<div class="d-flex justify-content-center px-0 py-2">
+<div class="col-md-9 col-lg-7 col-xl-5 mx-auto px-0 py-2">
     <div class="rounded p-2 p-md-3 bg-white">
 
     <!-- avatar and caption -->
@@ -84,7 +84,7 @@
             <!-- <div class="border-top my-scroll my-2"> -->
                 {% for comment in comments %}
                     <div class="d-flex">
-                        <div class="flex-grow-1">
+                        <div class="w-100">
                             <div class="media border-bottom py-2 py-md-3">
                                 <a class="mr-2 mr-md-3" href="{% url 'social_media:myAlbum' comment.user.id %}">
                                     <img class="comment_avatar rounded" src="/{{ comment.user.profile.avatar.url }}" alt="user avatar" />
@@ -99,7 +99,8 @@
                     <!-- delete option if user is comment author -->
                         {% if comment.user.id == user.id %}
                             <div class="d-flex">
-                                <div class="justify-content-end border-bottom py-2 py-md-3">
+                                <div class="flex-shrink-1 border-bottom py-2 py-md-3">
+                                <!-- <div class="justify-content-end border-bottom py-2 py-md-3"> -->
                                     <button class="close mx-1 icon-resize" type="button" data-toggle="modal" data-target="#deleteCommentModal" title="delete comment">
                                         <i class="fas fa-trash-alt text-info"></i>
                                     </button>
