@@ -40,7 +40,6 @@ class Profile(models.Model):
     dob = models.DateField(null=True, blank=True)
     bio = models.TextField(max_length=1000, blank=True)
     avatar = models.ImageField(upload_to=avatar_upload_path, null=True, blank=True)
-    # created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -58,7 +57,6 @@ class Profile(models.Model):
 
     # reset avatar to default
     def set_avatar_to_default(self):
-        # if not self.avatar:
         default = 'media/default_avatar/avatar.jpg'
         d = open(default)
         copyFile = ContentFile(d.read())
@@ -88,8 +86,6 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to=upload_path)
     caption = models.CharField(max_length=255)
-    com_count = models.IntegerField(default=0)
-    likes = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -98,6 +94,10 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('viewPost', args=[str(self.id)])
+
+    def __str__(self):
+        return str(self.id)
+
 
 
 
@@ -112,6 +112,21 @@ class Comment(models.Model):
     class Meta:
         db_table = 'comments'
 
+    def __str__(self):
+        return str(self.id)
+
+
+
+class Like(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_likes')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_likes')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('post', 'user')
+
+    def __str__(self):
+        return str(self.id)
 
 
 ####

@@ -28,6 +28,9 @@ urlpatterns = [
     url(r'^delete_avatar/(?P<id>\d+)$', views.delete_avatar, name='delete_avatar'),
 
 
+    url(r'^ajax/toggle_like/$', views.toggle_like, name='toggle_like'),
+
+
     # authentication urls
     url(r'^login/$', auth_views.login, {'template_name':'registration/login.html'}, name='login'),
     url(r'^register/$', views.register, name='register'),

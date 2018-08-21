@@ -68,6 +68,10 @@ body {
             vertical-align: text-top;
         }
 
+    .give-pointer:hover {
+        cursor: pointer;
+    }
+
 /* modals modal */
     div.modal-dialog {
         max-width: fit-content;

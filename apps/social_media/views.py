@@ -14,15 +14,19 @@ from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404, render_to_response
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.conf import settings
 from django.http import JsonResponse
+
+from django.conf import settings
 from datetime import datetime
 from urlparse import urlparse
+
+from django.db.models import Sum
 from django.utils.decorators import method_decorator
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.contrib.auth.models import User
-from .models import Post, Comment, Profile
+from .models import Post, Comment, Profile, Like
 from .forms import NewPostForm, NewCommentForm, AvatarForm, RegisterForm
 
 
@@ -30,7 +34,7 @@ from .forms import NewPostForm, NewCommentForm, AvatarForm, RegisterForm
 
 ###### NAVIGATION ######
 
-# DASHBOARD - landing page
+# DASHBOARD - landing page - initial data grab to pass to generic views
 @login_required
 def index(request):
     users = User.objects.all()
@@ -38,14 +42,22 @@ def index(request):
     posts = Post.objects.all()
     comments = Comment.objects.all()
     newPostForm = NewPostForm()
-    user = request.user
+
+    userLikes = Like.objects.filter(user=request.user)
+    like_array = []
+
+    for l in userLikes:
+        like_array.append(l.post.id)
+
+    request.session['like_array'] = like_array
 
     context = {
-        'user': user,
         'users': users,
         'profiles': profiles,
         'posts': posts,
         'comments': comments,
+        # 'userLikes': userLikes,
+        # 'like_array': like_array,
         'newPostForm': newPostForm,
         'nav_dashboard': 'active',
     }
@@ -173,7 +185,6 @@ def new_comment(request, id):
 
         if form.is_valid():
             comment = form.save()
-            post.com_count += 1
             post.save()
 
     return redirect(reverse('social_media:viewPost', kwargs={'pk':id}))
@@ -204,6 +215,39 @@ def delete_comment(request, pk):
             comment.delete()
 
     return redirect(reverse('social_media:viewPost', kwargs={'pk':post.id}))
+
+
+
+
+
+# TOGGLE LIKE
+
+# LIKE OR UNLIKE POST
+def toggle_like(request):
+    status = 'created'
+    post = Post.objects.get(id=request.GET.get('post_id', None))
+
+    like, created = Like.objects.filter(
+        Q(post=post) | Q(user=request.user),
+    ).get_or_create(post=post, user=request.user)
+
+    if not created:
+        like.delete()
+        status = 'deleted'
+
+
+
+
+    data = {
+        'status': status
+    }
+    return JsonResponse(data)
+
+
+
+
+
+
 
 
 # SET AVATAR - set profile picture/avatar

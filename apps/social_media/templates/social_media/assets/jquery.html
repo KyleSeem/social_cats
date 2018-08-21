@@ -49,13 +49,61 @@
 /* VIEW POST PAGE */
     // for add comments toggle icons, switch visible icon on click
         $('.icon-switch').on('click', function() {
-            $('div.switch').toggleClass('d-none');
+            $('.js-comment-switch').toggleClass('d-none');
         });
+
+
+        // $('.heart-switch').on('click', function() {
+        //     $(this).find('.switch').toggleClass('d-none');
+        // });
+
+        $('.js-heart-switch').click(function() {
+            var post_id = this.id;
+            var total_likes;
+            var $count = $(this).find('.js-like-count')[0];
+            if ($count) {
+                total_likes = parseInt($count.textContent);
+            }
+            var $i = $(this).find('i');
+
+            $.ajax({
+                url: '{% url "social_media:toggle_like" %}',
+                data: {
+                    'post_id': post_id,
+                },
+                dataType: 'json',
+                success: function(data) {
+                    // console.log(data);
+                    if (data.status == 'created') {
+                        if ($count) {
+                            total_likes += 1;
+                            $count.textContent = total_likes;
+                        }
+                        $i.removeClass().addClass('fas fa-heart text-danger align-text-bottom');
+                    }
+                    else if (data.status == 'deleted') {
+                        if ($count) {
+                            total_likes -= 1;
+                            $count.textContent = total_likes;
+                        }
+                        $i.removeClass().addClass('far fa-heart align-text-bottom');
+                    }
+                }
+            });
+        });
+
+
+
+
+
+
+
 
     // from the delete comment modal, if 'delete comment' is selected, submit delete comment form
         $('#submitDeleteCommentButton').on('click', function() {
             $('#deleteCommentForm').submit();
         });
+
 
 
 /* ACCOUNT PAGE */

@@ -5,7 +5,7 @@ from django import forms
 from django.core.files import File
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Post, Comment, Profile
+from .models import Post, Comment, Profile, Like
 
 
 class RegisterForm(UserCreationForm):
@@ -56,8 +56,14 @@ class AvatarForm(forms.ModelForm):
         fields = ('avatar', 'x', 'y', 'width', 'height',)
 
 
+class UpdateUserModelForm(forms.ModelForm):
+    pass
 
 
+
+
+class UpdateProfileForm(forms.ModelForm):
+    pass
 
 
 ######
