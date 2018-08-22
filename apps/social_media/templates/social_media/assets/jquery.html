@@ -52,11 +52,9 @@
             $('.js-comment-switch').toggleClass('d-none');
         });
 
-
-        // $('.heart-switch').on('click', function() {
-        //     $(this).find('.switch').toggleClass('d-none');
-        // });
-
+    // ajax request allows user to like/unlike post w/o refreshing page
+    // heart icon is toggled on click
+    // used on both index.html and view_post.html
         $('.js-heart-switch').click(function() {
             var post_id = this.id;
             var total_likes;
@@ -73,28 +71,24 @@
                 },
                 dataType: 'json',
                 success: function(data) {
-                    // console.log(data);
+                    console.log(data);
                     if (data.status == 'created') {
                         if ($count) {
                             total_likes += 1;
                             $count.textContent = total_likes;
                         }
-                        $i.removeClass().addClass('fas fa-heart text-danger align-text-bottom');
+                        $i.removeClass().addClass('fas fa-heart text-danger');
                     }
                     else if (data.status == 'deleted') {
                         if ($count) {
                             total_likes -= 1;
                             $count.textContent = total_likes;
                         }
-                        $i.removeClass().addClass('far fa-heart align-text-bottom');
+                        $i.removeClass().addClass('far fa-heart');
                     }
                 }
             });
         });
-
-
-
-
 
 
 
@@ -115,6 +109,20 @@
         }).on('mouseleave', function() {
             $('.middle').toggleClass('d-none');
         });
+
+    // toggle profile view on account page - view details vs edit details
+        $('.js-update-profile').on('click', function() {
+            $('.profile-view').toggleClass('d-none');
+        });
+
+    // toggle bio view on account page
+        $('.js-update-bio').on('click', function() {
+            $('.bio-view').toggleClass('d-none');
+        });
+
+
+
+
 
 /* CROPPER FUNCTIONS */
 

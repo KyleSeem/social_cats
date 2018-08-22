@@ -1,0 +1,60 @@
+<!-- included in account.html - toggle between viewing "General" details and updating them (form) -->
+<!-- separated for easier readability -->
+
+<!-- initial view - displays current data -->
+<div class="profile-view">
+    <ul class="list-group pt-2" style="word-wrap:break-word;">
+        <li class="list-group-item bg-light d-flex">
+            <span class="w-100">General</span>
+            <!-- toggle profile form -->
+            <span class="js-update-profile flex-shrink-1">
+                <i class="far fa-edit give-pointer text-muted"></i>
+            </span>
+        </li>
+
+        <li class="list-group-item">
+            First Name: <span class="text-secondary">{{ user.first_name }}</span>
+        </li>
+        <li class="list-group-item">
+            Last Name: <span class="text-secondary">{{ user.last_name }}</span>
+        </li>
+        <li class="list-group-item">
+            Nickname: <span class="text-secondary">{{ user.profile.nickname }}</span>
+        </li>
+        <li class="list-group-item">
+            Location: <span class="text-secondary">{{ user.profile.location }}</span>
+        </li>
+    </ul>
+</div>
+
+<!-- toggled view - displays form for user to update -->
+<div class="profile-view d-none">
+    <form action="{% url 'social_media:update_profile' %}" method="POST">
+        {% csrf_token %}
+        <ul class="list-group pt-2" style="word-wrap:break-word;">
+            <li class="list-group-item bg-light d-flex">
+                <span class="w-100">General</span>
+            <!-- toggle profile form -->
+                <span class="js-update-profile flex-shrink-1">
+                    <i class="fas fa-times give-pointer text-muted"></i>
+                </span>
+            </li>
+
+            <li class="list-group-item">
+                <input id="id_first_name" class="form-control border-0 p-0" name="first_name" type="text" placeholder="first name" value="{{ user.first_name }}">
+            </li>
+            <li class="list-group-item">
+                <input id="id_last_name" class="form-control border-0 p-0" name="last_name" type="text" placeholder="last name" value="{{ user.last_name }}">
+            </li>
+
+            <li class="list-group-item">
+                <input id="id_nickname" class="form-control border-0 p-0" name="nickname" type="text" placeholder="nickname" value="{{ user.profile.nickname }}">
+            </li>
+
+            <li class="list-group-item">
+                <input id="id_location" class="form-control border-0 p-0" name="location" type="text" placeholder="location" value="{{ user.profile.location }}">
+            </li>
+            <input type="submit" class="btn btn-sm btn-info" value="submit changes">
+        </ul>
+    </form>
+</div>

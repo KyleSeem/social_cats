@@ -1,0 +1,45 @@
+<!-- included in account.html - toggle form to update user's bio -->
+<!-- separated for easier readability -->
+
+<!-- initial view - displays current bio -->
+<ul class="bio-view list-group h-100 pb-md-2">
+    <li class="list-group-item bg-light d-flex">
+        <span class="w-100">Mewmoir</span>
+
+        <span class="js-update-bio flex-shrink-1">
+            <i class="far fa-edit text-muted"></i>
+        </span>
+    </li>
+    <li class="list-group-item text-justify h-100">
+        {% if user.profile.bio %}
+            <span class="text-secondary">{{ user.profile.bio }}</span>
+        {% else %}
+            <span class="text-black-50">Cat got your tongue? Tell us about yourself!</span>
+        {% endif %}
+    </li>
+</ul>
+
+
+<!-- toggled view - displays form for user to update -->
+<ul class="bio-view d-none list-group h-100 pb-md-2">
+    <li class="list-group-item bg-light d-flex">
+        <span class="w-100">Mewmoir</span>
+
+        <span class="js-update-bio flex-shrink-1">
+            <i class="far fa-edit text-muted"></i>
+        </span>
+    </li>
+
+    <li class="list-group-item text-justify h-100 p-0">
+        <form action="{% url 'social_media:update_bio' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group mb-0 px-2 py-1">
+                <textarea id="id_bio" name="bio" class="form-control border-0 m-0" rows="7" placeholder="type something here..." autofocus>{{ user.profile.bio }}</textarea>
+            </div>
+            <div class="text-right pr-1 w-100" style="margin-top:-20px;">
+                <input type="submit" class="btn btn-sm btn-info " value="done">
+            </div>
+        </form>
+    </li>
+
+</ul>

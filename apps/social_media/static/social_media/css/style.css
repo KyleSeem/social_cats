@@ -70,7 +70,16 @@ body {
 
     .give-pointer:hover {
         cursor: pointer;
+        text-decoration: none;
     }
+
+    a .fa-edit:hover {
+        color: #212529;
+    }
+
+    /* textarea:focus  {
+        outline: none !important;
+    } */
 
 /* modals modal */
     div.modal-dialog {
@@ -137,14 +146,6 @@ body {
 
 
 
-/* icon-related */
-    .icon-resize {
-        font-size: 1.2em;
-    }
-    a .fa-edit:hover {
-        color: #212529;
-    }
-
 
 /* ----------- end general ----------------- */
 
@@ -199,7 +200,7 @@ body {
 
 /* avatar-related */
     .post_avatar {
-        width: 70px;
+        width: 65px;
     }
     .comment_avatar {
         width: 60px;

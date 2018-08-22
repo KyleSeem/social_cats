@@ -14,20 +14,21 @@ urlpatterns = [
 
     url(r'^myAccount/(?P<id>\d+)$', views.MyAccountListView.as_view(), name='myAccount'),
     url(r'^myAlbum/(?P<id>\d+)$', views.MyAlbumListView.as_view(), name='myAlbum'),
-
     url(r'^viewPost/(?P<pk>\d+)$', views.ViewPostDetailView.as_view(), name='viewPost'),
 
     url(r'^new_post/$', views.new_post, name='new_post'),
-    url(r'^new_comment/(?P<id>\d+)$', views.new_comment, name='new_comment'),
-
     url(r'^delete_post/(?P<pk>\d+)$', views.delete_post, name='delete_post'),
+
+    url(r'^new_comment/(?P<id>\d+)$', views.new_comment, name='new_comment'),
     url(r'^delete_comment/(?P<pk>\d+)$', views.delete_comment, name='delete_comment'),
 
     url(r'^set_avatar/(?P<id>\d+)$', views.set_avatar, name='set_avatar'),
-
     url(r'^delete_avatar/(?P<id>\d+)$', views.delete_avatar, name='delete_avatar'),
 
+    url(r'^update_profile/$', views.update_profile, name='update_profile'),
+    url(r'^update_bio/$', views.update_bio, name='update_bio'),
 
+    # ajax urls
     url(r'^ajax/toggle_like/$', views.toggle_like, name='toggle_like'),
 
 

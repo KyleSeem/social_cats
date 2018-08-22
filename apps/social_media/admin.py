@@ -7,7 +7,7 @@ from .models import Profile, Post, Comment, Like
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('display_user_id', 'user', 'nickname', 'location', 'dob', 'display_bio', 'avatar')
+    list_display = ('display_user_id', 'user', 'nickname', 'location', 'display_bio', 'avatar')
 
 
 @admin.register(Post)

@@ -25,9 +25,10 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from .middleware import get_current_user
 from django.contrib.auth.models import User
 from .models import Post, Comment, Profile, Like
-from .forms import NewPostForm, NewCommentForm, AvatarForm, RegisterForm
+from .forms import NewPostForm, NewCommentForm, AvatarForm, RegisterForm, UpdateBioForm, UpdateUserModelForm, UpdateProfileForm
 
 
 # NOTE: class-based views get method_decorator for authentication, other views get login_required decorator
@@ -43,21 +44,18 @@ def index(request):
     comments = Comment.objects.all()
     newPostForm = NewPostForm()
 
-    userLikes = Like.objects.filter(user=request.user)
+    # compile array of posts that current user has liked so hearts appear correctly
     like_array = []
-
-    for l in userLikes:
+    for l in Like.objects.filter(user=request.user):
         like_array.append(l.post.id)
 
-    request.session['like_array'] = like_array
 
     context = {
         'users': users,
         'profiles': profiles,
         'posts': posts,
         'comments': comments,
-        # 'userLikes': userLikes,
-        # 'like_array': like_array,
+        'like_array': like_array,
         'newPostForm': newPostForm,
         'nav_dashboard': 'active',
     }
@@ -107,8 +105,14 @@ class ViewPostDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         id = self.kwargs['pk']
+        user_id = get_current_user()
+        like_array = []
+        for l in Like.objects.filter(user=user_id):
+            like_array.append(l.post.id)
+
         context = super(ViewPostDetailView, self).get_context_data(**kwargs)
         context['comments'] = Comment.objects.filter(post=id)
+        context['like_array'] = like_array
 
         return context
 
@@ -235,18 +239,10 @@ def toggle_like(request):
         like.delete()
         status = 'deleted'
 
-
-
-
     data = {
         'status': status
     }
     return JsonResponse(data)
-
-
-
-
-
 
 
 
@@ -276,7 +272,6 @@ def set_avatar(request, id):
         else:
             print 'NOT VALID!!!'
         ######## ADD ERROR MESSAGE AND RETURN ######
-            # should there be a backup function that resets the avatar to default if error or if null?
             # return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
     else:
         form = AvatarForm()
@@ -293,10 +288,38 @@ def delete_avatar(request, id):
 
 # UPDATE PROFILE (and/or User model)
 @login_required
-def update_profile(request, id):
-    print id
+def update_profile(request):
+    if request.method == "POST":
+        user_form = UpdateUserModelForm(request.POST, instance=request.user)
+        profile_form = UpdateProfileForm(request.POST, instance=request.user.profile)
 
-    return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+        else:
+            print 'something went wrong'
+            #### DO WE NEED AN ERROR MESSAGE HERE?? ####
+    else:
+        user_form = UpdateUserModelForm(instance=request.user)
+        profile_form = UpdateProfileForm(instance=request.user.profile)
+    return redirect(reverse('social_media:myAccount', kwargs={'id':request.user.id}))
+
+
+# UPDATE BIO (profile model)
+@login_required
+def update_bio(request):
+    if request.method == "POST":
+
+        form = UpdateBioForm(request.POST, instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+            print 'valid form!'
+        else:
+            print 'something went wrong'
+            #### DO WE NEED AN ERROR MESSAGE HERE?? ####
+    else:
+        form = UpdateBioForm(instance=request.user.profile)
+    return redirect(reverse('social_media:myAccount', kwargs={'id':request.user.id}))
 
 
 ###### ERRORS ######

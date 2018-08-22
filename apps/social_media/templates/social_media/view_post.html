@@ -33,7 +33,7 @@
             <!-- if viewed post belongs to signed in user, user sees delete option -->
             {% if post.user.id == user.id %}
                 <div class="justify-content-end">
-                    <button class="close mx-1 icon-resize" type="button" data-toggle="modal" data-target="#deletePostModal{{post.id}}" title="delete post">
+                    <button class="close mx-1 " type="button" data-toggle="modal" data-target="#deletePostModal{{post.id}}" title="delete post" style="font-size:1.2em;">
                         <i class="fas fa-trash-alt text-info"></i>
                     </button>
                 </div>
@@ -52,20 +52,20 @@
                 <span class="ml-1"><small>{{ post.created_at|date:"g:i A - j M y" }}</small></span>
             </div>
 
+            <div class="w-50 d-flex">
             <!-- like status -->
-            <div class="w-50 d-flex align-items-start">
-                <div id="{{ post.id }}" class="ml-auto js-heart-switch give-pointer px-4">
-                    {% if post.id in request.session.like_array %}
-                        <i class="fas fa-heart icon-resize text-danger"></i>
+                <div id="{{ post.id }}" class="ml-auto js-heart-switch give-pointer px-4" style="font-size:1.2em;">
+                    {% if post.id in like_array %}
+                        <i class="fas fa-heart text-danger"></i>
                     {% else %}
-                        <i class="far fa-heart icon-resize"></i>
+                        <i class="far fa-heart"></i>
                     {% endif %}
                 </div>
 
-                <!-- toggle comment button -->
-                <a id="commentFormToggleButton" role="button" class="icon-switch give-pointer p-0" data-toggle="collapse" data-target="#commentFormToggle" aria-expanded="false">
-                    <i class="far fa-comment icon-resize text-primary js-comment-switch"></i>
-                    <i class="fas fa-times icon-resize text-secondary js-comment-switch d-none"></i>
+            <!-- toggle comment button -->
+                <a id="commentFormToggleButton" role="button" class="icon-switch give-pointer p-0" data-toggle="collapse" data-target="#commentFormToggle" aria-expanded="false" style="font-size:1.2em;">
+                    <i class="far fa-comment text-primary js-comment-switch"></i>
+                    <i class="fas fa-times text-secondary js-comment-switch d-none"></i>
                 </a>
             </div>
 
@@ -108,7 +108,7 @@
                         {% if comment.user.id == user.id %}
                             <div class="d-flex">
                                 <div class="flex-shrink-1 border-bottom py-2 py-md-3">
-                                    <button class="close mx-1 icon-resize" type="button" data-toggle="modal" data-target="#deleteCommentModal" title="delete comment">
+                                    <button class="close mx-1" type="button" data-toggle="modal" data-target="#deleteCommentModal" title="delete comment" style="font-size:1.2em;">
                                         <i class="fas fa-trash-alt text-info"></i>
                                     </button>
                                 </div>

@@ -23,8 +23,6 @@ class RegisterForm(UserCreationForm):
     User._meta.get_field('email')._unique=True
 
 
-
-
 class NewPostForm(forms.ModelForm):
     x = forms.FloatField(widget=forms.HiddenInput())
     y = forms.FloatField(widget=forms.HiddenInput())
@@ -56,14 +54,23 @@ class AvatarForm(forms.ModelForm):
         fields = ('avatar', 'x', 'y', 'width', 'height',)
 
 
-class UpdateUserModelForm(forms.ModelForm):
-    pass
+class UpdateBioForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('bio',)
 
+
+class UpdateUserModelForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name',)
 
 
 
 class UpdateProfileForm(forms.ModelForm):
-    pass
+    class Meta:
+        model = Profile
+        fields = ('nickname', 'location',)
 
 
 ######
