@@ -56,7 +56,7 @@
 
                     <!-- likes count and icon -->
                         <span id="{{ post.id }}" class="ml-auto js-heart-switch give-pointer">
-                            {% if post.id in request.session.like_array %}
+                            {% if post.id in like_array %}
                                 <i class="fas fa-heart text-danger"></i>
                             {% else %}
                                 <i class="far fa-heart"></i>
@@ -65,16 +65,18 @@
                         </span>
 
                     <!-- comment count -->
-                        <!-- may use this later as comment form - not sure yet -->
-                        <!-- <div class="ml-auto">
-                            <span class=""><i class="far fa-comment text- px-2"></i><small>{{ post.comment_set.all.count }}</small></span>
-                        </div> -->
+                        <span class="js-comment-bubble pr-2 pl-4">
+                            <a class="give-pointer" href="{% url 'social_media:viewPost' post.id %}">
+                                <i class="far fa-comment text-primary"></i>
+                            </a>
+                            <small>{{ post.comment_set.all.count }}</small>
+                        </span>
 
-                        {% with total=post.comment_set.all.count %}
+                        <!-- {% with total=post.comment_set.all.count %}
                             <span class="ml-auto px-2">
                                 <small class="">{{ total }} comment{{ total|pluralize }}</small>
                             </span>
-                        {% endwith %}
+                        {% endwith %} -->
                     </div>
 
                 </div>
