@@ -28,7 +28,7 @@ from django.db.models import Q
 from .middleware import get_current_user
 from django.contrib.auth.models import User
 from .models import Post, Comment, Profile, Like
-from .forms import NewPostForm, NewCommentForm, AvatarForm, RegisterForm, UpdateBioForm, UpdateUserModelForm, UpdateProfileForm
+from .forms import RegisterForm, NewPostForm, NewCommentForm, AvatarForm, UpdateBioForm, UpdateUserModelForm, UpdateProfileForm
 
 
 # NOTE: class-based views get method_decorator for authentication, other views get login_required decorator
@@ -85,9 +85,9 @@ class MyAccountListView(generic.ListView):
     model = User
     template_name = 'social_media/account.html'
 
-    def get_context_data(self, **kwargs):
-        id = self.kwargs['id']
-        context = super(MyAccountListView, self).get_context_data(**kwargs)
+    def get_context_data(self):
+        id = get_current_user()
+        context = super(MyAccountListView, self).get_context_data()
         context['form'] = AvatarForm()
 
         return context
@@ -142,6 +142,26 @@ def register(request):
         form = RegisterForm()
     return render(request, 'registration/register.html', {'form':form})
 
+# DELETE ACCOUNT - delete user's account
+@login_required
+def delete_account(request):
+    if request.method == "POST":
+        # check the password entered against the current user's password
+        user = authenticate(username=request.user.username, password=request.POST['password'])
+
+        if user is not None:
+            # if the password matches the current user's password (is_authenticated)
+            User.objects.get(id=request.user.id).delete()
+            return redirect('social_media:register')
+        else:
+            error = "Password does not match our records."
+            return render(request, 'social_media/delete_account.html', {'error':error})
+
+    else:
+        return render(request, 'social_media/delete_account.html')
+
+
+
 
 
 # NEW POST - create and save new photo and new post objects
@@ -175,9 +195,21 @@ def new_post(request):
         # save resized image file
             resized_image.save(new_post.photo.path)
             return redirect(reverse('social_media:index'))
-
     else:
         return redirect(reverse('social_media:index'))
+
+
+# DELETE POST and all associated objects (comments, photo)
+@login_required
+def delete_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        if request.user.id == post.user.id:
+            post.delete()
+            return redirect(reverse('social_media:myAlbum', kwargs={'id':request.user.id}))
+    else:
+        return redirect(reverse('social_media:viewPost', kwargs={'pk':pk}))
+
 
 
 # NEW COMMENT - create and save new comment for specified post
@@ -194,20 +226,6 @@ def new_comment(request, id):
     return redirect(reverse('social_media:viewPost', kwargs={'pk':id}))
 
 
-
-# DELETE POST and all associated objects (comments, photo)
-@login_required
-def delete_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    if request.method == "POST":
-        if request.user.id == post.user.id:
-            post.delete()
-            return redirect(reverse('social_media:myAlbum', kwargs={'id':request.user.id}))
-
-    else:
-        return redirect(reverse('social_media:viewPost', kwargs={'pk':pk}))
-
-
 # DELETE COMMENT - delete comment from user post
 @login_required
 def delete_comment(request, pk):
@@ -222,11 +240,8 @@ def delete_comment(request, pk):
 
 
 
-
-
-# TOGGLE LIKE
-
 # LIKE OR UNLIKE POST
+@login_required
 def toggle_like(request):
     status = 'created'
     post = Post.objects.get(id=request.GET.get('post_id', None))
@@ -248,7 +263,7 @@ def toggle_like(request):
 
 # SET AVATAR - set profile picture/avatar
 @login_required
-def set_avatar(request, id):
+def set_avatar(request):
     print request.user.profile.avatar
     if request.method == "POST":
         # set form to target the profile associated with this user
@@ -268,22 +283,23 @@ def set_avatar(request, id):
             resized_image = cropped_image.resize((450, 450), Image.ANTIALIAS)
             resized_image.save(profile.avatar.path)
 
-            return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
+            return redirect(reverse('social_media:myAccount', kwargs={'id':request.user.id}))
         else:
             print 'NOT VALID!!!'
         ######## ADD ERROR MESSAGE AND RETURN ######
             # return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
     else:
         form = AvatarForm()
-    return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
+    return redirect(reverse('social_media:myAccount', kwargs={'id':request.user.id}))
+
 
 # DELETE AVATAR - delete existing avatar - will force re-creation of default as avatar
 @login_required
-def delete_avatar(request, id):
-    profile = Profile.objects.get(user=id)
+def delete_avatar(request):
+    profile = Profile.objects.get(user=request.user.id)
     profile.set_avatar_to_default()
 
-    return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
+    return redirect(reverse('social_media:myAccount', kwargs={'id':request.user.id}))
 
 
 # UPDATE PROFILE (and/or User model)
