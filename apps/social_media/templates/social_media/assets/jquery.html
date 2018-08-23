@@ -71,7 +71,7 @@
                 },
                 dataType: 'json',
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.status == 'created') {
                         if ($count) {
                             total_likes += 1;
@@ -110,6 +110,14 @@
             $('.middle').toggleClass('d-none');
         });
 
+    // sets the bio textarea height to 70% of the avatar image.
+    // this is unnecessary, but I added it to help the textarea be a little more responsive by device
+        if (this.location.pathname == "/kittenstagram/myAccount/") {
+            $ph = $('#accountAvatar')[0].offsetHeight;
+            a = ($ph*.7);
+            $('textarea#id_bio').css('height', a);
+        };
+
     // toggle profile view on account page - view details vs edit details
         $('.js-update-profile').on('click', function() {
             $('.profile-view').toggleClass('d-none');
@@ -121,7 +129,11 @@
         });
 
 
-
+// DELETE ACCOUNT CONFIRMATION PAGE
+    // hides navbar
+        if (this.location.pathname == "/kittenstagram/delete_account/") {
+            $('#navbarContainer').addClass('d-none');
+        };
 
 
 /* CROPPER FUNCTIONS */
@@ -141,6 +153,8 @@
 
     // relates to avatar
         $("#id_avatar").change(function() {
+            $("#viewAvatarModal").modal("hide");
+
             if (this.files && this.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
@@ -151,7 +165,7 @@
             }
         });
 
-// DEFINE VARIABLES
+    // DEFINE CROPPER VARIABLES
         var $newImage = $("#newImage");
         var $avatarImage = $("#avatarImage");
         var $image;

@@ -77,9 +77,10 @@ body {
         color: #212529;
     }
 
-    /* textarea:focus  {
-        outline: none !important;
-    } */
+    #deleteAccountButton:hover {
+        cursor: pointer;
+        font-style: italic;
+    }
 
 /* modals modal */
     div.modal-dialog {
@@ -121,9 +122,6 @@ body {
     }
     .avatarWrapper:hover .middle {
         opacity: 1;
-    }
-    #avatarLabel.btn-link:hover {
-        color: #007bff;
     }
     .avatar.img-thumbnail {
         opacity: 1;
