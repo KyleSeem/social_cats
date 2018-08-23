@@ -12,7 +12,7 @@ handler404 = 'social_media.views.handler404'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
 
-    url(r'^myAccount/(?P<id>\d+)$', views.MyAccountListView.as_view(), name='myAccount'),
+    url(r'^myAccount/$', views.MyAccountListView.as_view(), name='myAccount'),
     url(r'^myAlbum/(?P<id>\d+)$', views.MyAlbumListView.as_view(), name='myAlbum'),
     url(r'^viewPost/(?P<pk>\d+)$', views.ViewPostDetailView.as_view(), name='viewPost'),
 
@@ -22,11 +22,13 @@ urlpatterns = [
     url(r'^new_comment/(?P<id>\d+)$', views.new_comment, name='new_comment'),
     url(r'^delete_comment/(?P<pk>\d+)$', views.delete_comment, name='delete_comment'),
 
-    url(r'^set_avatar/(?P<id>\d+)$', views.set_avatar, name='set_avatar'),
-    url(r'^delete_avatar/(?P<id>\d+)$', views.delete_avatar, name='delete_avatar'),
+    url(r'^set_avatar/$', views.set_avatar, name='set_avatar'),
+    url(r'^delete_avatar/$', views.delete_avatar, name='delete_avatar'),
 
     url(r'^update_profile/$', views.update_profile, name='update_profile'),
     url(r'^update_bio/$', views.update_bio, name='update_bio'),
+
+    url(r'^delete_account/$', views.delete_account, name='delete_account'),
 
     # ajax urls
     url(r'^ajax/toggle_like/$', views.toggle_like, name='toggle_like'),
