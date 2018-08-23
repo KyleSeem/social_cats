@@ -34,7 +34,7 @@ def avatar_upload_path(instance, filename):
 
 # user's additional personal details (all optional)
 class Profile(models.Model):
-    user = models.OneToOneField(User, parent_link=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     nickname = models.CharField(max_length=55, blank=True)
     location = models.CharField(max_length=255, blank=True)
     bio = models.TextField(max_length=1000, blank=True)
