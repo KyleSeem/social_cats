@@ -8,39 +8,39 @@
 
 {% block content %}
 {% include 'social_media/modals/set_avatar_modal.html' %}
+{% include 'social_media/modals/view_avatar_modal.html' %}
 {% include 'social_media/modals/delete_avatar_modal.html' %}
+{% include 'social_media/modals/delete_account_modal.html' %}
 
 <!-- hidden form for avatar creation / used for all screen sizes -->
-<form id="avatar_upload_form" class="d-none" enctype="multipart/form-data" action="{% url 'social_media:set_avatar' user.id %}" method="POST">
+<form id="avatar_upload_form" class="d-none" enctype="multipart/form-data" action="{% url 'social_media:set_avatar' %}" method="POST">
     {% csrf_token %}
     {{ form }}
 </form>
 
 
-<div class="rounded bg-white mx-auto p-3 col-xl-7">
+<div class="rounded bg-white mx-auto p-3 col-lg-9 col-xl-7">
     <!-- avatar image -->
-    <div class="d-md-flex">
-        <div class="avatarWrapper col-md-4 p-0">
-            <label id="avatarLabel" class="btn-link" for="id_avatar">
+    <div class="d-md-flex mb-md-2">
+        <div class="avatarWrapper mb-2 mb-md-0 col-md-4 p-0">
+            <button class="btn-link bg-none border-0 p-0 m-0" data-toggle="modal" data-target="#viewAvatarModal">
                 <img id="accountAvatar" class="img-thumbnail p-2" src="/{{ user.profile.avatar.url }}" alt="avatar">
                 <div class="middle d-none">
                     <div class="btn border rounded-circle px-3 py-0 m-0" style="opacity:0.5; background:#f8f9fa; font-size:4em;">
                         <i class="fas fa-plus"></i>
                     </div>
                 </div>
-            </label>
+            </button>
         </div>
 
-    <!-- partial included -->
+    <!-- partial included - this is for the bio/mewmoir section -->
         <div class="flex-fill pl-md-3">
             {% include 'social_media/assets/update_bio_partial.html' %}
         </div>
     </div>
 
-    <button class="btn btn-info btn-large" data-toggle="modal" data-target="#deleteAvatarModal">Delete Avatar</button>
-
     <div class="d-md-flex">
-    <!-- partial included -->
+    <!-- partial included - this is for the personal info section -->
         <div class="flex-fill pr-md-3">
             {% include 'social_media/assets/update_profile_partial.html' %}
         </div>
@@ -57,7 +57,9 @@
                 <li class="list-group-item">
                     Date Joined: <span class="text-secondary">{{ user.date_joined|date:"F j, Y" }}</span>
                 </li>
-                <li class="list-group-item">Delete Account</li>
+                <li class="list-group-item">
+                    <button id="deleteAccountButton" class="bg-white border-0 p-0" data-toggle="modal" data-target="#deleteAccountModal">Delete Account</button>
+                </li>
             </ul>
         </div>
 
