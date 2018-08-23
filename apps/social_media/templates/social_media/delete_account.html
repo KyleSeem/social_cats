@@ -1,0 +1,69 @@
+{% extends 'social_media/base.html' %}
+
+{% block title %}KittenStagram | Delete Account{% endblock %}
+
+
+{% block content %}
+
+<header class="fixed-top mt-4 p-3" style="border-bottom:none; position:absolute; background:#9ba9b6;">
+    <h1 class="m-0">KittenStagram</h1>
+</header>
+
+
+<!-- this displays for md, lg and xl screens -->
+<div class="row justify-content-center">
+    <div class="m-auto">
+        <div class="d-none d-md-block">
+            <div class="jumbotron jumbotron-fluid rounded p-4">
+                <div class="container-fluid">
+                    <h1 class="display-4 text-center">We're sorry to see you go!</h1>
+                    <p class="lead text-center">Please confirm your password to delete your account.</p>
+                    <hr class="my-4">
+
+                    {% if error %}
+                        <p class="text-danger text-center" style="font-size:0.9em;">{{ error }}</p>
+                    {% endif %}
+
+                    <form class="" action="{% url 'social_media:delete_account' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-center form-group">
+                            <input class="form-control w-50" type="password" name="password" placeholder="password" required />
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="d-flex justify-content-between">
+                            <a class="btn btn-link" href="{% url 'social_media:myAccount' %}">Nevermind, don't delete my account</a>
+                            <input class="btn btn-danger" type="submit" value="Delete My Account">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- this displays for sm and xs screens -->
+<div class="d-md-none bg-white rounded m-auto p-3">
+    <p class="lead text-center" style="font-size:1.5em;">We're sorry to see you go!</p>
+    <p class="text-center">Please confirm your password to delete your account.</p>
+
+    {% if error %}
+        <p class="text-danger text-center" style="font-size:0.9em;">{{ error }}</p>
+    {% endif %}
+
+    <form class="" action="{% url 'social_media:delete_account' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="password" required />
+        </div>
+
+        <hr class="my-4">
+        <a class="btn btn-sm btn-secondary" href="{% url 'social_media:myAccount' %}">Cancel</a>
+        <input class="btn btn-sm btn-danger float-right" type="submit" value="Delete Account">
+    </form>
+</div>
+
+
+{% endblock %}

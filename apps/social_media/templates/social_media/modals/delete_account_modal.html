@@ -1,0 +1,24 @@
+
+
+<!-- delete account alert modal -->
+
+<div id="deleteAccountModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered mx-2 mx-md-auto" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h3 class="text-center m-0">WARNING: <i>action cannot be undone!</i></h3>
+            </div>
+
+            <div class="modal-body">
+                <p class="text-center m-0" style="font-size:1.2em;">Are you sure you want to permanently delete your account?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger" href="{% url 'social_media:delete_account' %}">Delete Account</a>
+            </div>
+
+        </div>
+    </div>
+</div>
