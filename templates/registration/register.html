@@ -14,16 +14,6 @@
     <div class="col col-md-6 col-xl-4" style="max-width:425px;">
         <div class="bg-white rounded m-2 pt-2 pb-3">
 
-            <!-- {% if form.errors %}
-                <ul class="text-danger mt-2 mb-0">
-                	{% for field in form %}
-                        {% if field.errors %}
-                    	   <li class="mb-1">{{ field.errors|striptags }}</li>
-                        {% endif %}
-                	{% endfor %}
-                </ul>
-            {% endif %} -->
-
             {% if form.errors %}
                 <ul class="list-group list-group-flush text-danger px-1" style="font-size:0.9em;">
                 	{% for field in form %}
