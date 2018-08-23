@@ -17,13 +17,8 @@
     <div class="col col-md-6 col-xl-4" style="max-width:425px;">
         <div class="bg-white rounded m-2 pt-2 pb-3">
 
-            {% if form.errors %}
-                <!-- <div class="alert alert-danger text-center m-0" role="alert" style="font-size:.9em;">
-                    <P>Ruh-Roh!</P>
-                </div> -->
-                <div class="text-danger">
-                    whoops
-                </div>
+            {% if form.non_field_errors %}
+                <p class="text-danger text-center mb-0 pt-1" style="font-size:0.9em;">Please enter a valid username and password.</p>
             {% endif %}
 
             <form class="px-4 py-3" action="{% url 'login' %}" method="POST">
