@@ -42,7 +42,7 @@
     <body>
         <!-- header and navbar -->
 
-        <div class="container-fluid m-0 p-0">
+        <div id="navbarContainer" class="container-fluid m-0 p-0">
             {% if user.is_authenticated %}
                 {% include 'social_media/assets/nav_bar.html' %}
             {% endif %}
