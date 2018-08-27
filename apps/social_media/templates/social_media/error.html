@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" name="description" content="KittenStagram is a social media site exclusively for cats (portfolio project)">
+        <title>KittenStagram | Error</title>
+        <meta name="author" content="Kyle Seem">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap 4 dependancies -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+        <!-- google fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Gochi+Hand|Leckerli+One|Patrick+Hand+SC|Pacifico" rel="stylesheet">
+        <!-- my stuff -->
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('button').on('click', function() {
+                    window.history.back();
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <div class="container-fluid">
+            <div class="col-lg-8 mx-auto p-2">
+                <div class="mt-3">
+                    <img class="rounded w-100" src="/static/social_media/img/error_graphic.jpg">
+                </div>
+
+                <div class="w-100 py-3 text-center">
+                    <div class="d-md-none">
+                        <h3 style="font-family: 'Patrick Hand SC', cursive;">We've encountered an error...</h3>
+                        <p class="lead pt-2">{{ error_message }}</p>
+
+                        <div class="text-center">
+                            <button class="btn btn-info back-button">Go Back</button>
+                        </div>
+
+                    </div>
+
+                    <div class="d-none d-md-block">
+                        <h1 class="display-4" style="font-family: 'Patrick Hand SC', cursive;">We've encountered an error...</h1>
+                        <div class="col-md-9 mx-auto">
+                            <p class="lead py-2" style="font-size:1.5em;">{{ error_message }}</p>
+                        </div>
+
+                        <div class="text-center">
+                            <button class="btn btn-lg btn-info back-button">Go Back</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>
