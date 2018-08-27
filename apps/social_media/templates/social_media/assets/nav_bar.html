@@ -22,7 +22,11 @@
 
         </div>
         <!-- not included in div above so will auto align to right -->
-        <span class="d-md-none navbar-text text-capitalize pr-1">Hi, {{ user.username }}!</span>
+        {% if btn_display == 'd-none' %}
+            <span class="d-md-none navbar-text text-capitalize pr-1">Hi, {{ user.username }}!</span>
+        {% else %}
+            <button class="back-button btn d-md-none {{ btn_display }} mr-2" style="opacity:0.7;"><i class="fas fa-arrow-left"></i></button>
+        {% endif %}
 
 
         <!-- all nav bits incuded in collapse -->
@@ -34,7 +38,6 @@
                         <label id="addPhotoLabel" class="nav-link mb-0" for="id_photo"><i class="far fa-plus-square pr-1"></i> New Post</label>
                         <form id="img_upload_form" class="d-none" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <!-- {{ photoUploadForm }} -->
                             <input id="id_photo" type="file">
                         </form>
                     </li>
@@ -42,10 +45,10 @@
                     <li class="d-none">
                         <button id="newPostModalButton" role="button" data-toggle="modal" data-target="#newPostModal"></button>
                     </li>
-                    <li class="nav-item d-md-none">
+                    <li class="nav-item {{ nav_myAccount }} d-md-none">
                         <a class="nav-link" href="{% url 'social_media:myAccount' %}"><i class="fas fa-cog pr-1"></i>My Account</a>
                     </li>
-                    <li class="nav-item d-md-none">
+                    <li class="nav-item {{ nav_about }} d-md-none">
                         <a class="nav-link" href="#"><i class="far fa-question-circle pr-1"></i>About Site</a>
                     </li>
                     <li class="nav-item d-md-none">
@@ -53,8 +56,8 @@
                     </li>
 
                     {% if album_owner and album_owner.id != user.id %}
-                        <li class="nav-item {{ other_album }} d-none d-lg-block">
-                            <label id="albumOwnerModalButton" class="nav-link mb-0"><i class="far fa-address-card pr-1"></i>About {{ album_owner.username }}</label>
+                        <li class="nav-item {{ other_album }} d-none d-lg-inline-block">
+                            <label id="albumOwnerModalButton" class="nav-link mb-0"><i class="far fa-address-card pr-1"></i>{{ album_owner }}'s details</label>
                         </li>
                     {% endif %}
                 </ul>

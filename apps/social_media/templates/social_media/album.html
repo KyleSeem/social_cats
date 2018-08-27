@@ -11,8 +11,9 @@
 <div class="d-lg-none">
     {% if album_owner.id != user.id %}
         <div class="bg-light border rounded text-center mx-2 mt-0 mb-2 p-2">
-            <p class="lead mb-2">You're visiting {{ album_owner }}'s album!</p>
-            <button class="btn btn-link border-0 m-0 p-0" type="button" data-toggle="modal" data-target="#albumOwnerModal">{{ album_owner }}'s details</button>
+            <p class="lead mb-1">Welcome to {{ album_owner }}'s album!</p>
+            <!-- <p class="lead mb-1" style="font-size:1.5em;">You're visiting {{ album_owner }}'s album!</p> -->
+            <button class="btn btn-link border-0 m-0 p-0" type="button" data-toggle="modal" data-target="#albumOwnerModal">See {{ album_owner }}'s details</button>
         </div>
     {% endif %}
 </div>

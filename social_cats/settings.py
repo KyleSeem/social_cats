@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'apps.social_media.middleware.GetCurrentUserMiddleware',
+    'apps.social_media.middleware.TimeZoneMiddleware',
 ]
 
 ROOT_URLCONF = 'social_cats.urls'

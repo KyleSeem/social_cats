@@ -1,0 +1,52 @@
+
+
+<!-- modal for delete post alert -->
+
+<div id="albumOwnerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="albumOwnerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered mx-auto py-2 px-3" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header bg-light">
+                <h4 class="mb-0">Get to know {{ album_owner }}!</h4>
+                <!-- <p class="lead m-0 pt-0 px-2">Get to know {{ album_owner }}!</p> -->
+                <!-- <p class="lead m-0 p-0">You're visiting {{ album_owner }}'s album!</p> -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="d-lg-flex border rounded p-3">
+                    <div class="flex-lg-fill pr-lg-2 w-100">
+                        <img class="rounded w-100" src="/{{ album_owner.profile.avatar.url }}" alt="photo" />
+                    </div>
+
+                    <!-- <hr class="my-3 d-lg-none"> -->
+                    <div class="flex-lg-fill align-self-center w-100">
+                        <div class="list-group list-group-flush w-100 text-nowrap">
+                            <li class="list-group-item lead">Username: {{ album_owner }}</li>
+                            {% if album_owner.first_name != '' and album_owner.last_name != '' %}
+                                <li class="list-group-item lead">Full name: {{ album_owner.first_name }} {{ album_owner.last_name }}</li>
+                            {% else %}
+                                <li class="list-group-item lead">Full name: ?</li>
+                            {% endif %}
+                            <li class="list-group-item lead">Nickname: {{ album_owner.profile.nickname|default:"?" }}</li>
+                            <li class="list-group-item lead">Location: {{ album_owner.profile.location|default:"?" }}</li>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <hr class="my-3"> -->
+                <div class="w-100 border rounded mt-2 p-3">
+                    <h4 class="border-bottom text-center ">{{ album_owner }}'s Mewmoir</h4>
+                    <p class="lead m-0">{{ album_owner.profile.bio|default:"This member hasn't written anything about themselves yet." }}</p>
+                </div>
+            </div>
+
+            <div class="modal-footer bg-light justify-content-center">
+                Joined {{ album_owner.date_joined|date:"F j, Y" }}
+            </div>
+
+        </div>
+    </div>
+</div>

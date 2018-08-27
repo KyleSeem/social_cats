@@ -2,10 +2,20 @@
 /* CSS applies to all device sizes unless otherwise called out */
 html {
     font-size: 1em;
+    height: 100%;
 }
 body {
     background-image: url("../img/yarn-bright.png");
     background-repeat: repeat;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+.content {
+    flex: 1 0 auto;
+}
+.footer {
+    flex-shrink: 0;
 }
 
 /* header and nav */
@@ -68,6 +78,7 @@ body {
             vertical-align: text-top;
         }
 
+
     .give-pointer:hover {
         cursor: pointer;
         text-decoration: none;
@@ -88,7 +99,7 @@ body {
     }
     #newPostHeader {
         font-size: 2em;
-        font-family: 'Gochi Hand', cursive;
+        /* font-family: 'Gochi Hand', cursive; */
         font-family: 'Patrick Hand SC', cursive;
     }
     #setAvatarModal img,
@@ -236,15 +247,20 @@ body {
     }
 
 /* scrollable container */
-    .my-scroll {
+    /* .my-scroll {
         max-height: 800px;
         overflow: scroll;
-    }
+    } */
 
     #newPostModal img {
         max-height: 60vh;
         /* max-height: 50vh; */
     }
+
+    #albumOwnerModal div.modal-dialog {
+        max-width: 600px;
+    }
+
 }
 
 /* ------------------------------------------------ */

@@ -18,8 +18,7 @@ from django.http import JsonResponse
 
 from django.conf import settings
 from datetime import datetime
-from urlparse import urlparse
-
+from django.utils import timezone
 from django.db.models import Sum
 from django.utils.decorators import method_decorator
 from django.contrib.auth import login, authenticate
@@ -31,7 +30,13 @@ from .models import Post, Comment, Profile, Like
 from .forms import RegisterForm, NewPostForm, NewCommentForm, AvatarForm, UpdateBioForm, UpdateUserModelForm, UpdateProfileForm
 
 
+
 # NOTE: class-based views get method_decorator for authentication, other views get login_required decorator
+
+# def set_timezone(request):
+#     if request.method == "POST":
+#         request.session['django_timezone'] = request.POST['timezone']
+
 
 ###### NAVIGATION ######
 
@@ -49,8 +54,12 @@ def index(request):
     for l in Like.objects.filter(user=request.user):
         like_array.append(l.post.id)
 
+    # now = timezone.localtime(timezone.now())
+    # print now
+
 
     context = {
+        # 'now':now,
         'users': users,
         'profiles': profiles,
         'posts': posts,
@@ -58,6 +67,7 @@ def index(request):
         'like_array': like_array,
         'newPostForm': newPostForm,
         'nav_dashboard': 'active',
+        'btn_display': 'd-none',
     }
     return render(request, 'social_media/index.html', context=context)
 
@@ -71,9 +81,21 @@ class MyAlbumListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         id = self.kwargs['id']
+        # determine nav_bar active status: current user = active
+        a = get_current_user()
+        b = int(id)
+        if a == b:
+            nav_status = 'active'
+            other_status = ''
+        else:
+            nav_status = ''
+            other_status = 'active'
+
         context = super(MyAlbumListView, self).get_context_data(**kwargs)
+        context['album_owner'] = User.objects.get(id=id)
         context['posts'] = Post.objects.filter(user=id)
-        context['nav_myAlbum'] = 'active'
+        context['nav_myAlbum'] = nav_status
+        context['other_album'] = other_status
 
         return context
 
@@ -89,6 +111,7 @@ class MyAccountListView(generic.ListView):
         id = get_current_user()
         context = super(MyAccountListView, self).get_context_data()
         context['form'] = AvatarForm()
+        context['nav_myAccount'] = 'active'
 
         return context
 
@@ -195,6 +218,9 @@ def new_post(request):
         # save resized image file
             resized_image.save(new_post.photo.path)
             return redirect(reverse('social_media:index'))
+        else:
+            error_message = "You have selected an invalid file type."
+            return render(request, 'social_media/error.html', {'error_message': error_message})
     else:
         return redirect(reverse('social_media:index'))
 

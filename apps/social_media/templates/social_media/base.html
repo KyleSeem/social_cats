@@ -31,7 +31,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
         <!-- google fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Gochi+Hand|Leckerli+One|Patrick+Hand+SC|Pacifico|Satisfy" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Gochi+Hand|Leckerli+One|Patrick+Hand+SC|Pacifico" rel="stylesheet">
         <!-- my stuff -->
         <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'social_media/css/style.css' %}">
@@ -40,23 +40,33 @@
         {% include 'social_media/assets/jquery.html' %}
     </head>
     <body>
-        <!-- header and navbar -->
-
+    <!-- header and navbar -->
         <div id="navbarContainer" class="container-fluid m-0 p-0">
             {% if user.is_authenticated %}
                 {% include 'social_media/assets/nav_bar.html' %}
             {% endif %}
         </div>
 
-        <div id="main-container" class="container-fluid">
-            <!-- scroll to top button -->
-            <button id="ScrollToTopButton" class="btn btn-info rounded position-fixed d-none" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+        <div class="content">
+            <div id="main-container" class="container-fluid">
+                <!-- scroll to top button -->
+                <button id="ScrollToTopButton" class="btn btn-info rounded position-fixed d-none" title="Go to top"><i class="fas fa-arrow-up"></i></button>
 
-            {% block content %}{% endblock %}
+                {% block content %}{% endblock %}
+
+            </div>
         </div>
 
-
-
+        {% if user.is_authenticated %}
+            <div class="footer text-center m-0 w-100" style="background-color:#9ba9b6; font-size:.9em;">
+                <p class="text-dark mb-0 p-3">Copyright (c) 2018 Kyle Seem |
+                    <a class="text-dark" href="https://www.linkedin.com/in/kyle-seem/">LinkedIn</a> |
+                    <a class="text-dark" href="https://github.com/KyleSeem">GitHub</a> |
+                    <a class="text-dark" href="https://twitter.com/_KyleDanielle">Twitter</a>
+                </p>
+            </div>
+        {% endif %}
 
     </body>
+
 </html>

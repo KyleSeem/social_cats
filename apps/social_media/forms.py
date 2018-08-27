@@ -47,9 +47,6 @@ class AvatarForm(forms.ModelForm):
     height = forms.FloatField(widget=forms.HiddenInput())
 
     class Meta:
-        # model = Avatar
-        # fields = ('user', 'file', 'x', 'y', 'width', 'height',)
-
         model = Profile
         fields = ('avatar', 'x', 'y', 'width', 'height',)
 

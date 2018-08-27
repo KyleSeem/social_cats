@@ -6,6 +6,7 @@
 {% block title %}KittenStagram | Home{% endblock %}
 
 {% load humanize %}
+{% load tz %}
 
 
 {% block content %}
@@ -42,7 +43,7 @@
                     <div class="p-1">
                         <div class="">
                             <a href="{% url 'social_media:viewPost' post.id %}">
-                                <img class="border rounded w-100" src="/media/{{ post.photo }}" alt="image for post id: {{ post.id }}" />
+                                <img class="rounded w-100" src="/media/{{ post.photo }}" alt="image for post id: {{ post.id }}" />
                             </a>
                         </div>
                     </div>
@@ -51,7 +52,9 @@
                     <div class="d-flex m-auto px-1">
                     <!-- timestamp -->
                         <span class="ml-1">
-                            <small>{{ post.created_at|date:"g:i A - j M y" }}</small>
+                            <!-- {% localtime on %} -->
+                                <small>{{ post.created_at|date:"g:i A - j M y" }}</small>
+                            <!-- {% endlocaltime %} -->
                         </span>
 
                     <!-- likes count and icon -->
@@ -84,6 +87,5 @@
         {% endfor %}
     {% endif %}
 </div>
-
 
 {% endblock %}
