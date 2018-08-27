@@ -21,6 +21,12 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
 
+        // use ajax request to set user's timezone in session???
+        // var now = Date();
+        // console.log(now);
+
+
+
 
 /* SCROLL TO TOP BUTTON FUNCTIONS */
         var $document = this;
@@ -91,12 +97,19 @@
         });
 
 
-
-
     // from the delete comment modal, if 'delete comment' is selected, submit delete comment form
         $('#submitDeleteCommentButton').on('click', function() {
             $('#deleteCommentForm').submit();
         });
+
+/* ALBUM PAGE */
+    // launch album owner bio modal
+        $('#albumOwnerModalButton').on('click', function() {
+            $('#albumOwnerModal').modal('show');
+        });
+
+
+
 
 
 
