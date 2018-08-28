@@ -249,8 +249,11 @@ def new_comment(request, id):
         if form.is_valid():
             comment = form.save()
             post.save()
+            return redirect(reverse('social_media:viewPost', kwargs={'pk':id}))
+        else:
+            error_message = "Ack... sorry, hairball."
+            return my_error_handler(request, error_message)
 
-    return redirect(reverse('social_media:viewPost', kwargs={'pk':id}))
 
 
 # DELETE COMMENT - delete comment from user post
@@ -291,12 +294,10 @@ def toggle_like(request):
 # SET AVATAR - set profile picture/avatar
 @login_required
 def set_avatar(request):
-    print request.user.profile.avatar
     if request.method == "POST":
         # set form to target the profile associated with this user
         form = AvatarForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
-            print "VALID"
             x = form.cleaned_data.get('x')
             y = form.cleaned_data.get('y')
             w = form.cleaned_data.get('width')
@@ -312,12 +313,16 @@ def set_avatar(request):
 
             return redirect(reverse('social_media:myAccount'))
         else:
-            print 'NOT VALID!!!'
-        ######## ADD ERROR MESSAGE AND RETURN ######
+            # print (form.errors.as_json())
+            # {"avatar": [{"message": "Upload a valid image. The file you uploaded was either not an image or a corrupted image.", "code": "invalid_image"}]}
+            if (form.errors["avatar"].as_data()[0].code == "invalid_image"):
+                error_message = "The file you selected was either not an image or the data was corrupted."
+            else:
+                error_message = "Ack... sorry, hairball."
+            return my_error_handler(request, error_message)
     else:
         form = AvatarForm()
-    # return redirect(reverse('social_media:myAccount'))
-    return render(request, 'social_media/account.html', { 'form': form })
+        return render(request, 'social_media/account.html', { 'form': form })
 
 
 # DELETE AVATAR - delete existing avatar - will force re-creation of default as avatar
@@ -364,7 +369,7 @@ def update_bio(request):
 
 ###### ERRORS ######
 def my_error_handler(request, error_message):
-    print error_message
+    # print error_message
     return render(request, 'social_media/error.html', {'error_message': error_message})
 
 
