@@ -165,6 +165,7 @@ def register(request):
         form = RegisterForm()
     return render(request, 'registration/register.html', {'form':form})
 
+
 # DELETE ACCOUNT - delete user's account
 @login_required
 def delete_account(request):
@@ -220,7 +221,7 @@ def new_post(request):
             return redirect(reverse('social_media:index'))
         else:
             error_message = "You have selected an invalid file type."
-            return render(request, 'social_media/error.html', {'error_message': error_message})
+            return my_error_handler(request, error_message)
     else:
         return redirect(reverse('social_media:index'))
 
@@ -309,14 +310,14 @@ def set_avatar(request):
             resized_image = cropped_image.resize((450, 450), Image.ANTIALIAS)
             resized_image.save(profile.avatar.path)
 
-            return redirect(reverse('social_media:myAccount', kwargs={'id':request.user.id}))
+            return redirect(reverse('social_media:myAccount'))
         else:
             print 'NOT VALID!!!'
         ######## ADD ERROR MESSAGE AND RETURN ######
-            # return redirect(reverse('social_media:myAccount', kwargs={'id':id}))
     else:
         form = AvatarForm()
-    return redirect(reverse('social_media:myAccount', kwargs={'id':request.user.id}))
+    # return redirect(reverse('social_media:myAccount'))
+    return render(request, 'social_media/account.html', { 'form': form })
 
 
 # DELETE AVATAR - delete existing avatar - will force re-creation of default as avatar
@@ -325,7 +326,7 @@ def delete_avatar(request):
     profile = Profile.objects.get(user=request.user.id)
     profile.set_avatar_to_default()
 
-    return redirect(reverse('social_media:myAccount', kwargs={'id':request.user.id}))
+    return redirect(reverse('social_media:myAccount'))
 
 
 # UPDATE PROFILE (and/or User model)
@@ -338,13 +339,12 @@ def update_profile(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-        else:
-            print 'something went wrong'
-            #### DO WE NEED AN ERROR MESSAGE HERE?? ####
+
+            # form errors are displayed in page
     else:
-        user_form = UpdateUserModelForm(instance=request.user)
-        profile_form = UpdateProfileForm(instance=request.user.profile)
-    return redirect(reverse('social_media:myAccount', kwargs={'id':request.user.id}))
+        user_form = UpdateUserModelForm()
+        profile_form = UpdateProfileForm()
+    return render(request, 'social_media/account.html', { 'user_form': user_form, 'profile_form': profile_form })
 
 
 # UPDATE BIO (profile model)
@@ -352,24 +352,20 @@ def update_profile(request):
 def update_bio(request):
     if request.method == "POST":
 
-        form = UpdateBioForm(request.POST, instance=request.user.profile)
-        if form.is_valid():
-            form.save()
-            print 'valid form!'
-        else:
-            print 'something went wrong'
-            #### DO WE NEED AN ERROR MESSAGE HERE?? ####
+        bio_form = UpdateBioForm(request.POST, instance=request.user.profile)
+        if bio_form.is_valid():
+            bio_form.save()
+
+            # form errors are displayed in page
     else:
-        form = UpdateBioForm(instance=request.user.profile)
-    return redirect(reverse('social_media:myAccount', kwargs={'id':request.user.id}))
+        bio_form = UpdateBioForm(instance=request.user.profile)
+    return render(request, 'social_media/account.html', { 'bio_form': bio_form })
 
 
 ###### ERRORS ######
-def handler404(request):
-    response = render_to_response('404.html', {},
-        context_instance=RequestContext(request))
-    response.status_code = 404
-    return response
+def my_error_handler(request, error_message):
+    print error_message
+    return render(request, 'social_media/error.html', {'error_message': error_message})
 
 
 #####

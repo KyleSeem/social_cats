@@ -37,15 +37,14 @@ def avatar_upload_path(instance, filename):
 # user's additional personal details (all optional)
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    nickname = models.CharField(max_length=55, blank=True)
-    location = models.CharField(max_length=255, blank=True)
+    nickname = models.CharField(max_length=60, blank=True)
+    location = models.CharField(max_length=75, blank=True)
     bio = models.TextField(max_length=1000, blank=True)
     avatar = models.ImageField(upload_to=avatar_upload_path, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = 'user profile'
-
 
     def display_user_id(self):
         return self.user.id

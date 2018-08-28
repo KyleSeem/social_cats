@@ -58,6 +58,12 @@ class UpdateBioForm(forms.ModelForm):
 
 
 class UpdateUserModelForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=30, error_messages={
+        'max_length': "First name may not exceed 30 characters in length.",
+    })
+    last_name = forms.CharField(max_length=30, error_messages={
+        'max_length': "Last name may not exceed 30 characters in length.",
+    })
     class Meta:
         model = User
         fields = ('first_name', 'last_name',)
@@ -65,6 +71,12 @@ class UpdateUserModelForm(forms.ModelForm):
 
 
 class UpdateProfileForm(forms.ModelForm):
+    nickname = forms.CharField(max_length=60, error_messages={
+        'max_length': "Nickname may not exceed 60 characters in length.",
+    })
+    location = forms.CharField(max_length=75, error_messages={
+        'max_length': "Location may not exceed 75 characters, which should be plenty... even if you live in Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch, Anglesey, Wales.",
+    })
     class Meta:
         model = Profile
         fields = ('nickname', 'location',)

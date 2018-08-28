@@ -39,6 +39,32 @@
         </div>
     </div>
 
+<!-- separate alert div for any form errors -->
+    {% if user_form.errors or profile_form.errors %}
+        <div class="alert alert-dismissable fade show border mt-3 pr-2" role="alert" style="word-break: break-word;">
+            <div class="text-right">
+                <button type="button" class="close pr-1" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <ul class="list-group list-group-flush text-danger" style="font-size:0.9em;">
+                {% for field in user_form %}
+                    {% if field.errors %}
+                        <li class="list-group-item border-0 px-0 py-2">{{ field.errors|striptags }}</li>
+                    {% endif %}
+                {% endfor %}
+
+                {% for field in profile_form %}
+                    {% if field.errors %}
+                        <li class="list-group-item border-0 px-0 py-2">{{ field.errors|striptags }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+
     <div class="d-md-flex">
     <!-- partial included - this is for the personal info section -->
         <div class="flex-fill pr-md-3">

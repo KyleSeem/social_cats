@@ -28,7 +28,7 @@
 </div>
 
 <!-- toggled view - displays form for user to update -->
-<div class="profile-view d-none">
+<div class="profile-view d-none my-2 my-md-0">
     <form action="{% url 'social_media:update_profile' %}" method="POST">
         {% csrf_token %}
         <ul class="list-group pt-2" style="word-wrap:break-word;">
@@ -41,20 +41,20 @@
             </li>
 
             <li class="list-group-item">
-                <input id="id_first_name" class="form-control border-0 p-0" name="first_name" type="text" placeholder="first name" value="{{ user.first_name }}">
+                <input id="id_first_name" class="form-control border-0 bg-light" name="first_name" type="text" placeholder="first name" value="{{ user.first_name }}" autofocus>
             </li>
             <li class="list-group-item">
-                <input id="id_last_name" class="form-control border-0 p-0" name="last_name" type="text" placeholder="last name" value="{{ user.last_name }}">
+                <input id="id_last_name" class="form-control border-0 bg-light" name="last_name" type="text" placeholder="last name" value="{{ user.last_name }}">
             </li>
 
             <li class="list-group-item">
-                <input id="id_nickname" class="form-control border-0 p-0" name="nickname" type="text" placeholder="nickname" value="{{ user.profile.nickname }}">
+                <input id="id_nickname" class="form-control border-0 bg-light" name="nickname" type="text" placeholder="nickname" value="{{ user.profile.nickname }}">
             </li>
 
             <li class="list-group-item">
-                <input id="id_location" class="form-control border-0 p-0" name="location" type="text" placeholder="location" value="{{ user.profile.location }}">
+                <input id="id_location" class="form-control border-0 bg-light" name="location" type="text" placeholder="location" value="{{ user.profile.location }}">
             </li>
-            <input type="submit" class="btn btn-sm btn-info" value="submit changes">
+            <input type="submit" class="btn btn-info" value="submit changes">
         </ul>
     </form>
 </div>
