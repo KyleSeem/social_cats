@@ -27,7 +27,7 @@
                     <form class="" action="{% url 'social_media:delete_account' %}" method="POST">
                         {% csrf_token %}
                         <div class="d-flex justify-content-center form-group">
-                            <input class="form-control w-50" type="password" name="password" placeholder="password" required />
+                            <input class="form-control w-50" type="password" name="password" placeholder="password" required autofocus />
                         </div>
 
                         <hr class="my-4">
