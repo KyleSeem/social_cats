@@ -99,7 +99,6 @@ body {
     }
     #newPostHeader {
         font-size: 2em;
-        /* font-family: 'Gochi Hand', cursive; */
         font-family: 'Patrick Hand SC', cursive;
     }
     #setAvatarModal img,
@@ -153,7 +152,15 @@ body {
         text-align: center;
     }
 
-
+/* Bio Modal */
+    .handwriting {
+        font-size: 1.1em;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+        /* font-family: 'Patrick Hand SC', cursive; */
+        font-family: 'Architects Daughter', cursive;
+    }
 
 
 /* ----------- end general ----------------- */
@@ -215,6 +222,9 @@ body {
         width: 60px;
     }
 
+    #albumOwnerModal div.modal-dialog {
+        max-width: 650px;
+    }
 
 }
 
@@ -257,9 +267,6 @@ body {
         /* max-height: 50vh; */
     }
 
-    #albumOwnerModal div.modal-dialog {
-        max-width: 600px;
-    }
 
 }
 
