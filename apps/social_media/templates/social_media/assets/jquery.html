@@ -51,13 +51,16 @@
             $document.documentElement.scrollTop = 0;
         });
 
+
 /* BACK BUTTON */
         $('.back-button').on('click', function() {
             window.history.back();
         });
 
 
-/* VIEW POST PAGE */
+/* INDEX AND/OR VIEW POST PAGE */
+    
+
     // for add comments toggle icons, switch visible icon on click
         $('.icon-switch').on('click', function() {
             $('.js-comment-switch').toggleClass('d-none');
@@ -142,9 +145,15 @@
         });
 
     // toggle bio view on account page
+    // focus in textarea and put cursor at the end of any existing text
         $('.js-update-bio').on('click', function() {
             $('.bio-view').toggleClass('d-none');
+            var bio_text = $('#id_bio');
+            var txt = bio_text.val();
+            bio_text.focus().val("").val(txt);
         });
+
+
 
 
 // DELETE ACCOUNT CONFIRMATION PAGE
