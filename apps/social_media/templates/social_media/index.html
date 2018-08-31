@@ -10,6 +10,8 @@
 
 
 {% block content %}
+{% timezone request.session.user_timezone %}
+
 
 <form id="likeForm" class="d-none" method="POST">
     {% csrf_token %}
@@ -43,7 +45,7 @@
                     <div class="p-1">
                         <div class="">
                             <a href="{% url 'social_media:viewPost' post.id %}">
-                                <img class="rounded w-100" src="/media/{{ post.photo }}" alt="image for post id: {{ post.id }}" />
+                                <img class="js-post-image rounded w-100" src="/media/{{ post.photo }}" alt="image for post id: {{ post.id }}" />
                             </a>
                         </div>
                     </div>
@@ -52,9 +54,9 @@
                     <div class="d-flex m-auto px-1">
                     <!-- timestamp -->
                         <span class="ml-1">
-                            <!-- {% localtime on %} -->
+
                                 <small>{{ post.created_at|date:"g:i A - j M y" }}</small>
-                            <!-- {% endlocaltime %} -->
+
                         </span>
 
                     <!-- likes count and icon -->
@@ -68,7 +70,7 @@
                         </span>
 
                     <!-- comment count -->
-                        <span class="js-comment-bubble pr-2 pl-4">
+                        <span class="js-comment-bubble pr-2 pl-4" data-id="{{ post.id }}">
                             <a class="give-pointer" href="{% url 'social_media:viewPost' post.id %}">
                                 <i class="far fa-comment text-primary"></i>
                             </a>
@@ -88,4 +90,5 @@
     {% endif %}
 </div>
 
+{% endtimezone %}
 {% endblock %}

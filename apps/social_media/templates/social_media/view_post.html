@@ -4,9 +4,11 @@
 {% block title %}KittenStagram | View Post{% endblock %}
 
 {% load humanize %}
+{% load tz %}
+
 
 {% block content %}
-
+{% timezone request.session.user_timezone %}
 
 {% include 'social_media/modals/delete_post_modal.html' %}
 {% include 'social_media/modals/delete_comment_modal.html' %}
@@ -126,5 +128,5 @@
     </div>
 </div>
 
-
+{% endtimezone %}
 {% endblock %}
