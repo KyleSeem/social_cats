@@ -3,6 +3,32 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
+/* TIMEZONE DETECT */
+    // when username field changes in register or login form, send ajax request to save the user's timezone in session
+        var tz = jstz.determine();
+
+        $('#id_username').on('change', function() {
+            set_user_timezone();
+        });
+        $('#username').on('change', function() {
+            set_user_timezone();
+        });
+
+        var set_user_timezone = function() {
+            var user_timezone = tz.name();
+            $.ajax({
+                url: '{% url "social_media:set_user_timezone" %}',
+                data: {
+                    'user_timezone': user_timezone,
+                },
+                dataType: 'json',
+                success: function(data) {
+                    // console.log(data);
+                }
+            });
+        };
+
+
 // ISOTOPE FUNCTIONS
     // isotope layout defined
         var $grid = $('.grid').isotope({
@@ -20,12 +46,6 @@
         $(function() {
             $('[data-toggle="tooltip"]').tooltip();
         });
-
-        // use ajax request to set user's timezone in session???
-        // var now = Date();
-        // console.log(now);
-
-
 
 
 /* SCROLL TO TOP BUTTON FUNCTIONS */
@@ -59,7 +79,29 @@
 
 
 /* INDEX AND/OR VIEW POST PAGE */
-    
+
+    // this bit is just for a better user experience:
+    // if a user clicks the comment bubble from while on the index page, once the user is redirected to the viewPost page the comment form is auto expanded
+    // otherwise, the comment form is hidden - can be expanded by clicking the comment button on the viewPost page
+        var ls = window.localStorage;
+        var currentPath = this.location.pathname;
+        var url;
+
+    // determine the path to which the user will be directed and store this path in the window's local storage
+        $('.js-comment-bubble').on('click', function() {
+            post_id = this.attributes['data-id'].value;
+            ls.url = '/kittenstagram/viewPost/' + post_id;
+        });
+
+    // if local storage is not empty and the urls match, expand comment form, then clear the local storage
+        if (ls.length > 0) {
+            if (ls.url == currentPath) {
+                $('#commentFormToggle').addClass('show');
+                ls.clear();
+            }
+        };
+
+
 
     // for add comments toggle icons, switch visible icon on click
         $('.icon-switch').on('click', function() {

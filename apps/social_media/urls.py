@@ -32,6 +32,7 @@ urlpatterns = [
 
     # ajax urls
     url(r'^ajax/toggle_like/$', views.toggle_like, name='toggle_like'),
+    url(r'^ajax/set_user_timezone/$', views.set_user_timezone, name='set_user_timezone'),
 
 
     # authentication urls

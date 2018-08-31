@@ -18,6 +18,7 @@ from django.http import JsonResponse
 
 from django.conf import settings
 from datetime import datetime
+import pytz
 from django.utils import timezone
 from django.db.models import Sum
 from django.utils.decorators import method_decorator
@@ -33,9 +34,15 @@ from .forms import RegisterForm, NewPostForm, NewCommentForm, AvatarForm, Update
 
 # NOTE: class-based views get method_decorator for authentication, other views get login_required decorator
 
-# def set_timezone(request):
-#     if request.method == "POST":
-#         request.session['django_timezone'] = request.POST['timezone']
+
+def set_user_timezone(request):
+    request.session['user_timezone'] = request.GET.get('user_timezone', None)
+    print request.session['user_timezone']
+
+    data = {
+        'status': 'success'
+    }
+    return JsonResponse(data)
 
 
 ###### NAVIGATION ######
@@ -54,12 +61,10 @@ def index(request):
     for l in Like.objects.filter(user=request.user):
         like_array.append(l.post.id)
 
-    # now = timezone.localtime(timezone.now())
-    # print now
-
+    print request.session['user_timezone']
 
     context = {
-        # 'now':now,
+        'user_timezone': request.session['user_timezone'],
         'users': users,
         'profiles': profiles,
         'posts': posts,
@@ -138,7 +143,6 @@ class ViewPostDetailView(generic.DetailView):
         context['like_array'] = like_array
 
         return context
-
 
 
 
