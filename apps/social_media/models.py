@@ -8,7 +8,6 @@ import pytz
 from PIL import Image, ImageFile
 from datetime import datetime
 from django.db import models
-from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -71,7 +70,6 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
         instance.profile.set_avatar_to_default()
-        member_group.user_set.add(instance)
 
 
 # save user profile any time the user model is updated
