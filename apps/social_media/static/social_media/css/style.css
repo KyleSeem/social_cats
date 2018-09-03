@@ -119,9 +119,6 @@ body {
         padding: .5em;
     }
 
-    /* .fas.fa-pencil-alt {
-        color: #7d7d7d;
-    } */
 
 /* avatar-related */
     .post_avatar {
@@ -278,8 +275,7 @@ body {
         max-height: 60vh;
         /* max-height: 50vh; */
     }
-
-
+    
 }
 
 /* ------------------------------------------------ */
