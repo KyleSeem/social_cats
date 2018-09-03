@@ -34,8 +34,8 @@ urlpatterns = [
     url(r'^ajax/toggle_like/$', views.toggle_like, name='toggle_like'),
     url(r'^ajax/set_user_timezone/$', views.set_user_timezone, name='set_user_timezone'),
 
-
     # authentication urls
     url(r'^login/$', auth_views.login, {'template_name':'registration/login.html'}, name='login'),
     url(r'^register/$', views.register, name='register'),
+    url(r'^guest_login/$', views.guest_login, name='guest_login'),
 ]

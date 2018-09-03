@@ -20,24 +20,28 @@ from django.conf import settings
 from datetime import datetime
 import pytz
 from django.utils import timezone
-from django.db.models import Sum
 from django.utils.decorators import method_decorator
+from django.db.models import Sum, Q
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.contrib.auth.models import User, Group
+
+from .decorators import anonymous_required
 from .middleware import get_current_user
-from django.contrib.auth.models import User
 from .models import Post, Comment, Profile, Like
 from .forms import RegisterForm, NewPostForm, NewCommentForm, AvatarForm, UpdateBioForm, UpdateUserModelForm, UpdateProfileForm
 
 
+# NOTE TO ME: class-based views get method_decorator for authentication, other views get login_required decorator
 
-# NOTE: class-based views get method_decorator for authentication, other views get login_required decorator
 
 
+####### GENERIC METHODS #######
+
+# USER TIMEZONE - determines user's current timezone in login or registration page
 def set_user_timezone(request):
     request.session['user_timezone'] = request.GET.get('user_timezone', None)
-    print request.session['user_timezone']
+    # print request.session['user_timezone']
 
     data = {
         'status': 'success'
@@ -45,7 +49,69 @@ def set_user_timezone(request):
     return JsonResponse(data)
 
 
-###### NAVIGATION ######
+
+# GUEST USER INDEX - most links and functions are disabled for guest users
+# only available to unauthenticated users
+@anonymous_required
+def guest_login(request):
+    context = {
+        'users': User.objects.all(),
+        'posts': Post.objects.all(),
+    }
+    return render(request, 'social_media/anon_user_page.html', context=context)
+
+
+
+####### AUTHENTICATION RELATED ########
+
+# REGISTER - create new user
+def register(request):
+    if request.method == "POST":
+        request.session['reg_username'] = request.POST['username']
+        request.session['reg_email'] = request.POST['email']
+
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+
+            user = authenticate(username=username, password= raw_password)
+            login(request, user)
+            del request.session['reg_username']
+            del request.session['reg_email']
+
+            return redirect(reverse('social_media:index'))
+    else:
+        if request.user.is_authenticated():
+            return redirect(reverse('social_media:index'))
+        else:
+            form = RegisterForm()
+            return render(request, 'registration/register.html', {'form':form})
+
+
+
+# DELETE ACCOUNT - delete user's account
+@login_required
+def delete_account(request):
+    if request.method == "POST":
+        # check the password entered against the current user's password
+        user = authenticate(username=request.user.username, password=request.POST['password'])
+
+        if user is not None:
+            # if the password matches the current user's password (is_authenticated)
+            User.objects.get(id=request.user.id).delete()
+            return redirect(reverse('social_media:register'))
+        else:
+            error = "Password does not match our records."
+            return render(request, 'social_media/delete_account.html', {'error':error})
+
+    else:
+        return render(request, 'social_media/delete_account.html')
+
+
+
+######## NAVIGATION ########
 
 # DASHBOARD - landing page - initial data grab to pass to generic views
 @login_required
@@ -55,16 +121,20 @@ def index(request):
     posts = Post.objects.all()
     comments = Comment.objects.all()
     newPostForm = NewPostForm()
+    like_array = []
 
     # compile array of posts that current user has liked so hearts appear correctly
-    like_array = []
     for l in Like.objects.filter(user=request.user):
         like_array.append(l.post.id)
 
-    print request.session['user_timezone']
+    # if there's a timezone in session, use that, otherwise use UTC
+    if 'user_timezone' in request.session:
+        set_ut = request.session['user_timezone']
+    else:
+        set_ut = 'UTC'
 
     context = {
-        'user_timezone': request.session['user_timezone'],
+        'user_timezone': set_ut,
         'users': users,
         'profiles': profiles,
         'posts': posts,
@@ -86,7 +156,7 @@ class MyAlbumListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         id = self.kwargs['id']
-        # determine nav_bar active status: current user = active
+        # determine nav_bar active status: current user = active - used to distinguish between my album and other user's album
         a = get_current_user()
         b = int(id)
         if a == b:
@@ -146,51 +216,7 @@ class ViewPostDetailView(generic.DetailView):
 
 
 
-###### OTHER CRUD ######
-# REGISTER - create new user
-def register(request):
-    if request.method == "POST":
-        request.session['reg_username'] = request.POST['username']
-        request.session['reg_email'] = request.POST['email']
-
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-
-            user = authenticate(username=username, password= raw_password)
-            login(request, user)
-            del request.session['reg_username']
-            del request.session['reg_email']
-
-            return redirect('social_media:index')
-    else:
-        form = RegisterForm()
-    return render(request, 'registration/register.html', {'form':form})
-
-
-# DELETE ACCOUNT - delete user's account
-@login_required
-def delete_account(request):
-    if request.method == "POST":
-        # check the password entered against the current user's password
-        user = authenticate(username=request.user.username, password=request.POST['password'])
-
-        if user is not None:
-            # if the password matches the current user's password (is_authenticated)
-            User.objects.get(id=request.user.id).delete()
-            return redirect('social_media:register')
-        else:
-            error = "Password does not match our records."
-            return render(request, 'social_media/delete_account.html', {'error':error})
-
-    else:
-        return render(request, 'social_media/delete_account.html')
-
-
-
-
+######### OTHER CRUD #########
 
 # NEW POST - create and save new photo and new post objects
 @login_required
@@ -228,6 +254,7 @@ def new_post(request):
             return my_error_handler(request, error_message)
     else:
         return redirect(reverse('social_media:index'))
+
 
 
 # DELETE POST and all associated objects (comments, photo)
@@ -329,6 +356,7 @@ def set_avatar(request):
         return render(request, 'social_media/account.html', { 'form': form })
 
 
+
 # DELETE AVATAR - delete existing avatar - will force re-creation of default as avatar
 @login_required
 def delete_avatar(request):
@@ -336,6 +364,7 @@ def delete_avatar(request):
     profile.set_avatar_to_default()
 
     return redirect(reverse('social_media:myAccount'))
+
 
 
 # UPDATE PROFILE (and/or User model)
@@ -356,6 +385,7 @@ def update_profile(request):
     return render(request, 'social_media/account.html', { 'user_form': user_form, 'profile_form': profile_form })
 
 
+
 # UPDATE BIO (profile model)
 @login_required
 def update_bio(request):
@@ -371,7 +401,9 @@ def update_bio(request):
     return render(request, 'social_media/account.html', { 'bio_form': bio_form })
 
 
+
 ###### ERRORS ######
+
 def my_error_handler(request, error_message):
     # print error_message
     return render(request, 'social_media/error.html', {'error_message': error_message})
