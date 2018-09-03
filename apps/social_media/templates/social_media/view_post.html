@@ -8,7 +8,7 @@
 
 
 {% block content %}
-{% timezone request.session.user_timezone %}
+{% timezone user_timezone %}
 
 {% include 'social_media/modals/delete_post_modal.html' %}
 {% include 'social_media/modals/delete_comment_modal.html' %}
@@ -71,7 +71,6 @@
                     <i class="fas fa-times text-secondary js-comment-switch d-none"></i>
                 </a>
             </div>
-
         </div>
 
     <!-- toggle comment form -->
