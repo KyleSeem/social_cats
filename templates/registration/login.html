@@ -1,52 +1,49 @@
+<!-- login page -->
+
 {% extends 'social_media/base.html' %}
 
 {% block title %}KittenStagram | Login{% endblock %}
 
 
-{% block content %}
+{% block anoncontent %}
 
 
-
-<header class="fixed-top mt-4 p-3" style="border-bottom:none; position:absolute; background:#9ba9b6;">
-    <h1 class="m-0 pb-2">KittenStagram</h1>
+<header class="p-3 mb-4 mb-lg-5" style="border-bottom:none; background:#9ba9b6;">
+    <h1 class="logreg m-0 pb-2">KittenStagram</h1>
 </header>
 
 
+<div class="col col-md-6 col-xl-4 mx-auto" style="max-width:425px;">
+    <div class="bg-white rounded mx-2 pb-3">
 
-<div class="row justify-content-center">
-    <div class="col col-md-6 col-xl-4" style="max-width:425px;">
-        <div class="bg-white rounded m-2 pt-2 pb-3">
+        {% if form.non_field_errors %}
+            <p class="text-danger text-center mb-0 pt-1" style="font-size:0.9em;">Please enter a valid username and password.</p>
+        {% endif %}
 
-            {% if form.non_field_errors %}
-                <p class="text-danger text-center mb-0 pt-1" style="font-size:0.9em;">Please enter a valid username and password.</p>
-            {% endif %}
+        <form class="px-4 py-3" action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">Username</label>
+                <input id="id_username" class="form-control" type="text" name="username" required />
+            </div>
 
-            <form class="px-4 py-3" action="{% url 'login' %}" method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="id_username">Username</label>
-                    <input id="id_username" class="form-control" type="text" name="username" required />
-                </div>
+            <div class="form-group">
+                <label for="id_password">Password</label>
+                <input id="id_password" class="form-control" type="password" name="password" required />
+            </div>
 
-                <div class="form-group">
-                    <label for="id_password">Password</label>
-                    <input id="id_password" class="form-control" type="password" name="password" required />
-                </div>
+            <button class="btn btn-primary" type="submit">Login</button>
+            <input type="hidden" name="next" value="{{ next }}">
+        </form>
 
-                <button class="btn btn-primary" type="submit">Login</button>
-                <input type="hidden" name="next" value="{{ next }}">
-            </form>
+    <!-- may implement at later date -->
+        <!-- <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Forgot password?</a> -->
 
-
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Forgot password?</a>
-            <div class="dropdown-divider"></div>
-
-            <a class="dropdown-item" href="{% url 'social_media:register' %}">Create an account</a>
-            <a class="dropdown-item" href="#">Continue as a guest</a>
-        </div>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url 'social_media:register' %}">Create an account</a>
+        <a class="dropdown-item" href="{% url 'social_media:guest_login' %}">Continue as a guest</a>
     </div>
-
 </div>
 
 {% endblock %}
