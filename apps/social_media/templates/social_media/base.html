@@ -45,29 +45,34 @@
     </head>
     <body>
     <!-- header and navbar -->
-        <div id="navbarContainer" class="container-fluid m-0 p-0">
-            {% if user.is_authenticated %}
-                {% include 'social_media/assets/nav_bar.html' %}
-            {% endif %}
-        </div>
-
-        <div class="content">
-            <div id="main-container" class="container-fluid">
-                <!-- scroll to top button -->
-                <button id="ScrollToTopButton" class="btn btn-info rounded position-fixed d-none" title="Go to top"><i class="fas fa-arrow-up"></i></button>
-
-                {% block content %}{% endblock %}
-
-            </div>
-        </div>
-
         {% if user.is_authenticated %}
+            <div id="navbarContainer" class="container-fluid m-0 p-0">
+                {% include 'social_media/assets/nav_bar.html' %}
+            </div>
+
+            <div class="content">
+                <div id="main-container" class="container-fluid">
+                    <!-- scroll to top button -->
+                    <button id="ScrollToTopButton" class="btn btn-info rounded position-fixed d-none" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+
+                    {% block content %}{% endblock %}
+
+                </div>
+            </div>
+
             <div class="footer text-center m-0 w-100" style="background-color:#9ba9b6; font-size:.9em;">
                 <p class="text-dark mb-0 p-2">Copyright (c) 2018 Kyle Seem |
                     <a class="text-dark" href="https://www.linkedin.com/in/kyle-seem/">LinkedIn</a> |
                     <a class="text-dark" href="https://github.com/KyleSeem">GitHub</a> |
                     <a class="text-dark" href="https://twitter.com/_KyleDanielle">Twitter</a>
                 </p>
+            </div>
+
+        {% else %}
+            <div class="content">
+                <div class="container-fluid m-0 p-0">
+                    {% block anoncontent %}{% endblock %}
+                </div>
             </div>
         {% endif %}
 
