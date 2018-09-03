@@ -8,6 +8,7 @@ import pytz
 from PIL import Image, ImageFile
 from datetime import datetime
 from django.db import models
+from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -29,6 +30,7 @@ def upload_path(instance, filename):
 def avatar_upload_path(instance, filename):
     # save to user's media folder in avatar subfolder - should only ever be one image saved here
     return 'user_{0}/avatar/{1}_{2}'.format(instance.user.id, time[0], filename)
+
 
 
 # user's additional personal details (all optional)
@@ -62,13 +64,14 @@ class Profile(models.Model):
         return self.avatar
 
 
-
-# create profile object and set default avatar when new user is created
+# create profile object, set default avatar, and add to 'member' group when new user is created
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
+    member_group = Group.objects.get(name="Member")
     if created:
         Profile.objects.create(user=instance)
         instance.profile.set_avatar_to_default()
+        member_group.user_set.add(instance)
 
 
 # save user profile any time the user model is updated
@@ -78,7 +81,7 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 
-# whole post - includes user, photo and user-added caption
+# POST MODEL - includes user, photo and user-added caption
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to=upload_path)
@@ -96,9 +99,7 @@ class Post(models.Model):
         return str(self.id)
 
 
-
-
-# comments are tied to a single post, include commentor as user and post id
+# COMMENT MODEL - comments are tied to a single post, include commentor as user and post id
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -113,7 +114,7 @@ class Comment(models.Model):
         return str(self.id)
 
 
-
+# LIKE MODEL - make association between requesting user and post
 class Like(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_likes')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_likes')
