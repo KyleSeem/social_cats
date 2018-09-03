@@ -66,7 +66,6 @@ class Profile(models.Model):
 # create profile object, set default avatar, and add to 'member' group when new user is created
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
-    member_group = Group.objects.get(name="Member")
     if created:
         Profile.objects.create(user=instance)
         instance.profile.set_avatar_to_default()

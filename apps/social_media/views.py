@@ -24,7 +24,7 @@ from django.utils.decorators import method_decorator
 from django.db.models import Sum, Q
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
 
 from .decorators import anonymous_required
 from .middleware import get_current_user
