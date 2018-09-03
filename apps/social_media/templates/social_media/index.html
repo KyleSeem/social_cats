@@ -10,7 +10,7 @@
 
 
 {% block content %}
-{% timezone user_timezone %}
+{% timezone request.session.user_timezone %}
 
 
 <form id="likeForm" class="d-none" method="POST">

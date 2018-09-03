@@ -128,13 +128,13 @@ def index(request):
         like_array.append(l.post.id)
 
     # if there's a timezone in session, use that, otherwise use UTC
-    if 'user_timezone' in request.session:
-        set_ut = request.session['user_timezone']
-    else:
-        set_ut = 'UTC'
+    if 'user_timezone' not in request.session:
+    #     # set_ut = request.session['user_timezone']
+    #     pass
+    # else:
+        request.session['user_timezone'] = 'UTC'
 
     context = {
-        'user_timezone': set_ut,
         'users': users,
         'profiles': profiles,
         'posts': posts,
@@ -379,6 +379,10 @@ def update_profile(request):
             profile_form.save()
 
             # form errors are displayed in page
+            if profile_form.errors:
+                print profile_form.errors
+            if user_form.errors:
+                print user_form.errors
     else:
         user_form = UpdateUserModelForm()
         profile_form = UpdateProfileForm()

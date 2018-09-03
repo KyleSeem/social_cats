@@ -161,14 +161,12 @@
             $('#deleteCommentForm').submit();
         });
 
+
 /* ALBUM PAGE */
     // launch album owner bio modal
         $('#albumOwnerModalButton').on('click', function() {
             $('#albumOwnerModal').modal('show');
         });
-
-
-
 
 
 
@@ -182,28 +180,24 @@
             $('.middle').toggleClass('d-none');
         });
 
-    // sets the bio textarea height to 70% of the avatar image.
-    // this is unnecessary, but I added it to help the textarea be a little more responsive by device
-        if (this.location.pathname == "/kittenstagram/myAccount/") {
-            $ph = $('#accountAvatar')[0].offsetHeight;
-            a = ($ph*.7);
-            $('textarea#id_bio').css('height', a);
-        };
 
     // toggle profile view on account page - view details vs edit details
+    // auto highlght (select) existing text in first_name input
         $('.js-update-profile').on('click', function() {
             $('.profile-view').toggleClass('d-none');
+            $('#id_first_name').select();
         });
 
     // toggle bio view on account page
-    // focus in textarea and put cursor at the end of any existing text
+    // auto highlght (select) existing text in textarea
         $('.js-update-bio').on('click', function() {
+            // if sm or xs screen size, give textarea 5 rows
+            if ($( window ).width() < 768) {
+                $('#id_bio').attr("rows", 5);
+            }
             $('.bio-view').toggleClass('d-none');
-            var bio_text = $('#id_bio');
-            var txt = bio_text.val();
-            bio_text.focus().val("").val(txt);
+            $('#id_bio').select();
         });
-
 
 
 

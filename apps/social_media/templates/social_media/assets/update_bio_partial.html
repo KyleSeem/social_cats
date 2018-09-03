@@ -31,14 +31,14 @@
     </li>
 
     <li id="updateBioLi" class="list-group-item text-justify h-100 p-0">
-        <form action="{% url 'social_media:update_bio' %}" method="POST">
+        <form class="h-100" action="{% url 'social_media:update_bio' %}" method="POST">
             {% csrf_token %}
-            <div class="form-group mb-0 px-2 py-1">
-                <!-- text area height defined in jquery.html -->
-                <textarea id="id_bio" name="bio" class="form-control border-0 m-0" maxlength="1000" placeholder="type something here..." autofocus>{{ user.profile.bio }}</textarea>
+            <div class="form-group mb-0 px-2 py-1" style="height:80%;">
+                <textarea id="id_bio" name="bio" class="form-control border-0 m-0 h-100" maxlength="1000" placeholder="type something here..." autofocus>{{ user.profile.bio }}</textarea>
             </div>
-            <div class="text-right pr-1 pb-1 pb-md-0 w-100" style="margin-top:-20px;">
-                <input type="submit" class="btn btn-sm btn-info " value="done">
+
+            <div class="text-right pr-1 pb-1 pb-md-0 w-100" style="height:20%;">
+                <input type="submit" class="btn btn-info " value="done">
             </div>
         </form>
     </li>

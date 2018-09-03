@@ -8,27 +8,37 @@
 
 
 {% block content %}
-<div class="d-lg-none">
-    {% if album_owner.id != user.id %}
-        <div class="bg-light border rounded text-center mx-2 mt-0 mb-2 p-2">
+
+{% include 'social_media/modals/album_owner_bio_modal.html' %}
+
+{% if album_owner.id != user.id %}
+    <div class="d-lg-none">
+        <div class="bg-white shadow-lg border rounded text-center mx-2 mt-0 mb-2 p-2">
             <p class="lead mb-1">Welcome to {{ album_owner }}'s album!</p>
             <button class="btn btn-link border-0 m-0 p-0" type="button" data-toggle="modal" data-target="#albumOwnerModal">See {{ album_owner }}'s details</button>
         </div>
-    {% endif %}
-</div>
+    </div>
+{% endif %}
 
-<div class="grid">
-    <div class="grid-sizer album"></div>
+{% if posts %}
+    <div class="grid">
+        <div class="grid-sizer album"></div>
 
-    {% for post in posts %}
-        <div class="grid-item album">
-            <div class="rounded p-2 bg-white">
-                <a href="{% url 'social_media:viewPost' post.id %}">
-                    <img class="rounded w-100" src="/{{ post.photo.url }}" alt="photo" />
-                </a>
+        {% for post in posts %}
+            <div class="grid-item album">
+                <div class="rounded p-2 bg-white">
+                    <a href="{% url 'social_media:viewPost' post.id %}">
+                        <img class="rounded w-100" src="/{{ post.photo.url }}" alt="photo" />
+                    </a>
+                </div>
             </div>
-        </div>
-    {% endfor %}
-</div>
+        {% endfor %}
+    </div>
+
+{% else %}
+    <div class="bg-white shadow-lg border rounded mx-auto p-1" style="width:fit-content;">
+        <h1 class="text-info font-weight-light text-center p-1 p-lg-3">You haven't posted any pictures yet.</h1>
+    </div>
+{% endif %}
 
 {% endblock %}

@@ -8,7 +8,7 @@
 
 
 {% block content %}
-{% timezone user_timezone %}
+{% timezone request.session.user_timezone %}
 
 {% include 'social_media/modals/delete_post_modal.html' %}
 {% include 'social_media/modals/delete_comment_modal.html' %}
