@@ -24,7 +24,7 @@
             <div class="flex-grow-1">
                 <div class="media">
                     <a class="mr-3" href="{% url 'social_media:myAlbum' post.user.id %}">
-                        <img class="post_avatar rounded" src="/{{ post.user.profile.avatar.url }}" alt="user avatar" />
+                        <img class="post_avatar rounded" src="{{ post.user.profile.avatar.url }}" alt="user avatar" />
                     </a>
                     <div class="media-body">
                         <h5 class="mb-1">{{ post.user.username }} <small> | {{ post.created_at|naturaltime }}</small></h5>
@@ -45,7 +45,7 @@
 
     <!-- image -->
         <div class="mt-2">
-            <img id="postImage" class="border rounded img-fluid" src="/{{ post.photo.url }}" alt="image for post id: {{ post.id }}">
+            <img id="postImage" class="border rounded img-fluid" src="{{ post.photo.url }}" alt="image for post id: {{ post.id }}">
         </div>
 
     <!-- timestamp, add comment toggle -->
@@ -97,7 +97,7 @@
                         <div class="w-100">
                             <div class="media border-bottom py-2 py-md-3">
                                 <a class="mr-2 mr-md-3" href="{% url 'social_media:myAlbum' comment.user.id %}">
-                                    <img class="comment_avatar rounded" src="/{{ comment.user.profile.avatar.url }}" alt="user avatar" />
+                                    <img class="comment_avatar rounded" src="{{ comment.user.profile.avatar.url }}" alt="user avatar" />
                                 </a>
                                 <div class="media-body">
                                     <h6>{{ comment.user.username }} <small>at {{ comment.created_at|date:"g:i A - j M y" }}</small></h6>

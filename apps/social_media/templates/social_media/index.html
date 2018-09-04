@@ -30,7 +30,7 @@
                         <div class="flex-grow-1">
                             <div class="media">
                                 <a class="mr-3" href="{% url 'social_media:myAlbum' post.user.id %}" style="width:15%;">
-                                    <img class="rounded w-100" src="/{{ post.user.profile.avatar.url }}" alt="user avatar" />
+                                    <img class="rounded w-100" src="{{ post.user.profile.avatar.url }}" alt="user avatar" />
                                 </a>
                                 <div class="media-body">
                                     <h6 class="mb-1">{{ post.user.username }} <small> | {{ post.created_at|naturaltime }}</small></h6>
@@ -44,7 +44,7 @@
                 <!-- photo -->
                     <div class="p-1">
                         <a href="{% url 'social_media:viewPost' post.id %}">
-                            <img class="js-post-image rounded w-100" src="/media/{{ post.photo }}" alt="image for post id: {{ post.id }}" />
+                            <img class="js-post-image rounded w-100" src="{{ post.photo.url }}" alt="image for post id: {{ post.id }}" />
                         </a>
                     </div>
 

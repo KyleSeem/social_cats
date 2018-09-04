@@ -28,7 +28,7 @@
             <div class="grid-item album">
                 <div class="rounded p-2 bg-white">
                     <a href="{% url 'social_media:viewPost' post.id %}">
-                        <img class="rounded w-100" src="/{{ post.photo.url }}" alt="photo" />
+                        <img class="rounded w-100" src="{{ post.photo.url }}" alt="photo" />
                     </a>
                 </div>
             </div>

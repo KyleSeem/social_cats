@@ -18,7 +18,7 @@
                 {% if not user.avatar %}
                     <img class="img-fluid rounded w-100" src="/media/default_avatar/avatar.jpg" alt="avatar">
                 {% else %}
-                    <img class="img-fluid rounded w-100" src="/{{ user.profile.avatar.url }}" alt="avatar">
+                    <img class="img-fluid rounded w-100" src="{{ user.profile.avatar.url }}" alt="avatar">
                 {% endif %}
             </div>
 
