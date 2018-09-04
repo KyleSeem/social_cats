@@ -1,8 +1,8 @@
-bcrypt==3.1.4
 cffi==1.11.5
 Django==1.11.15
 django-cleanup==2.1.0
 django-extensions==2.0.7
+django-filter==2.0.0
 Pillow==5.1.0
 pycparser==2.18
 pytz==2018.5
