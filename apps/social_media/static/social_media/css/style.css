@@ -5,7 +5,7 @@ html {
     height: 100%;
 }
 body {
-    background-image: url("../img/yarn-bright.png");
+    background-image: url("../img/yarn-bright.jpg");
     background-repeat: repeat;
     display: flex;
     flex-direction: column;
@@ -21,7 +21,7 @@ body {
 /* header and nav */
     header.page-header {
         margin: 0px;
-        background-image: url("../img/yarn-bright.png");
+        background-image: url("../img/yarn-bright.jpg");
         background-repeat: repeat;
         border-bottom: none;
     }
@@ -275,7 +275,7 @@ body {
         max-height: 60vh;
         /* max-height: 50vh; */
     }
-    
+
 }
 
 /* ------------------------------------------------ */
