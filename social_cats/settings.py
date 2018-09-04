@@ -122,14 +122,14 @@ USE_TZ = True
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
+
 LOGOUT_REDIRECT_URL = '/accounts/login/'
 
-# ENV_PATH = os.path.abspath(os.path.dirname(__file__))
-# MEDIA_ROOT = os.path.join(ENV_PATH, 'media/')
+# Media files
+MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-MEDIA_URL = 'media/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/

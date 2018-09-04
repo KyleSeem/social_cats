@@ -7,7 +7,6 @@ from . import views
 from views import MyAlbumListView, ViewPostDetailView, MyAccountListView
 
 app_name = 'social_media'
-handler404 = 'social_media.views.handler404'
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
