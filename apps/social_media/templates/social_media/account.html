@@ -15,6 +15,7 @@
 <!-- hidden form for avatar creation / used for all screen sizes -->
 <form id="avatar_upload_form" class="d-none" enctype="multipart/form-data" action="{% url 'social_media:set_avatar' %}" method="POST">
     {% csrf_token %}
+    <input id="id_avatar" name="avatar" class="" type="file" accept="image/*">
     {{ form }}
 </form>
 
