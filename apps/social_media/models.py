@@ -28,8 +28,7 @@ def upload_path(instance, filename):
 # save path for users' profile picture
 def avatar_upload_path(instance, filename):
     # save to user's media folder in avatar subfolder - should only ever be one image saved here
-    return 'user_{0}/avatar/{1}_{2}'.format(instance.user.id, time[0], filename)
-
+    return 'user_{0}/avatar/{1}'.format(instance.user.id, filename)
 
 
 # user's additional personal details (all optional)
