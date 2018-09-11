@@ -105,10 +105,6 @@ body {
         font-size: 2em;
         font-family: 'Patrick Hand SC', cursive;
     }
-    #setAvatarModal img,
-    #newPostModal img {
-        max-height: 55vh;
-    }
 
 
 
@@ -265,16 +261,6 @@ body {
         width: 50%;
     }
 
-/* scrollable container */
-    /* .my-scroll {
-        max-height: 800px;
-        overflow: scroll;
-    } */
-
-    #newPostModal img {
-        max-height: 60vh;
-        /* max-height: 50vh; */
-    }
 
 }
 
@@ -282,16 +268,6 @@ body {
 /* ------- X-LARGE DEVICES/SCREENS ------- */
 
 @media screen and (min-width: 1200px) {
-
-/* modals */
-    #setAvatarModal img{
-        max-height: 70vh;
-    }
-    #newPostModal img {
-        max-height: 60vh;
-        /* max-height: 50vh; */
-    }
-
 /* isotope */
     .grid-sizer,
     .grid-item {
