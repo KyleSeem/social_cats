@@ -12,7 +12,6 @@
 {% block content %}
 {% timezone request.session.user_timezone %}
 
-
 <form id="likeForm" class="d-none" method="POST">
     {% csrf_token %}
     {{ likeForm }}
@@ -44,7 +43,7 @@
                 <!-- photo -->
                     <div class="p-1">
                         <a href="{% url 'social_media:viewPost' post.id %}">
-                            <img class="js-post-image rounded w-100" src="{{ post.photo.url }}" alt="image for post id: {{ post.id }}" />
+                            <img class="js-post-image rounded w-100" src="{{ post.photo.url }}" alt="post image" />
                         </a>
                     </div>
 
