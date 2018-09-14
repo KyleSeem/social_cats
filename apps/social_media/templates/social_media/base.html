@@ -24,21 +24,25 @@
         <script type="text/javascript" src="{% static 'social_media/js/imagesloaded.js' %}"></script>
 
         <!-- cropper -->
-        <script type="text/javascript" src="{% static 'social_media/js/cropper.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.1/cropper.js"></script>
+        <script src="{% static 'social_media/js/jquery-cropper.js' %}"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'social_media/css/cropper.css' %}">
 
         <!-- jsTimezoneDetect -->
         <script type="text/javascript" src="{% static 'social_media/js/jstz.main.js' %}"></script>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
 
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
         <!-- google fonts -->
         <link href="https://fonts.googleapis.com/css?family=Architects+Daughter|Leckerli+One|Patrick+Hand+SC" rel="stylesheet">
+
         <!-- my stuff -->
         <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'social_media/css/style.css' %}">
+        <script type="text/javascript" src="{% static 'social_media/js/myjs.js' %}"></script>
 
         <!-- all of my jquery functions located in one html file and then included here -->
         {% include 'social_media/assets/jquery.html' %}
