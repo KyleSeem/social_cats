@@ -28,6 +28,7 @@
             });
         };
 
+
 /* ANONYMOUS USER/GUEST LOGIN PAGE */
     // popovers - general functionality, message content in template
         $('a.has-popover').popover({
@@ -35,7 +36,6 @@
             trigger: 'hover',
             placement: 'top',
         });
-
 
 
 // ISOTOPE FUNCTIONS
@@ -87,10 +87,17 @@
         });
 
 
+/* REFRESH CLASS */
+    // new post modal - page refreshes on close or cancel so cropper resets appropriately
+        $('.js-refresh-page').on('click', function() {
+            location.reload();
+        });
+
+
 /* INDEX AND/OR VIEW POST PAGE */
 
     // this bit is just for a better user experience:
-    // if a user clicks the comment bubble from while on the index page, once the user is redirected to the viewPost page the comment form is auto expanded
+    // if a user clicks the comment bubble while on the index page, once the user is redirected to the viewPost page the comment form is auto expanded
     // otherwise, the comment form is hidden - can be expanded by clicking the comment button on the viewPost page
         var ls = window.localStorage;
         var currentPath = this.location.pathname;
@@ -109,8 +116,6 @@
                 ls.clear();
             }
         };
-
-
 
     // for add comments toggle icons, switch visible icon on click
         $('.icon-switch').on('click', function() {
@@ -155,7 +160,6 @@
             });
         });
 
-
     // from the delete comment modal, if 'delete comment' is selected, submit delete comment form
         $('#submitDeleteCommentButton').on('click', function() {
             $('#deleteCommentForm').submit();
@@ -169,7 +173,6 @@
         });
 
 
-
 /* ACCOUNT PAGE */
     // functionality only when using lap/desktop
     // toggling display:none - allows hover effect defined in css to work
@@ -179,7 +182,6 @@
         }).on('mouseleave', function() {
             $('.middle').toggleClass('d-none');
         });
-
 
     // toggle profile view on account page - view details vs edit details
     // auto highlght (select) existing text in first_name input
@@ -200,7 +202,6 @@
         });
 
 
-
 // DELETE ACCOUNT CONFIRMATION PAGE
     // hides navbar
         if (this.location.pathname == "/kittenstagram/delete_account/") {
@@ -209,50 +210,58 @@
 
 
 /* CROPPER FUNCTIONS */
-
-// grab data on file input change and launch cropper in modal
-    // relates to new post
-        $("#id_photo").change(function() {
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $("#newImage").attr("src", e.target.result);
-                    $("#newPostModal").modal("show");
-                }
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
-
-    // relates to avatar
-        $("#id_avatar").change(function() {
-            $("#viewAvatarModal").modal("hide");
-
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $("#avatarImage").attr("src", e.target.result);
-                    $("#setAvatarModal").modal("show");
-                }
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
+// prior to cropper being launched, js functions are called during file read process to resize the image
 
     // DEFINE CROPPER VARIABLES
-        var $newImage = $("#newImage");
-        var $avatarImage = $("#avatarImage");
         var $image;
         var cropBoxData;
         var canvasData;
+
+// grab data on file input change and launch cropper in modal
+    // for new post
+        $("#grab_photo").change(function() {
+            if (this.files && this.files[0]) {
+                var file = event.target.files[0];
+                var canvasId = 'newPostCanvas';
+                var modalId = '#newPostModal';
+                var urlFieldId = '#photo_url';
+                myReaderFunction(file, canvasId, modalId, urlFieldId);
+            }
+        });
+
+    // for avatar
+        $("#grab_avatar").change(function() {
+            $("#viewAvatarModal").modal("hide");
+
+            if (this.files && this.files[0]) {
+                var file = event.target.files[0];
+                var canvasId = 'avatarCanvas';
+                var modalId = '#setAvatarModal';
+                var urlFieldId = '#avatar_url';
+                myReaderFunction(file, canvasId, modalId, urlFieldId);
+            }
+        });
+
+    // triggered by myjs.js function after image is resized - set data to modal
+        $(document).on("imageResized", function (event) {
+            if (event.blob && event.url) {
+                $(event.urlFieldId)[0].value = event.url;
+                $(event.canvas).attr("src", event.blob);
+                $(event.modalId).modal("show");
+            }
+        });
 
     // initializes crop box as square
         var setMyCropper = function() {
             $image.cropper({
                 viewMode: 1,
                 aspectRatio: 1/1,
-                minCropBoxWidth: 100,
-                minCropBoxHeight: 100,
+                minCropBoxWidth: 150,
+                minCropBoxHeight: 150,
                 zoomOnWheel: false,
+                rotatable: false,
                 ready: function() {
+                    $image.cropper("setDragMode", 'move');
                     $image.cropper("setCanvasData", canvasData);
                     $image.cropper("setCropBoxData", cropBoxData);
                 }
@@ -260,10 +269,9 @@
         };
 
 // SCRIPTS TO HANDLE THE CROPPER BOX
-
     // new post modal stuff
         $("#newPostModal").on("shown.bs.modal", function() {
-            $image = $newImage;
+            $image = $('#newPostCanvas');
             setMyCropper();
         }).on("hidden.bs.modal", function() {
             cropBoxData = $image.cropper("getCropBoxData");
@@ -273,7 +281,7 @@
 
     // set avatar modal stuff
         $("#setAvatarModal").on("shown.bs.modal", function() {
-            $image = $avatarImage;
+            $image = $('#avatarCanvas');
             setMyCropper();
         }).on("hidden.bs.modal", function() {
             cropBoxData = $image.cropper("getCropBoxData");
@@ -302,38 +310,29 @@
             $image.cropper("setAspectRatio", 1/1);
         });
 
-//SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER
 
+//SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER
     // new post
         $(".js-crop-and-post-new").click(function() {
             var cropData = $image.cropper("getData");
-            // console.log(cropData);
             $("#id_x").val(cropData["x"]);
             $("#id_y").val(cropData["y"]);
             $("#id_width").val(cropData["width"]);
             $("#id_height").val(cropData["height"]);
             // front-end form validation is skipped if use .submit() - clicking hidden submit button instead
             $('#submitNewPostButton').click()
-        })
+        });
 
     // set avatar
         $(".js-crop-and-upload").click(function () {
             var cropData = $image.cropper("getData");
-            console.log(cropData);
             $("#avatar_upload_form #id_x").val(cropData["x"]);
             $("#avatar_upload_form #id_y").val(cropData["y"]);
             $("#avatar_upload_form #id_width").val(cropData["width"]);
             $("#avatar_upload_form #id_height").val(cropData["height"]);
             $("#avatar_upload_form").submit();
+            // console.log(cropData);
         });
-
-
-
-
-
-
-
-
 
 
 

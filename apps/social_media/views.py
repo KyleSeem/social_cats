@@ -3,29 +3,26 @@
 
 from __future__ import unicode_literals
 import os
-
+import pytz
+import base64
+from rest_framework import serializers
+from PIL import Image, ExifTags
 from django.template import RequestContext
-
 from django.views import generic
 from django.views.generic import ListView, DetailView, UpdateView
-
-from PIL import Image
 from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404, render_to_response
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
-
 from django.conf import settings
 from datetime import datetime
-import pytz
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.db.models import Sum, Q
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-
 from .decorators import anonymous_required
 from .middleware import get_current_user
 from .models import Post, Comment, Profile, Like
@@ -33,7 +30,6 @@ from .forms import RegisterForm, NewPostForm, NewCommentForm, AvatarForm, Update
 
 
 # NOTE TO ME: class-based views get method_decorator for authentication, other views get login_required decorator
-
 
 
 ####### GENERIC METHODS #######
@@ -184,7 +180,14 @@ class MyAccountListView(generic.ListView):
 
     def get_context_data(self):
         id = get_current_user()
+        user = User.objects.get(id=id)
+        # identify if user's avatar is default or custom
+        av_name = str(user.profile.avatar).split('/')[-1]
+
         context = super(MyAccountListView, self).get_context_data()
+        # if default avatar, view avatar modal hides delete button
+        if av_name == 'avatar.jpg':
+            context['button_status'] = 'd-none'
         context['form'] = AvatarForm()
         context['nav_myAccount'] = 'active'
 
@@ -222,37 +225,43 @@ class ViewPostDetailView(generic.DetailView):
 @login_required
 def new_post(request):
     if request.method == "POST":
+        data = request.POST['photo_url']
 
-        form = NewPostForm(request.POST, request.FILES)
+        if isinstance(data, basestring) and data.startswith('data:image'):
+            format, imgstr = data.split(';base64,')
+            ext = format.split('/')[-1]
+
+            imgdata = ContentFile(base64.b64decode(imgstr), name=request.user.username + '_post_image.' + ext)
+
+            data = {
+                'photo':imgdata
+            }
+
+        form = NewPostForm(request.POST, initial=data)
         if form.is_valid():
             x = form.cleaned_data.get('x')
             y = form.cleaned_data.get('y')
             w = form.cleaned_data.get('width')
             h = form.cleaned_data.get('height')
-            photo = form.cleaned_data.get('photo')
 
         # save new post object
             new_post = form.save()
 
-        # open image file to adjust cropped proportions
+        # open image file and apply cropped proportions
             image = Image.open(new_post.photo)
             cropped_image = image.crop((x, y, w+x, h+y))
-
-        # determine photo orientation and resize accordingly (landscape, portrait, square)
-            if w > h:
-                resized_image = cropped_image.resize((600, 450), Image.ANTIALIAS)
-            elif w < h:
-                resized_image = cropped_image.resize((450, 600), Image.ANTIALIAS)
-            elif w == h:
-                resized_image = cropped_image.resize((450, 450), Image.ANTIALIAS)
-
-        # save resized image file
-            resized_image.save(new_post.photo.path)
+            cropped_image.save(new_post.photo.path)
             return redirect(reverse('social_media:index'))
+
         else:
-            error_message = "You have selected an invalid file type."
+            if (form.errors["photo"].as_data()[0].code == "invalid_image"):
+                error_message = "The file you selected was either not an image or the data was corrupted."
+            else:
+                error_message = "Ack... sorry, hairball. Please try again."
+                newPostForm = newPostForm()
             return my_error_handler(request, error_message)
     else:
+        newPostForm = newPostForm()
         return redirect(reverse('social_media:index'))
 
 
@@ -326,8 +335,20 @@ def toggle_like(request):
 @login_required
 def set_avatar(request):
     if request.method == "POST":
+        data = request.POST['avatar_url']
+
+        if isinstance(data, basestring) and data.startswith('data:image'):
+            format, imgstr = data.split(';base64,')
+            ext = format.split('/')[-1]
+
+            imgdata = ContentFile(base64.b64decode(imgstr), name='custom_avatar.' + ext)
+
+            data = {
+                'avatar':imgdata
+            }
+
         # set form to target the profile associated with this user
-        form = AvatarForm(request.POST, request.FILES, instance=request.user.profile)
+        form = AvatarForm(request.POST, initial=data, instance=request.user.profile)
         if form.is_valid():
             x = form.cleaned_data.get('x')
             y = form.cleaned_data.get('y')
@@ -346,10 +367,7 @@ def set_avatar(request):
         else:
             # print (form.errors.as_json())
             # {"avatar": [{"message": "Upload a valid image. The file you uploaded was either not an image or a corrupted image.", "code": "invalid_image"}]}
-            if (form.errors["avatar"].as_data()[0].code == "invalid_image"):
-                error_message = "The file you selected was either not an image or the data was corrupted."
-            else:
-                error_message = "Ack... sorry, hairball."
+            error_message = "The file you selected was either not an image or the data was corrupted."
             return my_error_handler(request, error_message)
     else:
         form = AvatarForm()

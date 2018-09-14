@@ -1,5 +1,4 @@
 
-
 <!-- template for cropping profile picture modal -->
 
 <div id="setAvatarModal" class="modal fade avatar-modal" tabindex="-1" role="dialog" aria-labelledby="setAvatarModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -7,7 +6,7 @@
         <div class="modal-content">
         <!-- modal header -->
             <div class="modal-header py-1">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close js-refresh-page" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -15,12 +14,12 @@
         <!-- modal body -->
             <div class="modal-body">
                 <div class="" style="max-width: 100%;">
-                    <img src="" id="avatarImage" style="max-width:100%;">
+                    <canvas id="avatarCanvas" width="" height=""></canvas>
                 </div>
             </div>
 
-    <!-- modal footer -->
-            <div class="modal-footer">
+        <!-- modal footer -->
+            <div class="modal-footer mx-auto ">
                 <div class="btn-group pull-left" role="group">
                     <button type="button" class="btn btn-info js-zoom-in">
                         <i class="fas fa-search-plus"></i>
@@ -29,8 +28,9 @@
                         <i class="fas fa-search-minus"></i>
                     </button>
                 </div>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button class="btn btn-primary js-crop-and-upload">Set Avatar</button>
+
+                <button type="button" class="btn btn-secondary js-refresh-page" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary js-crop-and-upload">Crop</button>
             </div>
 
         <!-- end of modal content -->

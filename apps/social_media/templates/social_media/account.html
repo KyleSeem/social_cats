@@ -13,9 +13,11 @@
 {% include 'social_media/modals/delete_account_modal.html' %}
 
 <!-- hidden form for avatar creation / used for all screen sizes -->
+<input id="grab_avatar" name="grab_avatar" class="d-none" type="file" accept="image/*">
+
 <form id="avatar_upload_form" class="d-none" enctype="multipart/form-data" action="{% url 'social_media:set_avatar' %}" method="POST">
     {% csrf_token %}
-    <input id="id_avatar" name="avatar" class="" type="file" accept="image/*">
+    <input id="avatar_url" name="avatar_url" value="" type="hidden">
     {{ form }}
 </form>
 
@@ -23,7 +25,7 @@
 <div class="rounded bg-white mx-auto p-3 col-lg-9 col-xl-7">
     <!-- avatar image -->
     <div class="d-md-flex mb-md-2">
-        <div class="avatarWrapper mb-2 mb-md-0 col-md-4 p-0">
+        <div class="avatarWrapper mb-2 mb-md-0 col-md-4 p-0 text-center">
             <button class="btn-link bg-none border-0 p-0 m-0" data-toggle="modal" data-target="#viewAvatarModal">
                 <img id="accountAvatar" class="img-thumbnail p-2" src="{{ user.profile.avatar.url }}" alt="avatar">
                 <div class="middle d-none">
@@ -89,7 +91,6 @@
                 </li>
             </ul>
         </div>
-
     </div>
 
 </div>

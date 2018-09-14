@@ -35,11 +35,8 @@
                 <li class="nav-item {{ nav_dashboard }}"><a class="nav-link" href="{% url 'social_media:index' %}"><i class="fas fa-home pr-1"></i>Dashboard</a></li>
                 <li class="nav-item {{ nav_myAlbum }}"><a class="nav-link" href="{% url 'social_media:myAlbum' user.id %}"><i class="far fa-images pr-1"></i>My Album</a></li>
                 <li class="nav-item">
-                    <label id="addPhotoLabel" class="nav-link mb-0" for="id_photo"><i class="far fa-plus-square pr-1"></i> New Post</label>
-                    <form id="img_upload_form" class="d-none" enctype="multipart/form-data" />
-                        {% csrf_token %}
-                        <input id="id_photo" type="file">
-                    </form>
+                    <label id="addPhotoLabel" class="nav-link mb-0" for="grab_photo"><i class="far fa-plus-square pr-1"></i> New Post</label>
+                    <input id="grab_photo" class="d-none" type="file" accept="image/*">
                 </li>
                 <!-- hidden button / jquery calls for modal -->
                 <li class="d-none">

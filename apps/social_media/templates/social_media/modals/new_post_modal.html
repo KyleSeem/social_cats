@@ -1,5 +1,4 @@
 
-
 <!-- modal for new post pop-up -->
 
 <div id="newPostModal" class="modal fade new-post-modal" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -8,7 +7,7 @@
         <!-- modal header -->
             <div class="modal-header py-1">
                 <strong id="newPostHeader" class="modal-title">Post a mew photo</strong>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close js-refresh-page" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -16,10 +15,10 @@
         <!-- modal body -->
             <div class="modal-body">
                 <div class="" style="max-width:100%;">
-                    <img id="newImage" class="" src="" style="max-width:100%;">
+                    <canvas id="newPostCanvas" height="" width=""></canvas>
                 </div>
 
-                <div class="w-100 mt-2">
+                <div class="w-100 mt-2 text-center">
                     <div class="btn-group pull-left" role="group">
                         <button type="button" class="btn btn-info js-zoom-in">
                             <i class="fas fa-search-plus"></i>
@@ -46,24 +45,23 @@
                     <form id="new_post_form" enctype="multipart/form-data" action="{% url 'social_media:new_post' %}" method="POST">
                         {% csrf_token %}
                         <input id="id_user" name="user" type="hidden" value="{{ user.id }}">
-                        <input id="id_photo" class="d-none" name="photo" type="file">
                         <input id="id_x" name="x" type="hidden">
                         <input id="id_y" name="y" type="hidden">
                         <input id="id_width" name="width" type="hidden">
                         <input id="id_height" name="height" type="hidden">
+                        <input id="id_rotate" name="rotate" type="hidden">
+                        <input id="photo_url" name="photo_url" value="" type="hidden">
                         <textarea name="caption" class="form-control" maxlength="255" rows="2" placeholder="add a caption..." required></textarea>
                         <button id="submitNewPostButton" class="d-none" type="submit">submit new post</button>
                     </form>
                 </div>
-
             </div>
 
         <!-- modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <div class="modal-footer pt-2 p-md-3">
+                <button type="button" class="btn btn-secondary js-refresh-page" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary js-crop-and-post-new">Post Meow</button>
             </div>
-
 
         <!-- end of modal content -->
         </div>
