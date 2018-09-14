@@ -1,11 +1,9 @@
 
-
 <!-- view avatar in modal with crud option buttons modal -->
 
 <div id="viewAvatarModal" class="modal fade avatar-modal" tabindex="-1" role="dialog" aria-labelledby="viewAvatarModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered mx-auto" role="document">
+    <div class="modal-dialog modal-dialog-centered mx-auto py-2 px-3" role="document">
         <div class="modal-content mx-auto">
-
         <!-- modal header -->
             <div class="modal-header py-1">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -15,10 +13,11 @@
 
         <!-- modal body -->
             <div class="modal-body">
-                {% if not user.avatar %}
-                    <img class="img-fluid rounded w-100" src="/media/default_avatar/avatar.jpg" alt="avatar">
+                {% if user.profile.avatar %}
+                    <img id="vamImage" class="img-fluid rounded w-100" src="{{ user.profile.avatar.url }}" alt="avatar">
                 {% else %}
-                    <img class="img-fluid rounded w-100" src="{{ user.profile.avatar.url }}" alt="avatar">
+                <!-- this is just in case a profile is created without an avatar // shouldn't happen outsite of dev -->
+                    <img class="img-fluid rounded w-100" src="/media/default_avatar/avatar.jpg" alt="avatar">
                 {% endif %}
             </div>
 
@@ -26,8 +25,8 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 
-                <button class="btn btn-info btn-large" data-toggle="modal" data-target="#deleteAvatarModal">Delete</button>
-                <label id="avatarLabel" class="btn btn-primary mb-0" for="id_avatar">Change</label>
+                <button id="deleteAvatarButton" class="btn btn-info btn-large {{ button_status }}" data-toggle="modal" data-target="#deleteAvatarModal">Delete</button>
+                <label id="avatarLabel" class="btn btn-primary mb-0" for="grab_avatar">Change</label>
             </div>
         </div>
     </div>
