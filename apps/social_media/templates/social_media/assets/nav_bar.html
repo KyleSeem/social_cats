@@ -10,13 +10,13 @@
 
     <nav id="myNav" class="navbar navbar-expand-md navbar-light">
     <!-- brand icon - routes to dashboard on-click when lg or xl -->
-        <a class="navbar-brand d-none d-md-inline-block myIcon" href="{%url 'social_media:index' %}">
+        <a class="navbar-brand d-none d-md-inline-block" href="{%url 'social_media:index' %}" style="background-color:transparent; border:none;">
             <img class="myIcon" alt="Brand" src="/static/social_media/img/icon.png" />
         </a>
 
     <!-- brand image used as toggle button when collapsed - sm, xs -->
         <div class="d-md-none">
-            <button class="myIcon" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="background-color:transparent; border:none;">
                 <img class="myIcon" alt="open menu" src="/static/social_media/img/icon.png" />
             </button>
 
