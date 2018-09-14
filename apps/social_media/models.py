@@ -4,7 +4,6 @@
 from __future__ import unicode_literals, print_function
 import os, sys
 import pytz
-
 from PIL import Image, ImageFile
 from datetime import datetime
 from django.db import models

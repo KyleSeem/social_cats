@@ -60,7 +60,6 @@ body {
             border-top: 1px solid #9ba9b6;
         }
 
-
 /* fluid container below navbar */
     #guest-container,
     #main-container {
@@ -106,15 +105,12 @@ body {
         font-family: 'Patrick Hand SC', cursive;
     }
 
-
-
 /* isotope */
     .grid-sizer,
     .grid-item {
         width: 100%;
         padding: .5em;
     }
-
 
 /* avatar-related */
     .post_avatar {
@@ -175,8 +171,6 @@ body {
     #myIcon {
         width: 3em;
     }
-
-
 
 }
 
@@ -260,7 +254,6 @@ body {
     .grid-item.album {
         width: 50%;
     }
-
 
 }
 
