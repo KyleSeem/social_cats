@@ -40,8 +40,10 @@ body {
             font-size: 1.25em;
             color: #00000069;
         }
-        #myIcon {
+        .myIcon {
             width: 3.25em;
+            background-color: transparent;
+            border: none;
         }
         #myNav label:hover {
             cursor: pointer;
@@ -168,8 +170,10 @@ body {
     #myNav a, label {
         font-size: .9em;
     }
-    #myIcon {
+    .myIcon {
         width: 3em;
+        background-color: transparent;
+        border: none;
     }
 
 }
@@ -235,8 +239,10 @@ body {
     h1.logreg {
         font-size: 7.5em;
     }
-        #myIcon {
+        .myIcon {
             width: 3.75em;
+            background-color: transparent;
+            border: none;
         }
 
 /* fluid container below navbar */
