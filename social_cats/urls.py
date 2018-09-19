@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+    url(r'^', include('apps.kyleseem.urls', namespace='kyleseem')),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^kittenstagram/', include('apps.social_media.urls', namespace='kitten_stagram')),
@@ -30,4 +31,5 @@ if settings.DEBUG is True:
 
 urlpatterns += {
     url(r'^', RedirectView.as_view(url='/kittenstagram/')),
+    # url(r'^', RedirectView.as_view(url='/kittenstagram/')),
 }
