@@ -11,7 +11,7 @@ var myReaderFunction = function(file, canvasId, modalId, urlFieldId) {
         image.onload = function (imageEvent) {
             var width = image.width;
             var height = image.height;
-            var max_size = 800;
+            // var max_size = 800;
             var canvas = document.getElementById(canvasId);
 
             // get image exif tags
@@ -22,11 +22,13 @@ var myReaderFunction = function(file, canvasId, modalId, urlFieldId) {
 
             // resize image
             if (width > height) {
+                max_size = 800;
                 if (width > max_size) {
                     height *= max_size / width;
                     width = max_size;
                 }
             } else {
+                max_size = 600;
                 if (height > max_size) {
                     width *= max_size / height;
                     height = max_size;
