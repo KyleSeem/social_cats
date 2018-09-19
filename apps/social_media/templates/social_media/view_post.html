@@ -14,10 +14,8 @@
 {% include 'social_media/modals/delete_comment_modal.html' %}
 
 
-<!-- using col classes to set max width of this container - will not allow expansion -->
-<div class="col-md-9 col-lg-7 col-xl-5 mx-auto px-0 py-2">
-    <!-- using fit-content to set white background to be even around image -->
-    <div class="rounded mx-auto p-2 p-md-3 bg-white" style="width:fit-content;">
+<div class="rounded bg-white mx-auto p-2 p-md-3" style="width:fit-content;">
+    <div style="max-width: {{ post.photo.width }}px;">
 
     <!-- avatar and caption -->
         <div class="d-flex pb-md-1">
@@ -44,9 +42,7 @@
         </div>
 
     <!-- image -->
-        <div class="mt-2">
-            <img id="postImage" class="border rounded w-100" src="{{ post.photo.url }}" alt="image for post id: {{ post.id }}">
-        </div>
+        <img class="border rounded mt-2" src="{{ post.photo.url }}" alt="post image" style="max-width:100%;" />
 
     <!-- timestamp, add comment toggle -->
         <div class="d-flex px-1 py-2 border-bottom">
@@ -90,39 +86,33 @@
         </div>
 
     <!-- all comments div -->
-        <div id="commentWrapper">
-            <div class="my-2">
-                {% for comment in comments %}
-                    <div class="d-flex">
-                        <div class="w-100">
-                            <div class="media border-bottom py-2 py-md-3">
-                                <a class="mr-2 mr-md-3" href="{% url 'social_media:myAlbum' comment.user.id %}">
-                                    <img class="comment_avatar rounded" src="{{ comment.user.profile.avatar.url }}" alt="user avatar" />
-                                </a>
-                                <div class="media-body">
-                                    <h6>{{ comment.user.username }} <small>at {{ comment.created_at|date:"g:i A - j M y" }}</small></h6>
-                                    <span class="text-dark">{{ comment.comment }}</span>
-                                </div>
-                            </div>
+        <div id="commentWrapper" class="my-2">
+            {% for comment in comments %}
+                <div class="d-flex flex-row border-bottom">
+                    <div class="media py-2 py-md-3">
+                        <a class="mr-2 mr-md-3" href="{% url 'social_media:myAlbum' comment.user.id %}">
+                            <img class="comment_avatar rounded" src="{{ comment.user.profile.avatar.url }}" alt="user avatar" />
+                        </a>
+                        <div class="media-body">
+                            <h6>{{ comment.user.username }} <small>at {{ comment.created_at|date:"g:i A - j M y" }}</small></h6>
+                            <span class="text-dark">{{ comment.comment }}</span>
                         </div>
-
-                    <!-- delete option if user is comment author -->
-                        {% if comment.user.id == user.id %}
-                            <div class="d-flex">
-                                <div class="flex-shrink-1 border-bottom py-2 py-md-3">
-                                    <button class="close mx-1" type="button" data-toggle="modal" data-target="#deleteCommentModal" title="delete comment" style="font-size:1.2em;">
-                                        <i class="fas fa-trash-alt text-info"></i>
-                                    </button>
-                                </div>
-                                <form id="deleteCommentForm" class="d-none" action="{% url 'social_media:delete_comment' comment.id %}" method="POST">
-                                    {% csrf_token %}
-                                    <input type="hidden" id="comment_id" name="comment_id" value="{{ comment.id }}">
-                                </form>
-                            </div>
-                        {% endif %}
                     </div>
-                {% endfor %}
-            </div>
+
+                <!-- delete option if user is comment author -->
+                    {% if comment.user.id == user.id %}
+                        <div class="d-flex flex-shrink-1 align-items-start">
+                            <button class="close mx-1" type="button" data-toggle="modal" data-target="#deleteCommentModal" title="delete comment" style="font-size:1.2em;">
+                                <i class="fas fa-trash-alt text-info"></i>
+                            </button>
+                            <form id="deleteCommentForm" class="d-none" action="{% url 'social_media:delete_comment' comment.id %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" id="comment_id" name="comment_id" value="{{ comment.id }}">
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
         </div>
     </div>
 </div>
