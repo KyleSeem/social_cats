@@ -282,7 +282,7 @@ def delete_post(request, pk):
     if request.method == "POST":
         if request.user.id == post.user.id:
             post.delete()
-            return redirect(reverse('social_media:myAlbum', kwargs={'id':request.user.id}))
+            return redirect(reverse('social_media:index'))
     else:
         return redirect(reverse('social_media:viewPost', kwargs={'pk':pk}))
 

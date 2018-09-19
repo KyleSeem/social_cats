@@ -89,7 +89,7 @@
         <div id="commentWrapper" class="my-2">
             {% for comment in comments %}
                 <div class="d-flex flex-row border-bottom">
-                    <div class="media py-2 py-md-3">
+                    <div class="media w-100 py-2 py-md-3">
                         <a class="mr-2 mr-md-3" href="{% url 'social_media:myAlbum' comment.user.id %}">
                             <img class="comment_avatar rounded" src="{{ comment.user.profile.avatar.url }}" alt="user avatar" />
                         </a>
@@ -101,7 +101,7 @@
 
                 <!-- delete option if user is comment author -->
                     {% if comment.user.id == user.id %}
-                        <div class="d-flex flex-shrink-1 align-items-start">
+                        <div class="d-flex flex-shrink-1 align-items-start py-2 py-md-3">
                             <button class="close mx-1" type="button" data-toggle="modal" data-target="#deleteCommentModal" title="delete comment" style="font-size:1.2em;">
                                 <i class="fas fa-trash-alt text-info"></i>
                             </button>

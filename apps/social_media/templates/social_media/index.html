@@ -12,6 +12,7 @@
 {% block content %}
 {% timezone request.session.user_timezone %}
 
+
 <form id="likeForm" class="d-none" method="POST">
     {% csrf_token %}
     {{ likeForm }}
@@ -40,6 +41,7 @@
 
                         <!-- if viewed post belongs to signed in user, user sees delete option -->
                         {% if post.user.id == user.id %}
+                            {% include 'social_media/modals/delete_post_modal.html' %}
                             <div class="justify-content-end">
                                 <button class="close mx-1 " type="button" data-toggle="modal" data-target="#deletePostModal{{post.id}}" title="delete post" style="font-size:1.2em;">
                                     <i class="fas fa-trash-alt text-info"></i>
