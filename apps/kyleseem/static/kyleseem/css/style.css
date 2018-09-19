@@ -1,0 +1,99 @@
+/* apps/kyleseem/static/kyleseem/css/style.css */
+
+html {
+    font-size: 1rem;
+    height: 100%;
+}
+    body {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+        .content {
+            flex: 1 0 auto;
+        }
+        .footer {
+            flex-shrink: 0;
+            font-family: 'Shadows Into Light Two', cursive;
+        }
+        h1 {
+            font-family: 'Bilbo', cursive;
+        }
+        h2, h1.stacks {
+            font-family: 'Shadows Into Light Two', cursive;
+        }
+        .aboutMe p {
+            font-family: 'Raleway', sans-serif;
+        }
+        p {
+            font-size: 1.1em;
+        }
+
+        .djangoStack {
+            font-family: 'Shadows Into Light Two', cursive;
+            font-family: 'Waiting for the Sunrise', cursive;
+        }
+        .djangoStack h4 {
+            font-size: 1.75em;
+        }
+        .djangoStack p {
+            font-size: 1.4em;
+        }
+        .meanStack h4 {
+            font-family: 'Julius Sans One', sans-serif;
+        }
+        .meanStack p {
+            font-size: 1.2em;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        img {
+            opacity: 1;
+            display: block;
+            width: 100%;
+            height: auto;
+            transition: .5s ease;
+            backface-visibility: hidden;
+        }
+        .overlay {
+            transition: .5s ease;
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            left: 0;
+            top: 0;
+            left: 0;
+            /* height: 100%; */
+            height: 97%;
+            width: 100%;
+            text-align: center;
+            overflow: auto;
+        }
+        .imageWrapper:hover img {
+            opacity: 0.1;
+        }
+        .imageWrapper:hover .overlay {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+
+
+
+@media screen and (max-width: 575.98px) {
+    h4 {
+        font-size: 1.25em;
+    }
+    p, a {
+        font-size: 1em;
+        font-family: 'Raleway', sans-serif;
+    }
+    button {
+        border: none;
+    }
+    .footer p,
+    .footer a {
+        font-size: .9em;
+        font-family: 'Shadows Into Light Two', cursive;
+    }
+}

@@ -1,0 +1,134 @@
+<!-- apps/kyleseem/templates/index.html -->
+
+{% extends 'kyleseem/base.html' %}
+
+{% block content %}
+<!-- decided to do completely different views for screens to have better suited layouts -->
+
+    <!-- md, lg, xl screens -->
+    <div class="d-none d-md-block">
+        <header class="w-100 p-4" style="background-color: #99CFD2;">
+            <h1 class="display-3 text-center font-weight-light m-0 p-2">Kyle Seem | Developer</h1>
+        </header>
+
+        <div class="d-none d-md-flex my-4 my-lg-5">
+
+        <!-- django column -->
+            <div class="djangoStack align-self-center ml-3 px-3 pb-3" style="width: 30%;">
+                <h1 class="stacks text-center m-0 pb-3">Django</h1>
+
+                <div class="imageWrapper position-relative border rounded shadow mx-auto p-2" style="max-width:275px;">
+                    <a href="{% url 'social_media:index' %}">
+                        <img class="rounded w-100" src="/static/kyleseem/img/ksp_screenshot.jpg" alt="kittenstagram site screenshot" />
+                        <div class="overlay">
+                            <div class="text-dark p-3">
+                                <h4>KittenStagram</h4>
+                                <p>A social media site that allows cats to share photos and interact with their peers.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        <!-- me column -->
+            <div class="px-3" style="width: 40%;">
+                <div class="imageWrapper position-relative rounded shadow-lg m-auto p-3" style="max-width:450px; border:2px solid #dee2e6;">
+                    <img class="rounded w-100" src="/static/kyleseem/img/watercolor_me2.jpg" alt="portrait" />
+                    <div class="overlay" style="cursor: auto;">
+                        <div class="text-dark p-3" style="overflow:auto;">
+                            <h2 class="py-3">Full-Stack Developer,<br> Full-Time Cat Enthusiast</h2>
+                            {% include 'kyleseem/about.html' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- mean column -->
+            <div class="meanStack align-self-center mr-3 px-3 pb-3" style="width: 30%;">
+                <h1 class="stacks text-center m-0 pb-3">MEAN</h1>
+
+                <div class="imageWrapper position-relative border rounded shadow mx-auto p-2" style="max-width:275px;">
+                    <a href="http://www.kyleseem.com/#!/photography/home">
+                        <img class="rounded w-100" src="/static/kyleseem/img/ksp_screenshot.jpg" alt="KSP site screenshot" />
+                        <div class="overlay">
+                            <div class="text-dark p-3">
+                                <h4>KS Photography</h4>
+                                <p>An online photo grallery showcasing some of my personal photography.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+<!-- ///////////////////////////////////////// -->
+<!-- SM AND XS SCREENS -->
+    <div class="d-md-none">
+        <header class="w-100 py-4 px-0" style="background-color: #99CFD2;">
+            <h1 class="text-center font-weight-light m-0 p-2">Kyle Seem | Developer</h1>
+        </header>
+
+        <div id="myAccordion" class="accordion">
+        <!-- me -->
+            <div class="p-3">
+                <div id="aboutMe" class="d-flex w-100">
+                    <button class="collapsed bg-white rounded-circle shadow p-1" type="button" data-toggle="collapse" data-target="#toggleMe" aria-expanded="false" aria-controls="toggleMe" style="max-width: 33%;">
+                        <img class="border-0 rounded-circle w-100" src="/static/kyleseem/img/watercolor_me.jpg" alt="portrait" />
+                    </button>
+                    <div class="align-self-center ml-4">
+                        <p class="lead mb-0" style="font-family: 'Shadows Into Light Two', cursive;">Full-Stack Developer,<br> Full-Time Cat Enthusiast</p>
+                    </div>
+                </div>
+
+                <div id="toggleMe" class="collapse pt-3" aria-labelledby="aboutMe" data-parent="#myAccordion">
+                    <div class="border-bottom">
+                        {% include 'kyleseem/about.html' %}
+                    </div>
+                </div>
+            </div>
+
+        <!-- django -->
+            <div class="p-3">
+                <div id="aboutDjango" class="d-flex w-100">
+                    <button class="collapsed bg-white rounded shadow p-1" type="button" data-toggle="collapse" data-target="#toggleDjango" aria-expanded="false" aria-controls="toggleDjango" style="max-width: 33%;">
+                        <img class="border-0 rounded w-100" src="/static/kyleseem/img/ksp_screenshot.jpg" alt="KittenStagram screenshot" />
+                    </button>
+                    <div class="align-self-center ml-4">
+                        <p class="lead mb-0" style="font-family: 'Shadows Into Light Two', cursive;">Django Stack<br> KittenStagram</p>
+                    </div>
+                </div>
+
+                <div id="toggleDjango" class="collapse pt-3" aria-labelledby="aboutDjango" data-parent="#myAccordion">
+                    <div class="border-bottom text-center pb-1">
+                        <p>A social media site that allows cats to share photos and interact with their peers.</p>
+                        <a href="{% url 'social_media:index' %}">visit site</a>
+                    </div>
+                </div>
+            </div>
+
+        <!-- mean -->
+            <div class="p-3">
+                <div id="aboutMean" class="d-flex w-100">
+                    <button class="collapsed bg-white rounded shadow p-1" type="button" data-toggle="collapse" data-target="#toggleMean" aria-expanded="false" aria-controls="toggleMean" style="max-width: 33%;">
+                        <img class="border-0 rounded w-100" src="/static/kyleseem/img/ksp_screenshot.jpg" alt="KSP screenshot" />
+                    </button>
+                    <div class="align-self-center ml-4">
+                        <p class="lead mb-0" style="font-family: 'Shadows Into Light Two', cursive;">MEAN Stack<br> KS Photography</p>
+                    </div>
+                </div>
+
+                <div id="toggleMean" class="collapse pt-3" aria-labelledby="aboutMean" data-parent="#myAccordion">
+                    <div class="border-bottom text-center pb-1">
+                        <p>An online photo grallery showcasing some of my personal photography.</p>
+                        <a href="http://www.kyleseem.com/#!/photography/home">visit site</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
