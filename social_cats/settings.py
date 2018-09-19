@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'apps.kyleseem',
     'apps.social_media',
     'django_extensions',
     'django_cleanup',
@@ -120,8 +121,11 @@ USE_L10N = True
 
 USE_TZ = True
 
+# set session to auto expire after 24 hours
+SESSION_COOKIE_AGE = 86400
+
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/kittenstagram/'
 
 LOGOUT_REDIRECT_URL = '/accounts/login/'
 
