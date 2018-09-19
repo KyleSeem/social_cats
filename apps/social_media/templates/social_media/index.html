@@ -37,13 +37,22 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- if viewed post belongs to signed in user, user sees delete option -->
+                        {% if post.user.id == user.id %}
+                            <div class="justify-content-end">
+                                <button class="close mx-1 " type="button" data-toggle="modal" data-target="#deletePostModal{{post.id}}" title="delete post" style="font-size:1.2em;">
+                                    <i class="fas fa-trash-alt text-info"></i>
+                                </button>
+                            </div>
+                        {% endif %}
                     </div>
 
             <!-- click image takes to image/post page -->
                 <!-- photo -->
                     <div class="p-1">
                         <a href="{% url 'social_media:viewPost' post.id %}">
-                            <img class="js-post-image rounded w-100" src="{{ post.photo.url }}" alt="post image" />
+                            <img class="rounded w-100" src="{{ post.photo.url }}" alt="post image" />
                         </a>
                     </div>
 
