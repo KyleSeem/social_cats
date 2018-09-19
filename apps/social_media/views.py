@@ -250,7 +250,16 @@ def new_post(request):
         # open image file and apply cropped proportions
             image = Image.open(new_post.photo)
             cropped_image = image.crop((x, y, w+x, h+y))
-            cropped_image.save(new_post.photo.path)
+
+         # determine photo orientation and resize accordingly (landscape, portrait, square)
+            if w > h:
+                resized_image = cropped_image.resize((600, 450), Image.ANTIALIAS)
+            elif w < h:
+                resized_image = cropped_image.resize((450, 600), Image.ANTIALIAS)
+            elif w == h:
+                resized_image = cropped_image.resize((450, 450), Image.ANTIALIAS)
+
+            resized_image.save(new_post.photo.path)
             return redirect(reverse('social_media:index'))
 
         else:
