@@ -59,14 +59,15 @@
 
 /* SCROLL TO TOP BUTTON FUNCTIONS */
         var $document = this;
+        var $container = $('.content');
     // when scrolling, call scroll button function
-        $(window).on('scroll', function() {
+        $('.content').on('scroll', function() {
             scrollButtonDisplay();
         });
 
     // show or hide scroll button based on scroll location
         function scrollButtonDisplay() {
-            if ($document.body.scrollTop > 100 || $document.documentElement.scrollTop > 100) {
+            if ($container[0].scrollTop > 200 || $document.documentElement.scrollTop > 200) {
                 $('#ScrollToTopButton').removeClass('d-none');
             }
             else {
