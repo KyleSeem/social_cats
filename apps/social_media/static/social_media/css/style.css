@@ -12,7 +12,8 @@ body {
     height: 100vh;
 }
 .content {
-    flex: 1 0 auto;
+    /* flex: 1 0 auto; */
+    overflow: auto;
 }
 .footer {
     flex-shrink: 0;
@@ -66,7 +67,9 @@ body {
     #guest-container,
     #main-container {
         padding-top: 8.5em;
-        margin-bottom: 10vh;
+        height: 100%;
+        margin-bottom: 2em;
+        /* padding-bottom: 2em; */
     }
 
     #ScrollToTopButton {
@@ -256,10 +259,10 @@ body {
     .grid-item {
         width: 33.333%;
     }
-    .grid-sizer.album,
+    /* .grid-sizer.album,
     .grid-item.album {
         width: 50%;
-    }
+    } */
 
 }
 
@@ -272,9 +275,9 @@ body {
     .grid-item {
         width: 25%;
     }
-    .grid-sizer.album,
+    /* .grid-sizer.album,
     .grid-item.album {
         width: 33.333%;
-    }
+    } */
 
 }
