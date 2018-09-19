@@ -11,7 +11,7 @@ var myReaderFunction = function(file, canvasId, modalId, urlFieldId) {
         image.onload = function (imageEvent) {
             var width = image.width;
             var height = image.height;
-            var max_size = 600;
+            var max_size = 800;
             var canvas = document.getElementById(canvasId);
 
             // get image exif tags
