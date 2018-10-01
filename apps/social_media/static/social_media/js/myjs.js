@@ -39,11 +39,11 @@ var myReaderFunction = function(file, canvasId, modalId, urlFieldId) {
     // this results in a modal that is too big for the screen that will not scroll
     // before defining the w/h of the canvas, check the screen dimensions and scale appropriately for a better fit
     // really only affects xs screens - only updates if mobile in portrait position bc modal would be too small in mobile landscape mode
-            if (width >= screen.width || height >= screen.width) {
-                max_width = (screen.width * .9);
-                height *= max_width / width;
-                width = max_width;
-            }
+            // if (width >= screen.width || height >= screen.width) {
+            //     max_width = (screen.width * .9);
+            //     height *= max_width / width;
+            //     width = max_width;
+            // }
             // define canvas width and height
             canvas.width = width;
             canvas.height = height;
