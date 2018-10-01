@@ -9,44 +9,81 @@ var myReaderFunction = function(file, canvasId, modalId, urlFieldId) {
 
         var image = new Image();
         image.onload = function (imageEvent) {
-            var width = image.width;
-            var height = image.height;
-            // var max_size = 800;
+            var width;
+            var height;
+            var max_size = 600;
+            var max_width = (screen.width * .9);
+            var max_height = screen.height * .75;
             var canvas = document.getElementById(canvasId);
 
             // get image exif tags
             EXIF.getData(image, function() {
                 exif = EXIF.getTag(this, "Orientation");
-                // console.log('EXIF', exif);
+                console.log('EXIF', exif);
             });
 
+            console.log('original image', image.width, image.height);
+
+
             // resize image
-            if (width > height) {
-                max_size = 800;
-                if (width > max_size) {
-                    height *= max_size / width;
-                    width = max_size;
+            if (image.width > image.height) {
+                if (image.width > max_size) {
+                    image.height *= max_size / image.width;
+                    image.width = max_size;
                 }
             } else {
-                max_size = 600;
-                if (height > max_size) {
-                    width *= max_size / height;
-                    height = max_size;
+                if (image.height > max_size) {
+                    image.width *= max_size / image.height;
+                    image.height = max_size;
                 }
             }
+            console.log('new image', image.width, image.height);
 
     // cropperjs functions to create and size [replacement] canvas don't scale well after resizing the image
     // this results in a modal that is too big for the screen that will not scroll
     // before defining the w/h of the canvas, check the screen dimensions and scale appropriately for a better fit
-    // really only affects xs screens - only updates if mobile in portrait position bc modal would be too small in mobile landscape mode
-            // if (width >= screen.width || height >= screen.width) {
-            //     max_width = (screen.width * .9);
-            //     height *= max_width / width;
-            //     width = max_width;
-            // }
+
+            // if image is bigger than screen
+            if (max_size >= screen.width) {
+                // if image is a square
+                if (image.width == image.height) {
+                    width = max_width;
+                    height = max_width;
+                }
+                // if image is not a square
+                else {
+                    // if exif = 1-4 or undefined (canvas height/width do not need to be swapped)
+                    if (exif <= 4 || exif == 'undefined') {
+                        height = image.height * (max_width / image.width);
+                        width = max_width;
+                        // if image is portrait shrink a little so modal fits better
+                        if (height > width) {
+                            height *= .85;
+                            width *= .85;
+                        }
+                    }
+                    // if exif = 5-8 (canvas height/width needs to be swapped before drawing)
+                    else {
+                        console.log('iw, ih', image.width, image.height)
+                        width = image.width * (max_width / image.height);
+                        height = max_width;
+                        // reversed for exif 5-8
+                        if (width > height) {
+                            height *= .85;
+                            width *= .85;
+                        }
+                    }
+                }
+            // if image is not bigger than screen
+            } else {
+                height = image.height;
+                width = image.width;
+            }
+            
             // define canvas width and height
             canvas.width = width;
             canvas.height = height;
+
 
             var context = canvas.getContext('2d');
             // find correct exif tag and transform context accordingly
@@ -81,9 +118,11 @@ var myReaderFunction = function(file, canvasId, modalId, urlFieldId) {
                     canvas.height = width;
                     context.transform(0, -1, 1, 0, 0, width);
                     break;
+
             }
             // render context to canvas
             context.drawImage(image, 0, 0, width, height);
+            console.log('final image', image.width, image.height);
 
 
             var dataUrl = canvas.toDataURL('image/jpeg');
