@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="flex-md-fill align-self-center w-100">
-                        <div class="list-group list-group-flush w-100 text-nowrap">
+                        <div class="list-group list-group-flush w-100" style="word-wrap:break-word;">
                             <li class="list-group-item lead">Username: <span class="handwriting">{{ album_owner }}</span></li>
                             {% if album_owner.first_name != '' and album_owner.last_name != '' %}
                                 <li class="list-group-item lead">Full name: <span class="handwriting">{{ album_owner.first_name }} {{ album_owner.last_name }}</span></li>
