@@ -61,7 +61,8 @@
         var $document = this;
         var $container = $('.content');
     // when scrolling, call scroll button function
-        $('.content').on('scroll', function() {
+        // $('.content').on('scroll', function() {
+        $(window).on('scroll', function() {
             scrollButtonDisplay();
         });
 
