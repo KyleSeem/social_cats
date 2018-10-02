@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^myAccount/$', views.MyAccountListView.as_view(), name='myAccount'),
     url(r'^myAlbum/(?P<id>\d+)$', views.MyAlbumListView.as_view(), name='myAlbum'),
     url(r'^viewPost/(?P<pk>\d+)$', views.ViewPostDetailView.as_view(), name='viewPost'),
+    url(r'^about/$', views.about, name='about'),
 
     url(r'^new_post/$', views.new_post, name='new_post'),
     url(r'^delete_post/(?P<pk>\d+)$', views.delete_post, name='delete_post'),

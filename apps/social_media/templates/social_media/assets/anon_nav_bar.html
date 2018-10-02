@@ -1,0 +1,73 @@
+<!-- nav bar for anonymous users - most links etc disabled -->
+
+<!-- <div class="container-fluid m-0 p-0"> -->
+    <header class="page-header fixed-top pt-1">
+
+        <h1>KittenStagram</h1>
+
+        <nav id="myNav" class="navbar navbar-expand-md navbar-light">
+        <!-- brand icon - routes to dashboard on-click when lg or xl -->
+            <a class="navbar-brand d-none d-md-inline-block" href="{%url 'social_media:guest_login' %}" style="background-color:transparent; border:none;">
+                <img class="myIcon" alt="Brand" src="/static/social_media/img/icon.png" />
+            </a>
+
+        <!-- brand image used as toggle button when collapsed - sm, xs -->
+            <div class="d-md-none">
+                <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <img class="myIcon" alt="open menu" src="/static/social_media/img/icon.png" />
+                </button>
+
+            </div>
+        <!-- not included in div above so will auto align to right -->
+            <span class="d-md-none navbar-text text-capitalize pr-1">Hi, Guest!</span>
+
+        <!-- all nav bits incuded in collapse -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'social_media:guest_login' %}"><i class="fas fa-home pr-1"></i>Dashboard</a></li>
+                    <li class="nav-item">
+                        <a class="has-popover give-pointer nav-link" data-content="Log in to use this feature"><i class="far fa-images pr-1"></i>My Album</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="has-popover give-pointer nav-link" data-content="Log in to use this feature"><i class="far fa-plus-square pr-1"></i> New Post</a>
+                    </li>
+                    <li class="nav-item d-md-none">
+                        <a class="has-popover give-pointer nav-link" data-content="Log in to use this feature"><i class="fas fa-cog pr-1"></i>My Account</a>
+                    </li>
+                    <li class="nav-item {{ nav_about }} d-md-none">
+                        <a class="nav-link" href="{% url 'social_media:about' %}"><i class="far fa-question-circle pr-1"></i>About Site</a>
+                    </li>
+
+                    <div class="dropdown-divider border-secondary"></div>
+
+                    <li class="nav-item d-md-none">
+                        <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-in-alt mx-1 pr-1"></i><i>Login</i></a>
+                    </li>
+                    <li class="nav-item d-md-none">
+                        <a class="nav-link" href="{% url 'social_media:register' %}"><i class="fas fa-user-plus mx-1 pr-1"></i><i>Sign up</i></a>
+                    </li>
+                </ul>
+            </div>
+        <!-- close navbar-collapse -->
+
+            <ul class="nav navbar-nav mr-1 d-none d-md-inline">
+                <li class="nav-item dropdown">
+                    <a id="userDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="text-capitalize pr-1">Hi, Guest!</span>
+                        <i class="far fa-user-circle"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="userDropdown" style="min-width:9rem; left:-15px;">
+                        <a class="has-popover disabled nav-link" data-content="Log in to use this feature"><i class="fas fa-cog mx-1 pr-1"></i>My Account</a>
+
+                        <a class="nav-link" href="{% url 'social_media:about' %}"><i class="far fa-question-circle mx-1 pr-1"></i>About Site</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-in-alt mx-1 pr-1"></i><i>Login</i></a>
+                        <a class="nav-link" href="{% url 'social_media:register' %}"><i class="fas fa-user-plus mx-1 pr-1"></i><i>Sign up</i></a>
+                    </div>
+                </li>
+            </ul>
+
+        </nav>
+    </header>
+<!-- </div> -->
+ <!-- close nav container div -->

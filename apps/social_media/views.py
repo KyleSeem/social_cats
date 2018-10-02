@@ -217,7 +217,13 @@ class ViewPostDetailView(generic.DetailView):
 
         return context
 
+# ABOUT - simple page that talks about this site
+def about(request):
+    context = {
+        'nav_about':'active',
+    }
 
+    return render(request, 'social_media/about.html', context)
 
 ######### OTHER CRUD #########
 
